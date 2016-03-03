@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-'''
+"""
 Created on 07/04/2011
 
 @author: Ritchie
-'''
+"""
 from Tkinter import *
 from Tix import *
 from tkFileDialog import *
@@ -12,207 +11,8059 @@ from rbsav import RBSav
 from gssav import GSSav
 from crsav import CRSav
 from rssav import RSSav
+import math
 import os
-
-items_rb = ["~0", "Master Ball (1)", "Ultra Ball (2)", "Great Ball (3)", "Poke Ball (4)", "Town Map (5)", "Bicycle (6)", "????? (7)", "Safari Ball (8)", "Pokedex (9)", "Moon Stone (10)", "Antidote (11)", "Burn Heal (12)", "Ice Heal (13)", "Awakening (14)", "Parlyz Heal (15)", "Full Restore (16)", "Max Potion (17)", "Hyper Potion (18)", "Super Potion (19)", "Potion (20)", "Boulderbadge (21)", "Cascadebadge (22)", "Thunderbadge (23)", "Rainbowbadge (24)", "Soulbadge (25)", "Marshbadge (26)", "Volcanobadge (27)", "Earthbadge (28)", "Escape Rope (29)", "Repel (30)", "Old Amber (31)", "Fire Stone (32)", "Thunderstone (33)", "Water Stone (34)", "HP Up (35)", "Protein (36)", "Iron (37)", "Carbos (38)", "Calcium (39)", "Rare Candy (40)", "Dome Fossil (41)", "Helix Fossil (42)", "Secret Key (43)", "????? (44)", "Bike Voucher (45)", "X Accuracy (46)", "Leaf Stone (47)", "Card Key (48)", "Nugget (49)", "PP Up (50)", "Poke Doll (51)", "Full Heal (52)", "Revive (53)", "Max Revive (54)", "Guard Spec (55)", "Super Repel (56)", "Max Repel (57)", "Dire Hit (58)", "Coin (59)", "Fresh Water (60)", "Soda Pop (61)", "Lemonade (62)", "S.S.Ticket (63)", "Gold Teeth (64)", "X Attack (65)", "X Defend (66)", "X Speed (67)", "X Special (68)", "Coin Case (69)", "Oak Parcel (70)", "Itemfinder (71)", "Silph Scope (72)", "Poke Flute (73)", "Lift Key (74)", "Exp.All (75)", "Old Rod (76)", "Good Rod (77)", "Super Rod (78)", "Pp Up (79)", "Ether (80)", "Max Ether (81)", "Elixer (82)", "Max Elixer (83)", "~84", "~85", "~86", "~87", "~88", "~89", "~90", "~91", "~92", "~93", "~94", "~95", "~96", "~97", "~98", "~99", "~100", "~101", "~102", "~103", "~104", "~105", "~106", "~107", "~108", "~109", "~110", "~111", "~112", "~113", "~163", "~115", "~116", "~117", "~118", "~119", "~120", "~121", "~122", "~123", "~124", "~125", "~126", "~127", "~128", "~129", "~130", "~131", "~132", "~133", "~134", "~135", "~136", "~137", "~138", "~139", "~140", "~141", "~142", "~143", "~144", "~145", "~146", "~147", "~148", "~149", "~150", "~151", "~152", "~153", "~154", "~155", "~156", "~163", "~158", "~159", "~160", "~161", "~162", "~163", "~164", "~165", "~166", "~167", "~168", "~169", "~170", "~171", "~172", "~173", "~174", "~175", "~176", "~177", "~178", "~179", "~180", "~181", "~182", "~183", "~184", "~185", "~186", "~187", "~188", "~189", "~190", "~191", "~192", "~193", "~194", "~195", "HM01 (196)", "HM02 (197)", "HM03 (198)", "HM04 (199)", "HM05 (200)", "TM01 (201)", "TM02 (202)", "TM03 (203)", "TM04 (204)", "TM05 (205)", "TM06 (206)", "TM07 (207)", "TM08 (208)", "TM09 (209)", "TM10 (210)", "TM11 (211)", "TM12 (212)", "TM13 (213)", "TM14 (214)", "TM15 (215)", "TM16 (216)", "TM17 (217)", "TM18 (218)", "TM19 (219)", "TM20 (220)", "TM21 (221)", "TM22 (222)", "TM23 (223)", "TM24 (224)", "TM25 (225)", "TM26 (226)", "TM27 (227)", "TM28 (228)", "TM29 (229)", "TM30 (230)", "TM31 (231)", "TM32 (232)", "TM33 (233)", "TM34 (234)", "TM35 (235)", "TM36 (236)", "TM37 (237)", "TM38 (238)", "TM39 (239)", "TM40 (240)", "TM41 (241)", "TM42 (242)", "TM43 (243)", "TM44 (244)", "TM45 (245)", "TM46 (246)", "TM47 (247)", "TM48 (248)", "TM49 (249)", "TM50 (250)", "TM51 (251)", "TM52 (252)", "TM53 (253)", "TM54 (254)", "-- Cancel -- (255)"]
-pokemon_rb = [" (0)", "Rhydon (1)", "Kangaskhan (2)", "Nidoranm (3)", "Clefairy (4)", "Spearow (5)", "Voltorb (6)", "Nidoking (7)", "Slowbro (8)", "Ivysaur (9)", "Exeggutor (10)", "Lickitung (11)", "Exeggcute (12)", "Grimer (13)", "Gengar (14)", "Nidoranh (15)", "Nidoqueen (16)", "Cubone (17)", "Rhyhorn (18)", "Lapras (19)", "Arcanine (20)", "Mew (21)", "Gyarados (22)", "Shellder (23)", "Tentacool (24)", "Gastly (25)", "Scyther (26)", "Staryu (27)", "Blastoise (28)", "Pinsir (29)", "Tangela (30)", "Missingno (31)", "Missingno (32)", "Growlithe (33)", "Onix (34)", "Fearow (35)", "Pidgey (36)", "Slowpoke (37)", "Kadabra (38)", "Graveler (39)", "Chansey (40)", "Machoke (41)", "Mr.Mime (42)", "Hitmonlee (43)", "Hitmonchan (44)", "Arbok (45)", "Parasect (46)", "Psyduck (47)", "Drowzee (48)", "Golem (49)", "Missingno (50)", "Magmar (51)", "Missingno (52)", "Electabuzz (53)", "Magneton (54)", "Koffing (55)", "Missingno (56)", "Mankey (57)", "Seel (58)", "Diglett (59)", "Tauros (60)", "Missingno (61)", "Missingno (62)", "Missingno (63)", "Farfetch'd (64)", "Venonat (65)", "Dragonite (66)", "Missingno (67)", "Missingno (68)", "Missingno (69)", "Doduo (70)", "Poliwag (71)", "Jynx (72)", "Moltres (73)", "Articuno (74)", "Zapdos (75)", "Ditto (76)", "Meowth (77)", "Krabby (78)", "Missingno (79)", "Missingno (80)", "Missingno (81)", "Vulpix (82)", "Ninetales (83)", "Pikachu (84)", "Raichu (85)", "Missingno (86)", "Missingno (87)", "Dratini (88)", "Dragonair (89)", "Kabuto (90)", "Kabutops (91)", "Horsea (92)", "Seadra (93)", "Missingno (94)", "Missingno (95)", "Sandshrew (96)", "Sandslash (97)", "Omanyte (98)", "Omastar (99)", "Jigglypuff (100)", "Wigglytuff (101)", "Eevee (102)", "Flareon (103)", "Jolteon (104)", "Vaporeon (105)", "Machop (106)", "Zubat (107)", "Ekans (108)", "Paras (109)", "Poliwhirl (110)", "Poliwrath (111)", "Weedle (112)", "Kakuna (113)", "Beedrill (163)", "Missingno (115)", "Dodrio (116)", "Primeape (117)", "Dugtrio (118)", "Venomoth (119)", "Dewgong (120)", "Missingno (121)", "Missingno (122)", "Caterpie (123)", "Metapod (124)", "Butterfree (125)", "Machamp (126)", "Missingno (127)", "Golduck (128)", "Hypno (129)", "Golbat (130)", "Mewtwo (131)", "Snorlax (132)", "Magikarp (133)", "Missingno (134)", "Missingno (135)", "Muk (136)", "Missingno (137)", "Kingler (138)", "Cloyster (139)", "Missingno (140)", "Electrode (141)", "Clefable (142)", "Weezing (143)", "Persian (144)", "Marowak (145)", "Missingno (146)", "Haunter (147)", "Abra (148)", "Alakazam (149)", "Pidgeotto (150)", "Pidgeot (151)", "Starmie (152)", "Bulbasaur (153)", "Venusaur (154)", "Tentacruel (155)", "Missingno (156)", "Goldeen (163)", "Seaking (158)", "Missingno (159)", "Missingno (160)", "Missingno (161)", "Missingno (162)", "Ponyta (163)", "Rapidash (164)", "Rattata (165)", "Raticate (166)", "Nidorino (167)", "Nidorina (168)", "Geodude (169)", "Porygon (170)", "Aerodactyl (171)", "Missingno (172)", "Magnemite (173)", "Missingno (174)", "Missingno (175)", "Charmander (176)", "Squirtle (177)", "Charmeleon (178)", "Wartortle (179)", "Charizard (180)", "Missingno (181)", "Missingno (182)", "Missingno (183)", "Missingno (184)", "Oddish (185)", "Gloom (186)", "Vileplume (187)", "Bellsprout (188)", "Weepinbell (189)", "Victreebel (190)", "~191", "~192", "~193", "~194", "~195", "~196", "~197", "~198", "~199", "~200", "~201", "~202", "~203", "~204", "~205", "~206", "~207", "~208", "~209", "~210", "~211", "~212", "~213", "~214", "~215", "~216", "~217", "~218", "~219", "~220", "~221", "~222", "~223", "~224", "~225", "~226", "~227", "~228", "~229", "~230", "~231", "~232", "~233", "~234", "~235", "~236", "~237", "~238", "~239", "~240", "~241", "~242", "~243", "~244", "~245", "~246", "~247", "~248", "~249", "~250", "~251", "~252", "~253", "~254", "-- No Pokemon -- (255)"]
-pokedex_rb = ["#000 Missingno", "#001 Bulbasaur", "#002 Ivysaur", "#003 Venusaur", "#004 Charmander", "#005 Charmeleon", "#006 Charizard", "#007 Squirtle", "#008 Wartortle", "#009 Blastoise", "#010 Caterpie", "#011 Metapod", "#012 Butterfree", "#013 Weedle", "#014 Kakuna", "#015 Beedrill", "#016 Pidgey", "#017 Pidgeotto", "#018 Pidgeot", "#019 Rattata", "#020 Raticate", "#021 Spearow", "#022 Fearow", "#023 Ekans", "#024 Arbok", "#025 Pikachu", "#026 Raichu", "#027 Sandshrew", "#028 Sandslash", "#029 Nidoranh", "#030 Nidorina", "#031 Nidoqueen", "#032 Nidoranm", "#033 Nidorino", "#034 Nidoking", "#035 Clefairy", "#036 Clefable", "#037 Vulpix", "#038 Ninetales", "#039 Jigglypuff", "#040 Wigglytuff", "#041 Zubat", "#042 Golbat", "#043 Oddish", "#044 Gloom", "#045 Vileplume", "#046 Paras", "#047 Parasect", "#048 Venonat", "#049 Venomoth", "#050 Diglett", "#051 Dugtrio", "#052 Meowth", "#053 Persian", "#054 Psyduck", "#055 Golduck", "#056 Mankey", "#057 Primeape", "#058 Growlithe", "#059 Arcanine", "#060 Poliwag", "#061 Poliwhirl", "#062 Poliwrath", "#063 Abra", "#064 Kadabra", "#065 Alakazam", "#066 Machop", "#067 Machoke", "#068 Machamp", "#069 Bellsprout", "#070 Weepinbell", "#071 Victreebel", "#072 Tentacool", "#073 Tentacruel", "#074 Geodude", "#075 Graveler", "#076 Golem", "#077 Ponyta", "#078 Rapidash", "#079 Slowpoke", "#080 Slowbro", "#081 Magnemite", "#082 Magneton", "#083 Farfetch'd", "#084 Doduo", "#085 Dodrio", "#086 Seel", "#087 Dewgong", "#088 Grimer", "#089 Muk", "#090 Shellder", "#091 Cloyster", "#092 Gastly", "#093 Haunter", "#094 Gengar", "#095 Onix", "#096 Drowzee", "#097 Hypno", "#098 Krabby", "#099 Kingler", "#100 Voltorb", "#101 Electrode", "#102 Exeggcute", "#103 Exeggutor", "#104 Cubone", "#105 Marowak", "#106 Hitmonlee", "#107 Hitmonchan", "#108 Lickitung", "#109 Koffing", "#110 Weezing", "#111 Rhyhorn", "#112 Rhydon", "#113 Chansey", "#163 Tangela", "#115 Kangaskhan", "#116 Horsea", "#117 Seadra", "#118 Goldeen", "#119 Seaking", "#120 Staryu", "#121 Starmie", "#122 Mr.Mime", "#123 Scyther", "#124 Jynx", "#125 Electabuzz", "#126 Magmar", "#127 Pinsir", "#128 Tauros", "#129 Magikarp", "#130 Gyarados", "#131 Lapras", "#132 Ditto", "#133 Eevee", "#134 Vaporeon", "#135 Jolteon", "#136 Flareon", "#137 Porygon", "#138 Omanyte", "#139 Omastar", "#140 Kabuto", "#141 Kabutops", "#142 Aerodactyl", "#143 Snorlax", "#144 Articuno", "#145 Zapdos", "#146 Moltres", "#147 Dratini", "#148 Dragonair", "#149 Dragonite", "#150 Mewtwo", "#151 Mew", "#152", "#153", "#154", "#155", "#156", "#163", "#158", "#159", "#160", "#161", "#162", "#163", "#164", "#165", "#166", "#167", "#168", "#169", "#170", "#171", "#172", "#173", "#174", "#175", "#176", "#177", "#178", "#179", "#180", "#181", "#182", "#183", "#184", "#185", "#186", "#187", "#188", "#189", "#190", "#191", "#192", "#193", "#194", "#195", "#196", "#197", "#198", "#199", "#200", "#201", "#202", "#203", "#204", "#205", "#206", "#207", "#208", "#209", "#210", "#211", "#212", "#213", "#214", "#215", "#216", "#217", "#218", "#219", "#220", "#221", "#222", "#223", "#224", "#225", "#226", "#227", "#228", "#229", "#230", "#231", "#232", "#233", "#234", "#235", "#236", "#237", "#238", "#239", "#240", "#241", "#242", "#243", "#244", "#245", "#246", "#247", "#248", "#249", "#250", "#251", "#252", "#253", "#254", "#255"]
-moves_rb = ["-- No Move -- (0)", "Pound (1)", "Karate Chop (2)", "Doubleslap (3)", "Comet Punch (4)", "Mega Punch (5)", "Pay Day (6)", "Fire Punch (7)", "Ice Punch (8)", "Thunderpunch (9)", "Scratch (10)", "Vicegrip (11)", "Guillotine (12)", "Razor Wind (13)", "Swords Dance (14)", "Cut (15)", "Gust (16)", "Wing Attack (17)", "Whirlwind (18)", "Fly (19)", "Bind (20)", "Slam (21)", "Vine Whip (22)", "Stomp (23)", "Double Kick (24)", "Mega Kick (25)", "Jump Kick (26)", "Rolling Kick (27)", "Sand-attack (28)", "Headbutt (29)", "Horn Attack (30)", "Fury Attack (31)", "Horn Drill (32)", "Tackle (33)", "Body Slam (34)", "Wrap (35)", "Take Down (36)", "Thrash (37)", "Double-edge (38)", "Tail Whip (39)", "Poison Sting (40)", "Twineedle (41)", "Pin Missile (42)", "Leer (43)", "Bite (44)", "Growl (45)", "Roar (46)", "Sing (47)", "Supersonic (48)", "Sonicboom (49)", "Disable (50)", "Acid (51)", "Ember (52)", "Flamethrower (53)", "Mist (54)", "Water Gun (55)", "Hydro Pump (56)", "Surf (57)", "Ice Beam (58)", "Blizzard (59)", "Psybeam (60)", "Bubblebeam (61)", "Aurora Beam (62)", "Hyper Beam (63)", "Peck (64)", "Drill Peck (65)", "Submission (66)", "Low Kick (67)", "Counter (68)", "Seismic Toss (69)", "Strength (70)", "Absorb (71)", "Mega Drain (72)", "Leech Seed (73)", "Growth (74)", "Razor Leaf (75)", "Solarbeam (76)", "Poisonpowder (77)", "Stun Spore (78)", "Sleep Powder (79)", "Petal Dance (80)", "String Shot (81)", "Dragon Rage (82)", "Fire Spin (83)", "Thundershock (84)", "Thunderbolt (85)", "Thunder Wave (86)", "Thunder (87)", "Rock Throw (88)", "Earthquake (89)", "Fissure (90)", "Dig (91)", "Toxic (92)", "Confusion (93)", "Psychic (94)", "Hypnosis (95)", "Meditate (96)", "Agility (97)", "Quick Attack (98)", "Rage (99)", "Teleport (100)", "Night Shade (101)", "Mimic (102)", "Screech (103)", "Double Team (104)", "Recover (105)", "Harden (106)", "Minimize (107)", "Smokescreen (108)", "Confuse Ray (109)", "Withdraw (110)", "Defense Curl (111)", "Barrier (112)", "Light Screen (113)", "Haze (163)", "Reflect (115)", "Focus Energy (116)", "Bide (117)", "Metronome (118)", "Mirror Move (119)", "Selfdestruct (120)", "Egg Bomb (121)", "Lick (122)", "Smog (123)", "Sludge (124)", "Bone Club (125)", "Fire Blast (126)", "Waterfall (127)", "Clamp (128)", "Swift (129)", "Skull Bash (130)", "Spike Cannon (131)", "Constrict (132)", "Amnesia (133)", "Kinesis (134)", "Softboiled (135)", "Hi Jump Kick (136)", "Glare (137)", "Dream Eater (138)", "Poison Gas (139)", "Barrage (140)", "Leech Life (141)", "Lovely Kiss (142)", "Sky Attack (143)", "Transform (144)", "Bubble (145)", "Dizzy Punch (146)", "Spore (147)", "Flash (148)", "Psywave (149)", "Splash (150)", "Acid Armor (151)", "Crabhammer (152)", "Explosion (153)", "Fury Swipes (154)", "Bonemerang (155)", "Rest (156)", "Rock Slide (163)", "Hyper Fang (158)", "Sharpen (159)", "Conversion (160)", "Tri Attack (161)", "Super Fang (162)", "Slash (163)", "Substitute (164)", "Struggle (165)", "~166", "~167", "~168", "~169", "~170", "~171", "~172", "~173", "~174", "~175", "~176", "~177", "~178", "~179", "~180", "~181", "~182", "~183", "~184", "~185", "~186", "~187", "~188", "~189", "~190", "~191", "~192", "~193", "~194", "~195", "~196", "~197", "~198", "~199", "~200", "~201", "~202", "~203", "~204", "~205", "~206", "~207", "~208", "~209", "~210", "~211", "~212", "~213", "~214", "~215", "~216", "~217", "~218", "~219", "~220", "~221", "~222", "~223", "~224", "~225", "~226", "~227", "~228", "~229", "~230", "~231", "~232", "~233", "~234", "~235", "~236", "~237", "~238", "~239", "~240", "~241", "~242", "~243", "~244", "~245", "~246", "~247", "~248", "~249", "~250", "~251", "~252", "~253", "~254", "~255"]
-types_rb = ["Normal (0)", "Fighting (1)", "Flying (2)", "Poison (3)", "Ground (4)", "Rock (5)", "Bird (6)", "Bug (7)", "Ghost (8)", "~9", "~10", "~11", "~12", "~13", "~14", "~15", "~16", "~17", "~18", "~19", "Fire (20)", "Water (21)", "Grass (22)", "Electric (23)", "Psychic (24)", "Ice (25)", "Dragon (26)", "~27", "~28", "~29", "~30", "~31", "~32", "~33", "~34", "~35", "~36", "~37", "~38", "~39", "~40", "~41", "~42", "~43", "~44", "~45", "~46", "~47", "~48", "~49", "~50", "~51", "~52", "~53", "~54", "~55", "~56", "~57", "~58", "~59", "~60", "~61", "~62", "~63", "~64", "~65", "~66", "~67", "~68", "~69", "~70", "~71", "~72", "~73", "~74", "~75", "~76", "~77", "~78", "~79", "~80", "~81", "~82", "~83", "~84", "~85", "~86", "~87", "~88", "~89", "~90", "~91", "~92", "~93", "~94", "~95", "~96", "~97", "~98", "~99", "~100", "~101", "~102", "~103", "~104", "~105", "~106", "~107", "~108", "~109", "~110", "~111", "~112", "~113", "~163", "~115", "~116", "~117", "~118", "~119", "~120", "~121", "~122", "~123", "~124", "~125", "~126", "~127", "~128", "~129", "~130", "~131", "~132", "~133", "~134", "~135", "~136", "~137", "~138", "~139", "~140", "~141", "~142", "~143", "~144", "~145", "~146", "~147", "~148", "~149", "~150", "~151", "~152", "~153", "~154", "~155", "~156", "~163", "~158", "~159", "~160", "~161", "~162", "~163", "~164", "~165", "~166", "~167", "~168", "~169", "~170", "~171", "~172", "~173", "~174", "~175", "~176", "~177", "~178", "~179", "~180", "~181", "~182", "~183", "~184", "~185", "~186", "~187", "~188", "~189", "~190", "~191", "~192", "~193", "~194", "~195", "~196", "~197", "~198", "~199", "~200", "~201", "~202", "~203", "~204", "~205", "~206", "~207", "~208", "~209", "~210", "~211", "~212", "~213", "~214", "~215", "~216", "~217", "~218", "~219", "~220", "~221", "~222", "~223", "~224", "~225", "~226", "~227", "~228", "~229", "~230", "~231", "~232", "~233", "~234", "~235", "~236", "~237", "~238", "~239", "~240", "~241", "~242", "~243", "~244", "~245", "~246", "~247", "~248", "~249", "~250", "~251", "~252", "~253", "~254", "~255"]
-
-items_gs = ["~0", "Master Ball (1)", "Ultra Ball (2)", "Brightpowder (3)", "Great Ball (4)", "Poké Ball (5)", "Teru-sama (6)", "Bicycle (7)", "Moon Stone (8)", "Antidote (9)", "Burn Heal (10)", "Ice Heal (11)", "Awakening (12)", "Parlyz Heal (13)", "Full Restore (14)", "Max Potion (15)", "Hyper Potion (16)", "Super Potion (17)", "Potion (18)", "Escape Rope (19)", "Repel (20)", "Max Elixer (21)", "Fire Stone (22)", "Thunderstone (23)", "Water Stone (24)", "Teru-sama (25)", "HP Up (26)", "Protein (27)", "Iron (28)", "Carbos (29)", "Lucky Punch (30)", "Calcium (31)", "Rare Candy (32)", "X Accuracy (33)", "Leaf Stone (34)", "Metal Powder (35)", "Nugget (36)", "Poké Doll (37)", "Full Heal (38)", "Revive (39)", "Max Revive (40)", "Guard Spec. (41)", "Super Repel (42)", "Max Repel (43)", "Dire Hit (44)", "Teru-sama (45)", "Fresh Water (46)", "Soda Pop (47)", "Lemonade (48)", "X Attack (49)", "Teru-sama (50)", "X Defend (51)", "X Speed (52)", "X Special (53)", "Coin Case (54)", "Itemfinder (55)", "Teru-sama (56)", "Exp.share (57)", "Old Rod (58)", "Good Rod (59)", "Silver Leaf (60)", "Super Rod (61)", "PP Up (62)", "Ether (63)", "Max Ether (64)", "Elixer (65)", "Red Scale (66)", "Secretpotion (67)", "S.s.ticket (68)", "Mystery Egg (69)", "Teru-sama (70)", "Silver Wing (71)", "Moomoo Milk (72)", "Quick Claw (73)", "Psncureberry (74)", "Gold Leaf (75)", "Soft Sand (76)", "Sharp Beak (77)", "Przcureberry (78)", "Burnt Berry (79)", "Ice Berry (80)", "Poison Barb (81)", "King's Rock (82)", "Bitter Berry (83)", "Mint Berry (84)", "Red Apricorn (85)", "Tinymushroom (86)", "Big Mushroom (87)", "Silverpowder (88)", "Blu Apricorn (89)", "Teru-sama (90)", "Amulet Coin (91)", "Ylw Apricorn (92)", "Grn Apricorn (93)", "Cleanse Tag (94)", "Mystic Water (95)", "Twistedspoon (96)", "Wht Apricorn (97)", "Blackbelt (98)", "Blk Apricorn (99)", "Teru-sama (100)", "Pnk Apricorn (101)", "Blackglasses (102)", "Slowpoketail (103)", "Pink Bow (104)", "Stick (105)", "Smoke Ball (106)", "Nevermeltice (107)", "Magnet (108)", "Miracleberry (109)", "Pearl (110)", "Big Pearl (111)", "Everstone (112)", "Spell Tag (113)", "Ragecandybar (163)", "Teru-sama (115)", "Teru-sama (116)", "Miracle Seed (117)", "Thick Club (118)", "Focus Band (119)", "Teru-sama (120)", "Energypowder (121)", "Energy Root (122)", "Heal Powder (123)", "Revival Herb (124)", "Hard Stone (125)", "Lucky Egg (126)", "Card Key (127)", "Machine Part (128)", "Teru-sama (129)", "Lost Item (130)", "Stardust (131)", "Star Piece (132)", "Basement Key (133)", "Pass (134)", "Teru-sama (135)", "Teru-sama (136)", "Teru-sama (137)", "Charcoal (138)", "Berry Juice (139)", "Scope Lens (140)", "Teru-sama (141)", "Teru-sama (142)", "Metal Coat (143)", "Dragon Fang (144)", "Teru-sama (145)", "Leftovers (146)", "Teru-sama (147)", "Teru-sama (148)", "Teru-sama (149)", "Mysteryberry (150)", "Dragon Scale (151)", "Berserk Gene (152)", "Teru-sama (153)", "Teru-sama (154)", "Teru-sama (155)", "Sacred Ash (156)", "Heavy Ball (163)", "Flower Mail (158)", "Level Ball (159)", "Lure Ball (160)", "Fast Ball (161)", "Teru-sama (162)", "Light Ball (163)", "Friend Ball (164)", "Moon Ball (165)", "Love Ball (166)", "Normal Box (167)", "Gorgeous Box (168)", "Sun Stone (169)", "Polkadot Bow (170)", "Teru-sama (171)", "Up-grade (172)", "Berry (173)", "Gold Berry (174)", "Squirtbottle (175)", "Teru-sama (176)", "Park Ball (177)", "Rainbow Wing (178)", "Teru-sama (179)", "Brick Piece (180)", "Surf Mail (181)", "Litebluemail (182)", "Portraitmail (183)", "Lovely Mail (184)", "Eon Mail (185)", "Morph Mail (186)", "Bluesky Mail (187)", "Music Mail (188)", "Mirage Mail (189)", "Teru-sama (190)", "TM01 (191)", "TM02 (192)", "TM03 (193)", "TM04 (194)", "Teru-sama (195)", "TM05 (196)", "TM06 (197)", "TM07 (198)", "TM08 (199)", "TM09 (200)", "TM10 (201)", "TM11 (202)", "TM12 (203)", "TM13 (204)", "TM14 (205)", "TM15 (206)", "TM16 (207)", "TM17 (208)", "TM18 (209)", "TM19 (210)", "TM20 (211)", "TM21 (212)", "TM22 (213)", "TM23 (214)", "TM24 (215)", "TM25 (216)", "TM26 (217)", "TM27 (218)", "TM28 (219)", "Teru-sama (220)", "TM29 (221)", "TM30 (222)", "TM31 (223)", "TM32 (224)", "TM33 (225)", "TM34 (226)", "TM35 (227)", "TM36 (228)", "TM37 (229)", "TM38 (230)", "TM39 (231)", "TM40 (232)", "TM41 (233)", "TM42 (234)", "TM43 (235)", "TM44 (236)", "TM45 (237)", "TM46 (238)", "TM47 (239)", "TM48 (240)", "TM49 (241)", "TM50 (242)", "HM01 (243)", "HM02 (244)", "HM03 (245)", "HM04 (246)", "HM05 (247)", "HM06 (248)", "HM07 (249)", "Teru-sama (250)", "Teru-sama (251)", "Teru-sama (252)", "Teru-sama (253)", "Teru-sama (254)", "-- Cancel -- (255)"]
-pokemon_gs = ["~0", "Bulbasaur (1)", "Ivysaur (2)", "Venusaur (3)", "Charmander (4)", "Charmeleon (5)", "Charizard (6)", "Squirtle (7)", "Wartortle (8)", "Blastoise (9)", "Caterpie (10)", "Metapod (11)", "Butterfree (12)", "Weedle (13)", "Kakuna (14)", "Beedrill (15)", "Pidgey (16)", "Pidgeotto (17)", "Pidgeot (18)", "Rattata (19)", "Raticate (20)", "Spearow (21)", "Fearow (22)", "Ekans (23)", "Arbok (24)", "Pikachu (25)", "Raichu (26)", "Sandshrew (27)", "Sandslash (28)", "Nidoranh (29)", "Nidorina (30)", "Nidoqueen (31)", "Nidoranm (32)", "Nidorino (33)", "Nidoking (34)", "Clefairy (35)", "Clefable (36)", "Vulpix (37)", "Ninetales (38)", "Jigglypuff (39)", "Wigglytuff (40)", "Zubat (41)", "Golbat (42)", "Oddish (43)", "Gloom (44)", "Vileplume (45)", "Paras (46)", "Parasect (47)", "Venonat (48)", "Venomoth (49)", "Diglett (50)", "Dugtrio (51)", "Meowth (52)", "Persian (53)", "Psyduck (54)", "Golduck (55)", "Mankey (56)", "Primeape (57)", "Growlithe (58)", "Arcanine (59)", "Poliwag (60)", "Poliwhirl (61)", "Poliwrath (62)", "Abra (63)", "Kadabra (64)", "Alakazam (65)", "Machop (66)", "Machoke (67)", "Machamp (68)", "Bellsprout (69)", "Weepinbell (70)", "Victreebel (71)", "Tentacool (72)", "Tentacruel (73)", "Geodude (74)", "Graveler (75)", "Golem (76)", "Ponyta (77)", "Rapidash (78)", "Slowpoke (79)", "Slowbro (80)", "Magnemite (81)", "Magneton (82)", "Farfetch'd (83)", "Doduo (84)", "Dodrio (85)", "Seel (86)", "Dewgong (87)", "Grimer (88)", "Muk (89)", "Shellder (90)", "Cloyster (91)", "Gastly (92)", "Haunter (93)", "Gengar (94)", "Onix (95)", "Drowzee (96)", "Hypno (97)", "Krabby (98)", "Kingler (99)", "Voltorb (100)", "Electrode (101)", "Exeggcute (102)", "Exeggutor (103)", "Cubone (104)", "Marowak (105)", "Hitmonlee (106)", "Hitmonchan (107)", "Lickitung (108)", "Koffing (109)", "Weezing (110)", "Rhyhorn (111)", "Rhydon (112)", "Chansey (113)", "Tangela (163)", "Kangaskhan (115)", "Horsea (116)", "Seadra (117)", "Goldeen (118)", "Seaking (119)", "Staryu (120)", "Starmie (121)", "Mr.mime (122)", "Scyther (123)", "Jynx (124)", "Electabuzz (125)", "Magmar (126)", "Pinsir (127)", "Tauros (128)", "Magikarp (129)", "Gyarados (130)", "Lapras (131)", "Ditto (132)", "Eevee (133)", "Vaporeon (134)", "Jolteon (135)", "Flareon (136)", "Porygon (137)", "Omanyte (138)", "Omastar (139)", "Kabuto (140)", "Kabutops (141)", "Aerodactyl (142)", "Snorlax (143)", "Articuno (144)", "Zapdos (145)", "Moltres (146)", "Dratini (147)", "Dragonair (148)", "Dragonite (149)", "Mewtwo (150)", "Mew (151)", "Chikorita (152)", "Bayleef (153)", "Meganium (154)", "Cyndaquil (155)", "Quilava (156)", "Typhlosion (163)", "Totodile (158)", "Croconaw (159)", "Feraligatr (160)", "Sentret (161)", "Furret (162)", "Hoothoot (163)", "Noctowl (164)", "Ledyba (165)", "Ledian (166)", "Spinarak (167)", "Ariados (168)", "Crobat (169)", "Chinchou (170)", "Lanturn (171)", "Pichu (172)", "Cleffa (173)", "Igglybuff (174)", "Togepi (175)", "Togetic (176)", "Natu (177)", "Xatu (178)", "Mareep (179)", "Flaaffy (180)", "Ampharos (181)", "Bellossom (182)", "Marill (183)", "Azumarill (184)", "Sudowoodo (185)", "Politoed (186)", "Hoppip (187)", "Skiploom (188)", "Jumpluff (189)", "Aipom (190)", "Sunkern (191)", "Sunflora (192)", "Yanma (193)", "Wooper (194)", "Quagsire (195)", "Espeon (196)", "Umbreon (197)", "Murkrow (198)", "Slowking (199)", "Misdreavus (200)", "Unown (201)", "Wobbuffet (202)", "Girafarig (203)", "Pineco (204)", "Forretress (205)", "Dunsparce (206)", "Gligar (207)", "Steelix (208)", "Snubbull (209)", "Granbull (210)", "Qwilfish (211)", "Scizor (212)", "Shuckle (213)", "Heracross (214)", "Sneasel (215)", "Teddiursa (216)", "Ursaring (217)", "Slugma (218)", "Magcargo (219)", "Swinub (220)", "Piloswine (221)", "Corsola (222)", "Remoraid (223)", "Octillery (224)", "Delibird (225)", "Mantine (226)", "Skarmory (227)", "Houndour (228)", "Houndoom (229)", "Kingdra (230)", "Phanpy (231)", "Donphan (232)", "Porygon2 (233)", "Stantler (234)", "Smeargle (235)", "Tyrogue (236)", "Hitmontop (237)", "Smoochum (238)", "Elekid (239)", "Magby (240)", "Miltank (241)", "Blissey (242)", "Raikou (243)", "Entei (244)", "Suicune (245)", "Larvitar (246)", "Pupitar (247)", "Tyranitar (248)", "Lugia (249)", "Ho-oh (250)", "Celebi (251)", "????? (252)", "Egg (253)", "????? (254)", "-- No Pokemon -- (255)" ]
-pokedex_gs = ["#000 Er", "#001 Bulbasaur", "#002 Ivysaur", "#003 Venusaur", "#004 Charmander", "#005 Charmeleon", "#006 Charizard", "#007 Squirtle", "#008 Wartortle", "#009 Blastoise", "#010 Caterpie", "#011 Metapod", "#012 Butterfree", "#013 Weedle", "#014 Kakuna", "#015 Beedrill", "#016 Pidgey", "#017 Pidgeotto", "#018 Pidgeot", "#019 Rattata", "#020 Raticate", "#021 Spearow", "#022 Fearow", "#023 Ekans", "#024 Arbok", "#025 Pikachu", "#026 Raichu", "#027 Sandshrew", "#028 Sandslash", "#029 Nidoranh", "#030 Nidorina", "#031 Nidoqueen", "#032 Nidoranm", "#033 Nidorino", "#034 Nidoking", "#035 Clefairy", "#036 Clefable", "#037 Vulpix", "#038 Ninetales", "#039 Jigglypuff", "#040 Wigglytuff", "#041 Zubat", "#042 Golbat", "#043 Oddish", "#044 Gloom", "#045 Vileplume", "#046 Paras", "#047 Parasect", "#048 Venonat", "#049 Venomoth", "#050 Diglett", "#051 Dugtrio", "#052 Meowth", "#053 Persian", "#054 Psyduck", "#055 Golduck", "#056 Mankey", "#057 Primeape", "#058 Growlithe", "#059 Arcanine", "#060 Poliwag", "#061 Poliwhirl", "#062 Poliwrath", "#063 Abra", "#064 Kadabra", "#065 Alakazam", "#066 Machop", "#067 Machoke", "#068 Machamp", "#069 Bellsprout", "#070 Weepinbell", "#071 Victreebel", "#072 Tentacool", "#073 Tentacruel", "#074 Geodude", "#075 Graveler", "#076 Golem", "#077 Ponyta", "#078 Rapidash", "#079 Slowpoke", "#080 Slowbro", "#081 Magnemite", "#082 Magneton", "#083 Farfetch'd", "#084 Doduo", "#085 Dodrio", "#086 Seel", "#087 Dewgong", "#088 Grimer", "#089 Muk", "#090 Shellder", "#091 Cloyster", "#092 Gastly", "#093 Haunter", "#094 Gengar", "#095 Onix", "#096 Drowzee", "#097 Hypno", "#098 Krabby", "#099 Kingler", "#100 Voltorb", "#101 Electrode", "#102 Exeggcute", "#103 Exeggutor", "#104 Cubone", "#105 Marowak", "#106 Hitmonlee", "#107 Hitmonchan", "#108 Lickitung", "#109 Koffing", "#110 Weezing", "#111 Rhyhorn", "#112 Rhydon", "#113 Chansey", "#163 Tangela", "#115 Kangaskhan", "#116 Horsea", "#117 Seadra", "#118 Goldeen", "#119 Seaking", "#120 Staryu", "#121 Starmie", "#122 Mr.mime", "#123 Scyther", "#124 Jynx", "#125 Electabuzz", "#126 Magmar", "#127 Pinsir", "#128 Tauros", "#129 Magikarp", "#130 Gyarados", "#131 Lapras", "#132 Ditto", "#133 Eevee", "#134 Vaporeon", "#135 Jolteon", "#136 Flareon", "#137 Porygon", "#138 Omanyte", "#139 Omastar", "#140 Kabuto", "#141 Kabutops", "#142 Aerodactyl", "#143 Snorlax", "#144 Articuno", "#145 Zapdos", "#146 Moltres", "#147 Dratini", "#148 Dragonair", "#149 Dragonite", "#150 Mewtwo", "#151 Mew", "#152 Chikorita", "#153 Bayleef", "#154 Meganium", "#155 Cyndaquil", "#156 Quilava", "#163 Typhlosion", "#158 Totodile", "#159 Croconaw", "#160 Feraligatr", "#161 Sentret", "#162 Furret", "#163 Hoothoot", "#164 Noctowl", "#165 Ledyba", "#166 Ledian", "#167 Spinarak", "#168 Ariados", "#169 Crobat", "#170 Chinchou", "#171 Lanturn", "#172 Pichu", "#173 Cleffa", "#174 Igglybuff", "#175 Togepi", "#176 Togetic", "#177 Natu", "#178 Xatu", "#179 Mareep", "#180 Flaaffy", "#181 Ampharos", "#182 Bellossom", "#183 Marill", "#184 Azumarill", "#185 Sudowoodo", "#186 Politoed", "#187 Hoppip", "#188 Skiploom", "#189 Jumpluff", "#190 Aipom", "#191 Sunkern", "#192 Sunflora", "#193 Yanma", "#194 Wooper", "#195 Quagsire", "#196 Espeon", "#197 Umbreon", "#198 Murkrow", "#199 Slowking", "#200 Misdreavus", "#201 Unown", "#202 Wobbuffet", "#203 Girafarig", "#204 Pineco", "#205 Forretress", "#206 Dunsparce", "#207 Gligar", "#208 Steelix", "#209 Snubbull", "#210 Granbull", "#211 Qwilfish", "#212 Scizor", "#213 Shuckle", "#214 Heracross", "#215 Sneasel", "#216 Teddiursa", "#217 Ursaring", "#218 Slugma", "#219 Magcargo", "#220 Swinub", "#221 Piloswine", "#222 Corsola", "#223 Remoraid", "#224 Octillery", "#225 Delibird", "#226 Mantine", "#227 Skarmory", "#228 Houndour", "#229 Houndoom", "#230 Kingdra", "#231 Phanpy", "#232 Donphan", "#233 Porygon2", "#234 Stantler", "#235 Smeargle", "#236 Tyrogue", "#237 Hitmontop", "#238 Smoochum", "#239 Elekid", "#240 Magby", "#241 Miltank", "#242 Blissey", "#243 Raikou", "#244 Entei", "#245 Suicune", "#246 Larvitar", "#247 Pupitar", "#248 Tyranitar", "#249 Lugia", "#250 Ho-oh", "#251 Celebi", "#252 ?????", "#253 Egg", "#254 ?????", "#255 ?????" ]
-moves_gs = ["-- No Move -- (0)", "Pound (1)", "Karate Chop (2)", "Doubleslap (3)", "Comet Punch (4)", "Mega Punch (5)", "Pay Day (6)", "Fire Punch (7)", "Ice Punch (8)", "Thunderpunch (9)", "Scratch (10)", "Vicegrip (11)", "Guillotine (12)", "Razor Wind (13)", "Swords Dance (14)", "Cut (15)", "Gust (16)", "Wing Attack (17)", "Whirlwind (18)", "Fly (19)", "Bind (20)", "Slam (21)", "Vine Whip (22)", "Stomp (23)", "Double Kick (24)", "Mega Kick (25)", "Jump Kick (26)", "Rolling Kick (27)", "Sand-attack (28)", "Headbutt (29)", "Horn Attack (30)", "Fury Attack (31)", "Horn Drill (32)", "Tackle (33)", "Body Slam (34)", "Wrap (35)", "Take Down (36)", "Thrash (37)", "Double-edge (38)", "Tail Whip (39)", "Poison Sting (40)", "Twineedle (41)", "Pin Missile (42)", "Leer (43)", "Bite (44)", "Growl (45)", "Roar (46)", "Sing (47)", "Supersonic (48)", "Sonicboom (49)", "Disable (50)", "Acid (51)", "Ember (52)", "Flamethrower (53)", "Mist (54)", "Water Gun (55)", "Hydro Pump (56)", "Surf (57)", "Ice Beam (58)", "Blizzard (59)", "Psybeam (60)", "Bubblebeam (61)", "Aurora Beam (62)", "Hyper Beam (63)", "Peck (64)", "Drill Peck (65)", "Submission (66)", "Low Kick (67)", "Counter (68)", "Seismic Toss (69)", "Strength (70)", "Absorb (71)", "Mega Drain (72)", "Leech Seed (73)", "Growth (74)", "Razor Leaf (75)", "Solarbeam (76)", "Poisonpowder (77)", "Stun Spore (78)", "Sleep Powder (79)", "Petal Dance (80)", "String Shot (81)", "Dragon Rage (82)", "Fire Spin (83)", "Thundershock (84)", "Thunderbolt (85)", "Thunder Wave (86)", "Thunder (87)", "Rock Throw (88)", "Earthquake (89)", "Fissure (90)", "Dig (91)", "Toxic (92)", "Confusion (93)", "Psychic (94)", "Hypnosis (95)", "Meditate (96)", "Agility (97)", "Quick Attack (98)", "Rage (99)", "Teleport (100)", "Night Shade (101)", "Mimic (102)", "Screech (103)", "Double Team (104)", "Recover (105)", "Harden (106)", "Minimize (107)", "Smokescreen (108)", "Confuse Ray (109)", "Withdraw (110)", "Defense Curl (111)", "Barrier (112)", "Light Screen (113)", "Haze (163)", "Reflect (115)", "Focus Energy (116)", "Bide (117)", "Metronome (118)", "Mirror Move (119)", "Selfdestruct (120)", "Egg Bomb (121)", "Lick (122)", "Smog (123)", "Sludge (124)", "Bone Club (125)", "Fire Blast (126)", "Waterfall (127)", "Clamp (128)", "Swift (129)", "Skull Bash (130)", "Spike Cannon (131)", "Constrict (132)", "Amnesia (133)", "Kinesis (134)", "Softboiled (135)", "Hi Jump Kick (136)", "Glare (137)", "Dream Eater (138)", "Poison Gas (139)", "Barrage (140)", "Leech Life (141)", "Lovely Kiss (142)", "Sky Attack (143)", "Transform (144)", "Bubble (145)", "Dizzy Punch (146)", "Spore (147)", "Flash (148)", "Psywave (149)", "Splash (150)", "Acid Armor (151)", "Crabhammer (152)", "Explosion (153)", "Fury Swipes (154)", "Bonemerang (155)", "Rest (156)", "Rock Slide (163)", "Hyper Fang (158)", "Sharpen (159)", "Conversion (160)", "Tri Attack (161)", "Super Fang (162)", "Slash (163)", "Substitute (164)", "Struggle (165)", "Sketch (166)", "Triple Kick (167)", "Thief (168)", "Spider Web (169)", "Mind Reader (170)", "Nightmare (171)", "Flame Wheel (172)", "Snore (173)", "Curse (174)", "Flail (175)", "Conversion2 (176)", "Aeroblast (177)", "Cotton Spore (178)", "Reversal (179)", "Spite (180)", "Powder Snow (181)", "Protect (182)", "Mach Punch (183)", "Scary Face (184)", "Faint Attack (185)", "Sweet Kiss (186)", "Belly Drum (187)", "Sludge Bomb (188)", "Mud-slap (189)", "Octazooka (190)", "Spikes (191)", "Zap Cannon (192)", "Foresight (193)", "Destiny Bond (194)", "Perish Song (195)", "Icy Wind (196)", "Detect (197)", "Bone Rush (198)", "Lock-on (199)", "Outrage (200)", "Sandstorm (201)", "Giga Drain (202)", "Endure (203)", "Charm (204)", "Rollout (205)", "False Swipe (206)", "Swagger (207)", "Milk Drink (208)", "Spark (209)", "Fury Cutter (210)", "Steel Wing (211)", "Mean Look (212)", "Attract (213)", "Sleep Talk (214)", "Heal Bell (215)", "Return (216)", "Present (217)", "Frustration (218)", "Safeguard (219)", "Pain Split (220)", "Sacred Fire (221)", "Magnitude (222)", "Dynamicpunch (223)", "Megahorn (224)", "Dragonbreath (225)", "Baton Pass (226)", "Encore (227)", "Pursuit (228)", "Rapid Spin (229)", "Sweet Scent (230)", "Iron Tail (231)", "Metal Claw (232)", "Vital Throw (233)", "Morning Sun (234)", "Synthesis (235)", "Moonlight (236)", "Hidden Power (237)", "Cross Chop (238)", "Twister (239)", "Rain Dance (240)", "Sunny Day (241)", "Crunch (242)", "Mirror Coat (243)", "Psych Up (244)", "Extremespeed (245)", "Ancientpower (246)", "Shadow Ball (247)", "Future Sight (248)", "Rock Smash (249)", "Whirlpool (250)", "Beat Up (251)", "~252", "~253", "~254", "~255"]
-types_gs = ["Normal (0)", "Fighting (1)", "Flying (2)", "Poison (3)", "Ground (4)", "Rock (5)", "Bird (6)", "Bug (7)", "Ghost (8)", "Steel (9)", "~10", "~11", "~12", "~13", "~14", "~15", "~16", "~17", "~18", "~19", "Fire (20)", "Water (21)", "Grass (22)", "Electric (23)", "Psychic (24)", "Ice (25)", "Dragon (26)", "Dark (27)", "~28", "~29", "~30", "~31", "~32", "~33", "~34", "~35", "~36", "~37", "~38", "~39", "~40", "~41", "~42", "~43", "~44", "~45", "~46", "~47", "~48", "~49", "~50", "~51", "~52", "~53", "~54", "~55", "~56", "~57", "~58", "~59", "~60", "~61", "~62", "~63", "~64", "~65", "~66", "~67", "~68", "~69", "~70", "~71", "~72", "~73", "~74", "~75", "~76", "~77", "~78", "~79", "~80", "~81", "~82", "~83", "~84", "~85", "~86", "~87", "~88", "~89", "~90", "~91", "~92", "~93", "~94", "~95", "~96", "~97", "~98", "~99", "~100", "~101", "~102", "~103", "~104", "~105", "~106", "~107", "~108", "~109", "~110", "~111", "~112", "~113", "~163", "~115", "~116", "~117", "~118", "~119", "~120", "~121", "~122", "~123", "~124", "~125", "~126", "~127", "~128", "~129", "~130", "~131", "~132", "~133", "~134", "~135", "~136", "~137", "~138", "~139", "~140", "~141", "~142", "~143", "~144", "~145", "~146", "~147", "~148", "~149", "~150", "~151", "~152", "~153", "~154", "~155", "~156", "~163", "~158", "~159", "~160", "~161", "~162", "~163", "~164", "~165", "~166", "~167", "~168", "~169", "~170", "~171", "~172", "~173", "~174", "~175", "~176", "~177", "~178", "~179", "~180", "~181", "~182", "~183", "~184", "~185", "~186", "~187", "~188", "~189", "~190", "~191", "~192", "~193", "~194", "~195", "~196", "~197", "~198", "~199", "~200", "~201", "~202", "~203", "~204", "~205", "~206", "~207", "~208", "~209", "~210", "~211", "~212", "~213", "~214", "~215", "~216", "~217", "~218", "~219", "~220", "~221", "~222", "~223", "~224", "~225", "~226", "~227", "~228", "~229", "~230", "~231", "~232", "~233", "~234", "~235", "~236", "~237", "~238", "~239", "~240", "~241", "~242", "~243", "~244", "~245", "~246", "~247", "~248", "~249", "~250", "~251", "~252", "~253", "~254", "~255"]
-
-items_rs = ["-- No Item --", "Master Ball (1)","Ultra Ball (2)","Great Ball (3)","Poke Ball (4)","Safari Ball (5)","Net Ball (6)","Dive Ball (7)","Nest Ball (8)","Repeat Ball (9)","Timer Ball (10)","Luxury Ball (11)","Premier Ball (12)","Potion (13)","Antidote (14)","Burn Heal (15)","Ice Heal (16)","Awakening (17)","Parlyz Heal (18)","Full Restore (19)","Max Potion (20)","Hyper Potion (21)","Super Potion (22)","Full Heal (23)","Revive (24)","Max Revive (25)","Fresh Water (26)","Soda Pop (27)","Lemonade (28)","Moomoo Milk (29)","Energypowder (30)","Energy Root (31)","Heal Powder (32)","Revival Herb (33)","Ether (34)","Max Ether (35)","Elixir (36)","Max Elixir (37)","Lava Cookie (38)","Blue Flute (39)","Yellow Flute (40)","Red Flute (41)","Black Flute (42)","White Flute (43)","Berry Juice (44)","Sacred Ash (45)","Shoal Salt (46)","Shoal Shell (47)","Red Shard (48)","Blue Shard (49)","Yellow Shard (50)","Green Shard (51)","???????? (52)","???????? (53)","???????? (54)","???????? (55)","???????? (56)","???????? (57)","???????? (58)","???????? (59)","???????? (60)","???????? (61)","???????? (62)","Hp Up (63)","Protein (64)","Iron (65)","Carbos (66)","Calcium (67)","Rare Candy (68)","Pp Up (69)","Zinc (70)","Pp Max (71)","???????? (72)","Guard Spec. (73)","Dire Hit (74)","X Attack (75)","X Defend (76)","X Speed (77)","X Accuracy (78)","X Special (79)","Poke Doll (80)","Fluffy Tail (81)","???????? (82)","Super Repel (83)","Max Repel (84)","Escape Rope (85)","Repel (86)","???????? (87)","???????? (88)","???????? (89)","???????? (90)","???????? (91)","???????? (92)","Sun Stone (93)","Moon Stone (94)","Fire Stone (95)","Thunderstone (96)","Water Stone (97)","Leaf Stone (98)","???????? (99)","???????? (100)","???????? (101)","???????? (102)","Tinymushroom (103)","Big Mushroom (104)","???????? (105)","Pearl (106)","Big Pearl (107)","Stardust (108)","Star Piece (109)","Nugget (110)","Heart Scale (111)","???????? (112)","???????? (113)","???????? (163)","???????? (115)","???????? (116)","???????? (117)","???????? (118)","???????? (119)","???????? (120)","Orange Mail (121)","Harbor Mail (122)","Glitter Mail (123)","Mech Mail (124)","Wood Mail (125)","Wave Mail (126)","Bead Mail (127)","Shadow Mail (128)","Tropic Mail (129)","Dream Mail (130)","Fab Mail (131)","Retro Mail (132)","Cheri Berry (133)","Chesto Berry (134)","Pecha Berry (135)","Rawst Berry (136)","Aspear Berry (137)","Leppa Berry (138)","Oran Berry (139)","Persim Berry (140)","Lum Berry (141)","Sitrus Berry (142)","Figy Berry (143)","Wiki Berry (144)","Mago Berry (145)","Aguav Berry (146)","Iapapa Berry (147)","Razz Berry (148)","Bluk Berry (149)","Nanab Berry (150)","Wepear Berry (151)","Pinap Berry (152)","Pomeg Berry (153)","Kelpsy Berry (154)","Qualot Berry (155)","Hondew Berry (156)","Grepa Berry (163)","Tamato Berry (158)","Cornn Berry (159)","Magost Berry (160)","Rabuta Berry (161)","Nomel Berry (162)","Spelon Berry (163)","Pamtre Berry (164)","Watmel Berry (165)","Durin Berry (166)","Belue Berry (167)","Liechi Berry (168)","Ganlon Berry (169)","Salac Berry (170)","Petaya Berry (171)","Apicot Berry (172)","Lansat Berry (173)","Starf Berry (174)","Enigma Berry (175)","???????? (176)","???????? (177)","???????? (178)","Brightpowder (179)","White Herb (180)","Macho Brace (181)","Exp. Share (182)","Quick Claw (183)","Soothe Bell (184)","Mental Herb (185)","Choice Band (186)","King's Rock (187)","Silverpowder (188)","Amulet Coin (189)","Cleanse Tag (190)","Soul Dew (191)","Deepseatooth (192)","Deepseascale (193)","Smoke Ball (194)","Everstone (195)","Focus Band (196)","Lucky Egg (197)","Scope Lens (198)","Metal Coat (199)","Leftovers (200)","Dragon Scale (201)","Light Ball (202)","Soft Sand (203)","Hard Stone (204)","Miracle Seed (205)","Blackglasses (206)","Black Belt (207)","Magnet (208)","Mystic Water (209)","Sharp Beak (210)","Poison Barb (211)","Nevermeltice (212)","Spell Tag (213)","Twistedspoon (214)","Charcoal (215)","Dragon Fang (216)","Silk Scarf (217)","Up-grade (218)","Shell Bell (219)","Sea Incense (220)","Lax Incense (221)","Lucky Punch (222)","Metal Powder (223)","Thick Club (224)","Stick (225)","???????? (226)","???????? (227)","???????? (228)","???????? (229)","???????? (230)","???????? (231)","???????? (232)","???????? (233)","???????? (234)","???????? (235)","???????? (236)","???????? (237)","???????? (238)","???????? (239)","???????? (240)","???????? (241)","???????? (242)","???????? (243)","???????? (244)","???????? (245)","???????? (246)","???????? (247)","???????? (248)","???????? (249)","???????? (250)","???????? (251)","???????? (252)","???????? (253)","Red Scarf (254)","Blue Scarf (255)","Pink Scarf (256)","Green Scarf (257)","Yellow Scarf (258)","Mach Bike (259)","Coin Case (260)","Itemfinder (261)","Old Rod (262)","Good Rod (263)","Super Rod (264)","S.s. Ticket (265)","Contest Pass (266)","???????? (267)","Wailmer Pail (268)","Devon Goods (269)","Soot Sack (270)","Basement Key (271)","Acro Bike (272)","Pokeblock Case (273)","Letter (274)","Eon Ticket (275)","Red Orb (276)","Blue Orb (277)","Scanner (278)","Go-goggles (279)","Meteorite (280)","Rm. 1 Key (281)","Rm. 2 Key (282)","Rm. 4 Key (283)","Rm. 6 Key (284)","Storage Key (285)","Root Fossil (286)","Claw Fossil (287)","Devon Scope (288)","TM01 (289)","TM02 (290)","TM03 (291)","TM04 (292)","TM05 (293)","TM06 (294)","TM07 (295)","TM08 (296)","TM09 (297)","TM10 (298)","TM11 (299)","TM12 (300)","TM13 (301)","TM14 (302)","TM15 (303)","TM16 (304)","TM17 (305)","TM18 (306)","TM19 (307)","TM20 (308)","TM21 (309)","TM22 (310)","TM23 (311)","TM24 (312)","TM25 (313)","TM26 (314)","TM27 (315)","TM28 (316)","TM29 (317)","TM30 (318)","TM31 (319)","TM32 (320)","TM33 (321)","TM34 (322)","TM35 (323)","TM36 (324)","TM37 (325)","TM38 (326)","TM39 (327)","TM40 (328)","TM41 (329)","TM42 (330)","TM43 (331)","TM44 (332)","TM45 (333)","TM46 (334)","TM47 (335)","TM48 (336)","TM49 (337)","TM50 (338)","HM01 (339)","HM02 (340)","HM03 (341)","HM04 (342)","HM05 (343)","HM06 (344)","HM07 (345)","HM08 (346)","???????? (347)","???????? (348)"]
-pokemon_rs = ["-- No Pokemon -- (0)", "Bulbasaur (1)", "Ivysaur (2)", "Venusaur (3)", "Charmander (4)", "Charmeleon (5)", "Charizard (6)", "Squirtle (7)", "Wartortle (8)", "Blastoise (9)", "Caterpie (10)", "Metapod (11)", "Butterfree (12)", "Weedle (13)", "Kakuna (14)", "Beedrill (15)", "Pidgey (16)", "Pidgeotto (17)", "Pidgeot (18)", "Rattata (19)", "Raticate (20)", "Spearow (21)", "Fearow (22)", "Ekans (23)", "Arbok (24)", "Pikachu (25)", "Raichu (26)", "Sandshrew (27)", "Sandslash (28)", "Nidoranf (29)", "Nidorina (30)", "Nidoqueen (31)", "Nidoranm (32)", "Nidorino (33)", "Nidoking (34)", "Clefairy (35)", "Clefable (36)", "Vulpix (37)", "Ninetales (38)", "Jigglypuff (39)", "Wigglytuff (40)", "Zubat (41)", "Golbat (42)", "Oddish (43)", "Gloom (44)", "Vileplume (45)", "Paras (46)", "Parasect (47)", "Venonat (48)", "Venomoth (49)", "Diglett (50)", "Dugtrio (51)", "Meowth (52)", "Persian (53)", "Psyduck (54)", "Golduck (55)", "Mankey (56)", "Primeape (57)", "Growlithe (58)", "Arcanine (59)", "Poliwag (60)", "Poliwhirl (61)", "Poliwrath (62)", "Abra (63)", "Kadabra (64)", "Alakazam (65)", "Machop (66)", "Machoke (67)", "Machamp (68)", "Bellsprout (69)", "Weepinbell (70)", "Victreebel (71)", "Tentacool (72)", "Tentacruel (73)", "Geodude (74)", "Graveler (75)", "Golem (76)", "Ponyta (77)", "Rapidash (78)", "Slowpoke (79)", "Slowbro (80)", "Magnemite (81)", "Magneton (82)", "Farfetch'd (83)", "Doduo (84)", "Dodrio (85)", "Seel (86)", "Dewgong (87)", "Grimer (88)", "Muk (89)", "Shellder (90)", "Cloyster (91)", "Gastly (92)", "Haunter (93)", "Gengar (94)", "Onix (95)", "Drowzee (96)", "Hypno (97)", "Krabby (98)", "Kingler (99)", "Voltorb (100)", "Electrode (101)", "Exeggcute (102)", "Exeggutor (103)", "Cubone (104)", "Marowak (105)", "Hitmonlee (106)", "Hitmonchan (107)", "Lickitung (108)", "Koffing (109)", "Weezing (110)", "Rhyhorn (111)", "Rhydon (112)", "Chansey (113)", "Tangela (163)", "Kangaskhan (115)", "Horsea (116)", "Seadra (117)", "Goldeen (118)", "Seaking (119)", "Staryu (120)", "Starmie (121)", "Mr. Mime (122)", "Scyther (123)", "Jynx (124)", "Electabuzz (125)", "Magmar (126)", "Pinsir (127)", "Tauros (128)", "Magikarp (129)", "Gyarados (130)", "Lapras (131)", "Ditto (132)", "Eevee (133)", "Vaporeon (134)", "Jolteon (135)", "Flareon (136)", "Porygon (137)", "Omanyte (138)", "Omastar (139)", "Kabuto (140)", "Kabutops (141)", "Aerodactyl (142)", "Snorlax (143)", "Articuno (144)", "Zapdos (145)", "Moltres (146)", "Dratini (147)", "Dragonair (148)", "Dragonite (149)", "Mewtwo (150)", "Mew (151)", "Chikorita (152)", "Bayleef (153)", "Meganium (154)", "Cyndaquil (155)", "Quilava (156)", "Typhlosion (163)", "Totodile (158)", "Croconaw (159)", "Feraligatr (160)", "Sentret (161)", "Furret (162)", "Hoothoot (163)", "Noctowl (164)", "Ledyba (165)", "Ledian (166)", "Spinarak (167)", "Ariados (168)", "Crobat (169)", "Chinchou (170)", "Lanturn (171)", "Pichu (172)", "Cleffa (173)", "Igglybuff (174)", "Togepi (175)", "Togetic (176)", "Natu (177)", "Xatu (178)", "Mareep (179)", "Flaaffy (180)", "Ampharos (181)", "Bellossom (182)", "Marill (183)", "Azumarill (184)", "Sudowoodo (185)", "Politoed (186)", "Hoppip (187)", "Skiploom (188)", "Jumpluff (189)", "Aipom (190)", "Sunkern (191)", "Sunflora (192)", "Yanma (193)", "Wooper (194)", "Quagsire (195)", "Espeon (196)", "Umbreon (197)", "Murkrow (198)", "Slowking (199)", "Misdreavus (200)", "Unown (201)", "Wobbuffet (202)", "Girafarig (203)", "Pineco (204)", "Forretress (205)", "Dunsparce (206)", "Gligar (207)", "Steelix (208)", "Snubbull (209)", "Granbull (210)", "Qwilfish (211)", "Scizor (212)", "Shuckle (213)", "Heracross (214)", "Sneasel (215)", "Teddiursa (216)", "Ursaring (217)", "Slugma (218)", "Magcargo (219)", "Swinub (220)", "Piloswine (221)", "Corsola (222)", "Remoraid (223)", "Octillery (224)", "Delibird (225)", "Mantine (226)", "Skarmory (227)", "Houndour (228)", "Houndoom (229)", "Kingdra (230)", "Phanpy (231)", "Donphan (232)", "Porygon2 (233)", "Stantler (234)", "Smeargle (235)", "Tyrogue (236)", "Hitmontop (237)", "Smoochum (238)", "Elekid (239)", "Magby (240)", "Miltank (241)", "Blissey (242)", "Raikou (243)", "Entei (244)", "Suicune (245)", "Larvitar (246)", "Pupitar (247)", "Tyranitar (248)", "Lugia (249)", "Ho-oh (250)", "Celebi (251)", "? (252)", "? (253)", "? (254)", "? (255)", "? (256)", "? (257)", "? (258)", "? (259)", "? (260)", "? (261)", "? (262)", "? (263)", "? (264)", "? (265)", "? (266)", "? (267)", "? (268)", "? (269)", "? (270)", "? (271)", "? (272)", "? (273)", "? (274)", "? (275)", "? (276)", "Treecko (277)", "Grovyle (278)", "Sceptile (279)", "Torchic (280)", "Combusken (281)", "Blaziken (282)", "Mudkip (283)", "Marshtomp (284)", "Swampert (285)", "Poochyena (286)", "Mightyena (287)", "Zigzagoon (288)", "Linoone (289)", "Wurmple (290)", "Silcoon (291)", "Beautifly (292)", "Cascoon (293)", "Dustox (294)", "Lotad (295)", "Lombre (296)", "Ludicolo (297)", "Seedot (298)", "Nuzleaf (299)", "Shiftry (300)", "Nincada (301)", "Ninjask (302)", "Shedinja (303)", "Taillow (304)", "Swellow (305)", "Shroomish (306)", "Breloom (307)", "Spinda (308)", "Wingull (309)", "Pelipper (310)", "Surskit (311)", "Masquerain (312)", "Wailmer (313)", "Wailord (314)", "Skitty (315)", "Delcatty (316)", "Kecleon (317)", "Baltoy (318)", "Claydol (319)", "Nosepass (320)", "Torkoal (321)", "Sableye (322)", "Barboach (323)", "Whiscash (324)", "Luvdisc (325)", "Corphish (326)", "Crawdaunt (327)", "Feebas (328)", "Milotic (329)", "Carvanha (330)", "Sharpedo (331)", "Trapinch (332)", "Vibrava (333)", "Flygon (334)", "Makuhita (335)", "Hariyama (336)", "Electrike (337)", "Manectric (338)", "Numel (339)", "Camerupt (340)", "Spheal (341)", "Sealeo (342)", "Walrein (343)", "Cacnea (344)", "Cacturne (345)", "Snorunt (346)", "Glalie (347)", "Lunatone (348)", "Solrock (349)", "Azurill (350)", "Spoink (351)", "Grumpig (352)", "Plusle (353)", "Minun (354)", "Mawile (355)", "Meditite (356)", "Medicham (357)", "Swablu (358)", "Altaria (359)", "Wynaut (360)", "Duskull (361)", "Dusclops (362)", "Roselia (363)", "Slakoth (364)", "Vigoroth (365)", "Slaking (366)", "Gulpin (367)", "Swalot (368)", "Tropius (369)", "Whismur (370)", "Loudred (371)", "Exploud (372)", "Clamperl (373)", "Huntail (374)", "Gorebyss (375)", "Absol (376)", "Shuppet (377)", "Banette (378)", "Seviper (379)", "Zangoose (380)", "Relicanth (381)", "Aron (382)", "Lairon (383)", "Aggron (384)", "Castform (385)", "Volbeat (386)", "Illumise (387)", "Lileep (388)", "Cradily (389)", "Anorith (390)", "Armaldo (391)", "Ralts (392)", "Kirlia (393)", "Gardevoir (394)", "Bagon (395)", "Shelgon (396)", "Salamence (397)", "Beldum (398)", "Metang (399)", "Metagross (400)", "Regirock (401)", "Regice (402)", "Registeel (403)", "Kyogre (404)", "Groudon (405)", "Rayquaza (406)", "Latias (407)", "Latios (408)", "Jirachi (409)", "Deoxys (410)", "Chimecho (411)", "- (412)" ]
-pokedex_rs = ["#000 ?????","#001 Bulbasaur","#002 Ivysaur","#003 Venusaur","#004 Charmander","#005 Charmeleon","#006 Charizard","#007 Squirtle","#008 Wartortle","#009 Blastoise","#010 Caterpie","#011 Metapod","#012 Butterfree","#013 Weedle","#014 Kakuna","#015 Beedrill","#016 Pidgey","#017 Pidgeotto","#018 Pidgeot","#019 Rattata","#020 Raticate","#021 Spearow","#022 Fearow","#023 Ekans","#024 Arbok","#025 Pikachu","#026 Raichu","#027 Sandshrew","#028 Sandslash","#029 Nidoran?","#030 Nidorina","#031 Nidoqueen","#032 Nidoran?","#033 Nidorino","#034 Nidoking","#035 Clefairy","#036 Clefable","#037 Vulpix","#038 Ninetales","#039 Jigglypuff","#040 Wigglytuff","#041 Zubat","#042 Golbat","#043 Oddish","#044 Gloom","#045 Vileplume","#046 Paras","#047 Parasect","#048 Venonat","#049 Venomoth","#050 Diglett","#051 Dugtrio","#052 Meowth","#053 Persian","#054 Psyduck","#055 Golduck","#056 Mankey","#057 Primeape","#058 Growlithe","#059 Arcanine","#060 Poliwag","#061 Poliwhirl","#062 Poliwrath","#063 Abra","#064 Kadabra","#065 Alakazam","#066 Machop","#067 Machoke","#068 Machamp","#069 Bellsprout","#070 Weepinbell","#071 Victreebel","#072 Tentacool","#073 Tentacruel","#074 Geodude","#075 Graveler","#076 Golem","#077 Ponyta","#078 Rapidash","#079 Slowpoke","#080 Slowbro","#081 Magnemite","#082 Magneton","#083 Farfetch'd","#084 Doduo","#085 Dodrio","#086 Seel","#087 Dewgong","#088 Grimer","#089 Muk","#090 Shellder","#091 Cloyster","#092 Gastly","#093 Haunter","#094 Gengar","#095 Onix","#096 Drowzee","#097 Hypno","#098 Krabby","#099 Kingler","#100 Voltorb","#101 Electrode","#102 Exeggcute","#103 Exeggutor","#104 Cubone","#105 Marowak","#106 Hitmonlee","#107 Hitmonchan","#108 Lickitung","#109 Koffing","#110 Weezing","#111 Rhyhorn","#112 Rhydon","#113 Chansey","#163 Tangela","#115 Kangaskhan","#116 Horsea","#117 Seadra","#118 Goldeen","#119 Seaking","#120 Staryu","#121 Starmie","#122 Mr. Mime","#123 Scyther","#124 Jynx","#125 Electabuzz","#126 Magmar","#127 Pinsir","#128 Tauros","#129 Magikarp","#130 Gyarados","#131 Lapras","#132 Ditto","#133 Eevee","#134 Vaporeon","#135 Jolteon","#136 Flareon","#137 Porygon","#138 Omanyte","#139 Omastar","#140 Kabuto","#141 Kabutops","#142 Aerodactyl","#143 Snorlax","#144 Articuno","#145 Zapdos","#146 Moltres","#147 Dratini","#148 Dragonair","#149 Dragonite","#150 Mewtwo","#151 Mew","#152 Chikorita","#153 Bayleef","#154 Meganium","#155 Cyndaquil","#156 Quilava","#163 Typhlosion","#158 Totodile","#159 Croconaw","#160 Feraligatr","#161 Sentret","#162 Furret","#163 Hoothoot","#164 Noctowl","#165 Ledyba","#166 Ledian","#167 Spinarak","#168 Ariados","#169 Crobat","#170 Chinchou","#171 Lanturn","#172 Pichu","#173 Cleffa","#174 Igglybuff","#175 Togepi","#176 Togetic","#177 Natu","#178 Xatu","#179 Mareep","#180 Flaaffy","#181 Ampharos","#182 Bellossom","#183 Marill","#184 Azumarill","#185 Sudowoodo","#186 Politoed","#187 Hoppip","#188 Skiploom","#189 Jumpluff","#190 Aipom","#191 Sunkern","#192 Sunflora","#193 Yanma","#194 Wooper","#195 Quagsire","#196 Espeon","#197 Umbreon","#198 Murkrow","#199 Slowking","#200 Misdreavus","#201 Unown","#202 Wobbuffet","#203 Girafarig","#204 Pineco","#205 Forretress","#206 Dunsparce","#207 Gligar","#208 Steelix","#209 Snubbull","#210 Granbull","#211 Qwilfish","#212 Scizor","#213 Shuckle","#214 Heracross","#215 Sneasel","#216 Teddiursa","#217 Ursaring","#218 Slugma","#219 Magcargo","#220 Swinub","#221 Piloswine","#222 Corsola","#223 Remoraid","#224 Octillery","#225 Delibird","#226 Mantine","#227 Skarmory","#228 Houndour","#229 Houndoom","#230 Kingdra","#231 Phanpy","#232 Donphan","#233 Porygon2","#234 Stantler","#235 Smeargle","#236 Tyrogue","#237 Hitmontop","#238 Smoochum","#239 Elekid","#240 Magby","#241 Miltank","#242 Blissey","#243 Raikou","#244 Entei","#245 Suicune","#246 Larvitar","#247 Pupitar","#248 Tyranitar","#249 Lugia","#250 Ho-oh","#251 Celebi","#252 Treecko","#253 Grovyle","#254 Sceptile","#255 Torchic","#256 Combusken","#257 Blaziken","#258 Mudkip","#259 Marshtomp","#260 Swampert","#261 Poochyena","#262 Mightyena","#263 Zigzagoon","#264 Linoone","#265 Wurmple","#266 Silcoon","#267 Beautifly","#268 Cascoon","#269 Dustox","#270 Lotad","#271 Lombre","#272 Ludicolo","#273 Seedot","#274 Nuzleaf","#275 Shiftry","#276 Taillow","#277 Swellow","#278 Wingull","#279 Pelipper","#280 Ralts","#281 Kirlia","#282 Gardevoir","#283 Surskit","#284 Masquerain","#285 Shroomish","#286 Breloom","#287 Slakoth","#288 Vigoroth","#289 Slaking","#290 Nincada","#291 Ninjask","#292 Shedinja","#293 Whismur","#294 Loudred","#295 Exploud","#296 Makuhita","#297 Hariyama","#298 Azurill","#299 Nosepass","#300 Skitty","#301 Delcatty","#302 Sableye","#303 Mawile","#304 Aron","#305 Lairon","#306 Aggron","#307 Meditite","#308 Medicham","#309 Electrike","#310 Manectric","#311 Plusle","#312 Minun","#313 Volbeat","#314 Illumise","#315 Roselia","#316 Gulpin","#317 Swalot","#318 Carvanha","#319 Sharpedo","#320 Wailmer","#321 Wailord","#322 Numel","#323 Camerupt","#324 Torkoal","#325 Spoink","#326 Grumpig","#327 Spinda","#328 Trapinch","#329 Vibrava","#330 Flygon","#331 Cacnea","#332 Cacturne","#333 Swablu","#334 Altaria","#335 Zangoose","#336 Seviper","#337 Lunatone","#338 Solrock","#339 Barboach","#340 Whiscash","#341 Corphish","#342 Crawdaunt","#343 Baltoy","#344 Claydol","#345 Lileep","#346 Cradily","#347 Anorith","#348 Armaldo","#349 Feebas","#350 Milotic","#351 Castform","#352 Kecleon","#353 Shuppet","#354 Banette","#355 Duskull","#356 Dusclops","#357 Tropius","#358 Chimecho","#359 Absol","#360 Wynaut","#361 Snorunt","#362 Glalie","#363 Spheal","#364 Sealeo","#365 Walrein","#366 Clamperl","#367 Huntail","#368 Gorebyss","#369 Relicanth","#370 Luvdisc","#371 Bagon","#372 Shelgon","#373 Salamence","#374 Beldum","#375 Metang","#376 Metagross","#377 Regirock","#378 Regice","#379 Registeel","#380 Latias","#381 Latios","#382 Kyogre","#383 Groudon","#384 Rayquaza","#385 Jirachi","#386 Deoxys"]
-moves_rs = ["-- No Move -- (0)", "Pound (1)", "Karate Chop (2)", "Doubleslap (3)", "Comet Punch (4)", "Mega Punch (5)", "Pay Day (6)", "Fire Punch (7)", "Ice Punch (8)", "Thunderpunch (9)", "Scratch (10)", "Vicegrip (11)", "Guillotine (12)", "Razor Wind (13)", "Swords Dance (14)", "Cut (15)", "Gust (16)", "Wing Attack (17)", "Whirlwind (18)", "Fly (19)", "Bind (20)", "Slam (21)", "Vine Whip (22)", "Stomp (23)", "Double Kick (24)", "Mega Kick (25)", "Jump Kick (26)", "Rolling Kick (27)", "Sand-attack (28)", "Headbutt (29)", "Horn Attack (30)", "Fury Attack (31)", "Horn Drill (32)", "Tackle (33)", "Body Slam (34)", "Wrap (35)", "Take Down (36)", "Thrash (37)", "Double-edge (38)", "Tail Whip (39)", "Poison Sting (40)", "Twineedle (41)", "Pin Missile (42)", "Leer (43)", "Bite (44)", "Growl (45)", "Roar (46)", "Sing (47)", "Supersonic (48)", "Sonicboom (49)", "Disable (50)", "Acid (51)", "Ember (52)", "Flamethrower (53)", "Mist (54)", "Water Gun (55)", "Hydro Pump (56)", "Surf (57)", "Ice Beam (58)", "Blizzard (59)", "Psybeam (60)", "Bubblebeam (61)", "Aurora Beam (62)", "Hyper Beam (63)", "Peck (64)", "Drill Peck (65)", "Submission (66)", "Low Kick (67)", "Counter (68)", "Seismic Toss (69)", "Strength (70)", "Absorb (71)", "Mega Drain (72)", "Leech Seed (73)", "Growth (74)", "Razor Leaf (75)", "Solarbeam (76)", "Poisonpowder (77)", "Stun Spore (78)", "Sleep Powder (79)", "Petal Dance (80)", "String Shot (81)", "Dragon Rage (82)", "Fire Spin (83)", "Thundershock (84)", "Thunderbolt (85)", "Thunder Wave (86)", "Thunder (87)", "Rock Throw (88)", "Earthquake (89)", "Fissure (90)", "Dig (91)", "Toxic (92)", "Confusion (93)", "Psychic (94)", "Hypnosis (95)", "Meditate (96)", "Agility (97)", "Quick Attack (98)", "Rage (99)", "Teleport (100)", "Night Shade (101)", "Mimic (102)", "Screech (103)", "Double Team (104)", "Recover (105)", "Harden (106)", "Minimize (107)", "Smokescreen (108)", "Confuse Ray (109)", "Withdraw (110)", "Defense Curl (111)", "Barrier (112)", "Light Screen (113)", "Haze (163)", "Reflect (115)", "Focus Energy (116)", "Bide (117)", "Metronome (118)", "Mirror Move (119)", "Selfdestruct (120)", "Egg Bomb (121)", "Lick (122)", "Smog (123)", "Sludge (124)", "Bone Club (125)", "Fire Blast (126)", "Waterfall (127)", "Clamp (128)", "Swift (129)", "Skull Bash (130)", "Spike Cannon (131)", "Constrict (132)", "Amnesia (133)", "Kinesis (134)", "Softboiled (135)", "Hi Jump Kick (136)", "Glare (137)", "Dream Eater (138)", "Poison Gas (139)", "Barrage (140)", "Leech Life (141)", "Lovely Kiss (142)", "Sky Attack (143)", "Transform (144)", "Bubble (145)", "Dizzy Punch (146)", "Spore (147)", "Flash (148)", "Psywave (149)", "Splash (150)", "Acid Armor (151)", "Crabhammer (152)", "Explosion (153)", "Fury Swipes (154)", "Bonemerang (155)", "Rest (156)", "Rock Slide (163)", "Hyper Fang (158)", "Sharpen (159)", "Conversion (160)", "Tri Attack (161)", "Super Fang (162)", "Slash (163)", "Substitute (164)", "Struggle (165)", "Sketch (166)", "Triple Kick (167)", "Thief (168)", "Spider Web (169)", "Mind Reader (170)", "Nightmare (171)", "Flame Wheel (172)", "Snore (173)", "Curse (174)", "Flail (175)", "Conversion 2 (176)", "Aeroblast (177)", "Cotton Spore (178)", "Reversal (179)", "Spite (180)", "Powder Snow (181)", "Protect (182)", "Mach Punch (183)", "Scary Face (184)", "Faint Attack (185)", "Sweet Kiss (186)", "Belly Drum (187)", "Sludge Bomb (188)", "Mud-slap (189)", "Octazooka (190)", "Spikes (191)", "Zap Cannon (192)", "Foresight (193)", "Destiny Bond (194)", "Perish Song (195)", "Icy Wind (196)", "Detect (197)", "Bone Rush (198)", "Lock-on (199)", "Outrage (200)", "Sandstorm (201)", "Giga Drain (202)", "Endure (203)", "Charm (204)", "Rollout (205)", "False Swipe (206)", "Swagger (207)", "Milk Drink (208)", "Spark (209)", "Fury Cutter (210)", "Steel Wing (211)", "Mean Look (212)", "Attract (213)", "Sleep Talk (214)", "Heal Bell (215)", "Return (216)", "Present (217)", "Frustration (218)", "Safeguard (219)", "Pain Split (220)", "Sacred Fire (221)", "Magnitude (222)", "Dynamicpunch (223)", "Megahorn (224)", "Dragonbreath (225)", "Baton Pass (226)", "Encore (227)", "Pursuit (228)", "Rapid Spin (229)", "Sweet Scent (230)", "Iron Tail (231)", "Metal Claw (232)", "Vital Throw (233)", "Morning Sun (234)", "Synthesis (235)", "Moonlight (236)", "Hidden Power (237)", "Cross Chop (238)", "Twister (239)", "Rain Dance (240)", "Sunny Day (241)", "Crunch (242)", "Mirror Coat (243)", "Psych Up (244)", "Extremespeed (245)", "Ancientpower (246)", "Shadow Ball (247)", "Future Sight (248)", "Rock Smash (249)", "Whirlpool (250)", "Beat Up (251)", "Fake Out (252)", "Uproar (253)", "Stockpile (254)", "Spit Up (255)", "Swallow (256)", "Heat Wave (257)", "Hail (258)", "Torment (259)", "Flatter (260)", "Will-o-wisp (261)", "Memento (262)", "Facade (263)", "Focus Punch (264)", "Smellingsalt (265)", "Follow Me (266)", "Nature Power (267)", "Charge (268)", "Taunt (269)", "Helping Hand (270)", "Trick (271)", "Role Play (272)", "Wish (273)", "Assist (274)", "Ingrain (275)", "Superpower (276)", "Magic Coat (277)", "Recycle (278)", "Revenge (279)", "Brick Break (280)", "Yawn (281)", "Knock Off (282)", "Endeavor (283)", "Eruption (284)", "Skill Swap (285)", "Imprison (286)", "Refresh (287)", "Grudge (288)", "Snatch (289)", "Secret Power (290)", "Dive (291)", "Arm Thrust (292)", "Camouflage (293)", "Tail Glow (294)", "Luster Purge (295)", "Mist Ball (296)", "Featherdance (297)", "Teeter Dance (298)", "Blaze Kick (299)", "Mud Sport (300)", "Ice Ball (301)", "Needle Arm (302)", "Slack Off (303)", "Hyper Voice (304)", "Poison Fang (305)", "Crush Claw (306)", "Blast Burn (307)", "Hydro Cannon (308)", "Meteor Mash (309)", "Astonish (310)", "Weather Ball (311)", "Aromatherapy (312)", "Fake Tears (313)", "Air Cutter (314)", "Overheat (315)", "Odor Sleuth (316)", "Rock Tomb (317)", "Silver Wind (318)", "Metal Sound (319)", "Grasswhistle (320)", "Tickle (321)", "Cosmic Power (322)", "Water Spout (323)", "Signal Beam (324)", "Shadow Punch (325)", "Extrasensory (326)", "Sky Uppercut (327)", "Sand Tomb (328)", "Sheer Cold (329)", "Muddy Water (330)", "Bullet Seed (331)", "Aerial Ace (332)", "Icicle Spear (333)", "Iron Defense (334)", "Block (335)", "Howl (336)", "Dragon Claw (337)", "Frenzy Plant (338)", "Bulk Up (339)", "Bounce (340)", "Mud Shot (341)", "Poison Tail (342)", "Covet (343)", "Volt Tackle (344)", "Magical Leaf (345)", "Water Sport (346)", "Calm Mind (347)", "Leaf Blade (348)", "Dragon Dance (349)", "Rock Blast (350)", "Shock Wave (351)", "Water Pulse (352)", "Doom Desire (353)", "Psycho Boost (354)"]
-types_rs = ["Normal (0)", "Fighting (1)", "Flying (2)", "Poison (3)", "Ground (4)", "Rock (5)", "Bird (6)", "Bug (7)", "Ghost (8)", "Steel (9)", "~10", "~11", "~12", "~13", "~14", "~15", "~16", "~17", "~18", "~19", "Fire (20)", "Water (21)", "Grass (22)", "Electric (23)", "Psychic (24)", "Ice (25)", "Dragon (26)", "Dark (27)", "~28", "~29", "~30", "~31", "~32", "~33", "~34", "~35", "~36", "~37", "~38", "~39", "~40", "~41", "~42", "~43", "~44", "~45", "~46", "~47", "~48", "~49", "~50", "~51", "~52", "~53", "~54", "~55", "~56", "~57", "~58", "~59", "~60", "~61", "~62", "~63", "~64", "~65", "~66", "~67", "~68", "~69", "~70", "~71", "~72", "~73", "~74", "~75", "~76", "~77", "~78", "~79", "~80", "~81", "~82", "~83", "~84", "~85", "~86", "~87", "~88", "~89", "~90", "~91", "~92", "~93", "~94", "~95", "~96", "~97", "~98", "~99", "~100", "~101", "~102", "~103", "~104", "~105", "~106", "~107", "~108", "~109", "~110", "~111", "~112", "~113", "~163", "~115", "~116", "~117", "~118", "~119", "~120", "~121", "~122", "~123", "~124", "~125", "~126", "~127", "~128", "~129", "~130", "~131", "~132", "~133", "~134", "~135", "~136", "~137", "~138", "~139", "~140", "~141", "~142", "~143", "~144", "~145", "~146", "~147", "~148", "~149", "~150", "~151", "~152", "~153", "~154", "~155", "~156", "~163", "~158", "~159", "~160", "~161", "~162", "~163", "~164", "~165", "~166", "~167", "~168", "~169", "~170", "~171", "~172", "~173", "~174", "~175", "~176", "~177", "~178", "~179", "~180", "~181", "~182", "~183", "~184", "~185", "~186", "~187", "~188", "~189", "~190", "~191", "~192", "~193", "~194", "~195", "~196", "~197", "~198", "~199", "~200", "~201", "~202", "~203", "~204", "~205", "~206", "~207", "~208", "~209", "~210", "~211", "~212", "~213", "~214", "~215", "~216", "~217", "~218", "~219", "~220", "~221", "~222", "~223", "~224", "~225", "~226", "~227", "~228", "~229", "~230", "~231", "~232", "~233", "~234", "~235", "~236", "~237", "~238", "~239", "~240", "~241", "~242", "~243", "~244", "~245", "~246", "~247", "~248", "~249", "~250", "~251", "~252", "~253", "~254", "~255"]
-
-
-
+items_rb = ['~0',
+ 'Master Ball (1)',
+ 'Ultra Ball (2)',
+ 'Great Ball (3)',
+ 'Poke Ball (4)',
+ 'Town Map (5)',
+ 'Bicycle (6)',
+ '????? (7)',
+ 'Safari Ball (8)',
+ 'Pokedex (9)',
+ 'Moon Stone (10)',
+ 'Antidote (11)',
+ 'Burn Heal (12)',
+ 'Ice Heal (13)',
+ 'Awakening (14)',
+ 'Parlyz Heal (15)',
+ 'Full Restore (16)',
+ 'Max Potion (17)',
+ 'Hyper Potion (18)',
+ 'Super Potion (19)',
+ 'Potion (20)',
+ 'Boulderbadge (21)',
+ 'Cascadebadge (22)',
+ 'Thunderbadge (23)',
+ 'Rainbowbadge (24)',
+ 'Soulbadge (25)',
+ 'Marshbadge (26)',
+ 'Volcanobadge (27)',
+ 'Earthbadge (28)',
+ 'Escape Rope (29)',
+ 'Repel (30)',
+ 'Old Amber (31)',
+ 'Fire Stone (32)',
+ 'Thunderstone (33)',
+ 'Water Stone (34)',
+ 'HP Up (35)',
+ 'Protein (36)',
+ 'Iron (37)',
+ 'Carbos (38)',
+ 'Calcium (39)',
+ 'Rare Candy (40)',
+ 'Dome Fossil (41)',
+ 'Helix Fossil (42)',
+ 'Secret Key (43)',
+ '????? (44)',
+ 'Bike Voucher (45)',
+ 'X Accuracy (46)',
+ 'Leaf Stone (47)',
+ 'Card Key (48)',
+ 'Nugget (49)',
+ 'PP Up (50)',
+ 'Poke Doll (51)',
+ 'Full Heal (52)',
+ 'Revive (53)',
+ 'Max Revive (54)',
+ 'Guard Spec (55)',
+ 'Super Repel (56)',
+ 'Max Repel (57)',
+ 'Dire Hit (58)',
+ 'Coin (59)',
+ 'Fresh Water (60)',
+ 'Soda Pop (61)',
+ 'Lemonade (62)',
+ 'S.S.Ticket (63)',
+ 'Gold Teeth (64)',
+ 'X Attack (65)',
+ 'X Defend (66)',
+ 'X Speed (67)',
+ 'X Special (68)',
+ 'Coin Case (69)',
+ 'Oak Parcel (70)',
+ 'Itemfinder (71)',
+ 'Silph Scope (72)',
+ 'Poke Flute (73)',
+ 'Lift Key (74)',
+ 'Exp.All (75)',
+ 'Old Rod (76)',
+ 'Good Rod (77)',
+ 'Super Rod (78)',
+ 'Pp Up (79)',
+ 'Ether (80)',
+ 'Max Ether (81)',
+ 'Elixer (82)',
+ 'Max Elixer (83)',
+ '~84',
+ '~85',
+ '~86',
+ '~87',
+ '~88',
+ '~89',
+ '~90',
+ '~91',
+ '~92',
+ '~93',
+ '~94',
+ '~95',
+ '~96',
+ '~97',
+ '~98',
+ '~99',
+ '~100',
+ '~101',
+ '~102',
+ '~103',
+ '~104',
+ '~105',
+ '~106',
+ '~107',
+ '~108',
+ '~109',
+ '~110',
+ '~111',
+ '~112',
+ '~113',
+ '~163',
+ '~115',
+ '~116',
+ '~117',
+ '~118',
+ '~119',
+ '~120',
+ '~121',
+ '~122',
+ '~123',
+ '~124',
+ '~125',
+ '~126',
+ '~127',
+ '~128',
+ '~129',
+ '~130',
+ '~131',
+ '~132',
+ '~133',
+ '~134',
+ '~135',
+ '~136',
+ '~137',
+ '~138',
+ '~139',
+ '~140',
+ '~141',
+ '~142',
+ '~143',
+ '~144',
+ '~145',
+ '~146',
+ '~147',
+ '~148',
+ '~149',
+ '~150',
+ '~151',
+ '~152',
+ '~153',
+ '~154',
+ '~155',
+ '~156',
+ '~163',
+ '~158',
+ '~159',
+ '~160',
+ '~161',
+ '~162',
+ '~163',
+ '~164',
+ '~165',
+ '~166',
+ '~167',
+ '~168',
+ '~169',
+ '~170',
+ '~171',
+ '~172',
+ '~173',
+ '~174',
+ '~175',
+ '~176',
+ '~177',
+ '~178',
+ '~179',
+ '~180',
+ '~181',
+ '~182',
+ '~183',
+ '~184',
+ '~185',
+ '~186',
+ '~187',
+ '~188',
+ '~189',
+ '~190',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ 'HM01 (196)',
+ 'HM02 (197)',
+ 'HM03 (198)',
+ 'HM04 (199)',
+ 'HM05 (200)',
+ 'TM01 (201)',
+ 'TM02 (202)',
+ 'TM03 (203)',
+ 'TM04 (204)',
+ 'TM05 (205)',
+ 'TM06 (206)',
+ 'TM07 (207)',
+ 'TM08 (208)',
+ 'TM09 (209)',
+ 'TM10 (210)',
+ 'TM11 (211)',
+ 'TM12 (212)',
+ 'TM13 (213)',
+ 'TM14 (214)',
+ 'TM15 (215)',
+ 'TM16 (216)',
+ 'TM17 (217)',
+ 'TM18 (218)',
+ 'TM19 (219)',
+ 'TM20 (220)',
+ 'TM21 (221)',
+ 'TM22 (222)',
+ 'TM23 (223)',
+ 'TM24 (224)',
+ 'TM25 (225)',
+ 'TM26 (226)',
+ 'TM27 (227)',
+ 'TM28 (228)',
+ 'TM29 (229)',
+ 'TM30 (230)',
+ 'TM31 (231)',
+ 'TM32 (232)',
+ 'TM33 (233)',
+ 'TM34 (234)',
+ 'TM35 (235)',
+ 'TM36 (236)',
+ 'TM37 (237)',
+ 'TM38 (238)',
+ 'TM39 (239)',
+ 'TM40 (240)',
+ 'TM41 (241)',
+ 'TM42 (242)',
+ 'TM43 (243)',
+ 'TM44 (244)',
+ 'TM45 (245)',
+ 'TM46 (246)',
+ 'TM47 (247)',
+ 'TM48 (248)',
+ 'TM49 (249)',
+ 'TM50 (250)',
+ 'TM51 (251)',
+ 'TM52 (252)',
+ 'TM53 (253)',
+ 'TM54 (254)',
+ '-- Cancel -- (255)']
+pokemon_rb = [' (0)',
+ 'Rhydon (1)',
+ 'Kangaskhan (2)',
+ 'Nidoranm (3)',
+ 'Clefairy (4)',
+ 'Spearow (5)',
+ 'Voltorb (6)',
+ 'Nidoking (7)',
+ 'Slowbro (8)',
+ 'Ivysaur (9)',
+ 'Exeggutor (10)',
+ 'Lickitung (11)',
+ 'Exeggcute (12)',
+ 'Grimer (13)',
+ 'Gengar (14)',
+ 'Nidoranh (15)',
+ 'Nidoqueen (16)',
+ 'Cubone (17)',
+ 'Rhyhorn (18)',
+ 'Lapras (19)',
+ 'Arcanine (20)',
+ 'Mew (21)',
+ 'Gyarados (22)',
+ 'Shellder (23)',
+ 'Tentacool (24)',
+ 'Gastly (25)',
+ 'Scyther (26)',
+ 'Staryu (27)',
+ 'Blastoise (28)',
+ 'Pinsir (29)',
+ 'Tangela (30)',
+ 'Missingno (31)',
+ 'Missingno (32)',
+ 'Growlithe (33)',
+ 'Onix (34)',
+ 'Fearow (35)',
+ 'Pidgey (36)',
+ 'Slowpoke (37)',
+ 'Kadabra (38)',
+ 'Graveler (39)',
+ 'Chansey (40)',
+ 'Machoke (41)',
+ 'Mr.Mime (42)',
+ 'Hitmonlee (43)',
+ 'Hitmonchan (44)',
+ 'Arbok (45)',
+ 'Parasect (46)',
+ 'Psyduck (47)',
+ 'Drowzee (48)',
+ 'Golem (49)',
+ 'Missingno (50)',
+ 'Magmar (51)',
+ 'Missingno (52)',
+ 'Electabuzz (53)',
+ 'Magneton (54)',
+ 'Koffing (55)',
+ 'Missingno (56)',
+ 'Mankey (57)',
+ 'Seel (58)',
+ 'Diglett (59)',
+ 'Tauros (60)',
+ 'Missingno (61)',
+ 'Missingno (62)',
+ 'Missingno (63)',
+ "Farfetch'd (64)",
+ 'Venonat (65)',
+ 'Dragonite (66)',
+ 'Missingno (67)',
+ 'Missingno (68)',
+ 'Missingno (69)',
+ 'Doduo (70)',
+ 'Poliwag (71)',
+ 'Jynx (72)',
+ 'Moltres (73)',
+ 'Articuno (74)',
+ 'Zapdos (75)',
+ 'Ditto (76)',
+ 'Meowth (77)',
+ 'Krabby (78)',
+ 'Missingno (79)',
+ 'Missingno (80)',
+ 'Missingno (81)',
+ 'Vulpix (82)',
+ 'Ninetales (83)',
+ 'Pikachu (84)',
+ 'Raichu (85)',
+ 'Missingno (86)',
+ 'Missingno (87)',
+ 'Dratini (88)',
+ 'Dragonair (89)',
+ 'Kabuto (90)',
+ 'Kabutops (91)',
+ 'Horsea (92)',
+ 'Seadra (93)',
+ 'Missingno (94)',
+ 'Missingno (95)',
+ 'Sandshrew (96)',
+ 'Sandslash (97)',
+ 'Omanyte (98)',
+ 'Omastar (99)',
+ 'Jigglypuff (100)',
+ 'Wigglytuff (101)',
+ 'Eevee (102)',
+ 'Flareon (103)',
+ 'Jolteon (104)',
+ 'Vaporeon (105)',
+ 'Machop (106)',
+ 'Zubat (107)',
+ 'Ekans (108)',
+ 'Paras (109)',
+ 'Poliwhirl (110)',
+ 'Poliwrath (111)',
+ 'Weedle (112)',
+ 'Kakuna (113)',
+ 'Beedrill (163)',
+ 'Missingno (115)',
+ 'Dodrio (116)',
+ 'Primeape (117)',
+ 'Dugtrio (118)',
+ 'Venomoth (119)',
+ 'Dewgong (120)',
+ 'Missingno (121)',
+ 'Missingno (122)',
+ 'Caterpie (123)',
+ 'Metapod (124)',
+ 'Butterfree (125)',
+ 'Machamp (126)',
+ 'Missingno (127)',
+ 'Golduck (128)',
+ 'Hypno (129)',
+ 'Golbat (130)',
+ 'Mewtwo (131)',
+ 'Snorlax (132)',
+ 'Magikarp (133)',
+ 'Missingno (134)',
+ 'Missingno (135)',
+ 'Muk (136)',
+ 'Missingno (137)',
+ 'Kingler (138)',
+ 'Cloyster (139)',
+ 'Missingno (140)',
+ 'Electrode (141)',
+ 'Clefable (142)',
+ 'Weezing (143)',
+ 'Persian (144)',
+ 'Marowak (145)',
+ 'Missingno (146)',
+ 'Haunter (147)',
+ 'Abra (148)',
+ 'Alakazam (149)',
+ 'Pidgeotto (150)',
+ 'Pidgeot (151)',
+ 'Starmie (152)',
+ 'Bulbasaur (153)',
+ 'Venusaur (154)',
+ 'Tentacruel (155)',
+ 'Missingno (156)',
+ 'Goldeen (163)',
+ 'Seaking (158)',
+ 'Missingno (159)',
+ 'Missingno (160)',
+ 'Missingno (161)',
+ 'Missingno (162)',
+ 'Ponyta (163)',
+ 'Rapidash (164)',
+ 'Rattata (165)',
+ 'Raticate (166)',
+ 'Nidorino (167)',
+ 'Nidorina (168)',
+ 'Geodude (169)',
+ 'Porygon (170)',
+ 'Aerodactyl (171)',
+ 'Missingno (172)',
+ 'Magnemite (173)',
+ 'Missingno (174)',
+ 'Missingno (175)',
+ 'Charmander (176)',
+ 'Squirtle (177)',
+ 'Charmeleon (178)',
+ 'Wartortle (179)',
+ 'Charizard (180)',
+ 'Missingno (181)',
+ 'Missingno (182)',
+ 'Missingno (183)',
+ 'Missingno (184)',
+ 'Oddish (185)',
+ 'Gloom (186)',
+ 'Vileplume (187)',
+ 'Bellsprout (188)',
+ 'Weepinbell (189)',
+ 'Victreebel (190)',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ '~196',
+ '~197',
+ '~198',
+ '~199',
+ '~200',
+ '~201',
+ '~202',
+ '~203',
+ '~204',
+ '~205',
+ '~206',
+ '~207',
+ '~208',
+ '~209',
+ '~210',
+ '~211',
+ '~212',
+ '~213',
+ '~214',
+ '~215',
+ '~216',
+ '~217',
+ '~218',
+ '~219',
+ '~220',
+ '~221',
+ '~222',
+ '~223',
+ '~224',
+ '~225',
+ '~226',
+ '~227',
+ '~228',
+ '~229',
+ '~230',
+ '~231',
+ '~232',
+ '~233',
+ '~234',
+ '~235',
+ '~236',
+ '~237',
+ '~238',
+ '~239',
+ '~240',
+ '~241',
+ '~242',
+ '~243',
+ '~244',
+ '~245',
+ '~246',
+ '~247',
+ '~248',
+ '~249',
+ '~250',
+ '~251',
+ '~252',
+ '~253',
+ '~254',
+ '-- No Pokemon -- (255)']
+pokemon_lower_rb = ['',
+ 'rhydon',
+ 'kangaskhan',
+ 'nidoranm',
+ 'clefairy',
+ 'spearow',
+ 'voltorb',
+ 'nidoking',
+ 'slowbro',
+ 'ivysaur',
+ 'exeggutor',
+ 'lickitung',
+ 'exeggcute',
+ 'grimer',
+ 'gengar',
+ 'nidoranh',
+ 'nidoqueen',
+ 'cubone',
+ 'rhyhorn',
+ 'lapras',
+ 'arcanine',
+ 'mew',
+ 'gyarados',
+ 'shellder',
+ 'tentacool',
+ 'gastly',
+ 'scyther',
+ 'staryu',
+ 'blastoise',
+ 'pinsir',
+ 'tangela',
+ 'missingno.',
+ 'missingno.',
+ 'growlithe',
+ 'onix',
+ 'fearow',
+ 'pidgey',
+ 'slowpoke',
+ 'kadabra',
+ 'graveler',
+ 'chansey',
+ 'machoke',
+ 'mr.mime',
+ 'hitmonlee',
+ 'hitmonchan',
+ 'arbok',
+ 'parasect',
+ 'psyduck',
+ 'drowzee',
+ 'golem',
+ 'missingno.',
+ 'magmar',
+ 'missingno.',
+ 'electabuzz',
+ 'magneton',
+ 'koffing',
+ 'missingno.',
+ 'mankey',
+ 'seel',
+ 'diglett',
+ 'tauros',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ "farfetch'd",
+ 'venonat',
+ 'dragonite',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'doduo',
+ 'poliwag',
+ 'jynx',
+ 'moltres',
+ 'articuno',
+ 'zapdos',
+ 'ditto',
+ 'meowth',
+ 'krabby',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'vulpix',
+ 'ninetales',
+ 'pikachu',
+ 'raichu',
+ 'missingno.',
+ 'missingno.',
+ 'dratini',
+ 'dragonair',
+ 'kabuto',
+ 'kabutops',
+ 'horsea',
+ 'seadra',
+ 'missingno.',
+ 'missingno.',
+ 'sandshrew',
+ 'sandslash',
+ 'omanyte',
+ 'omastar',
+ 'jigglypuff',
+ 'wigglytuff',
+ 'eevee',
+ 'flareon',
+ 'jolteon',
+ 'vaporeon',
+ 'machop',
+ 'zubat',
+ 'ekans',
+ 'paras',
+ 'poliwhirl',
+ 'poliwrath',
+ 'weedle',
+ 'kakuna',
+ 'beedrill',
+ 'missingno.',
+ 'dodrio',
+ 'primeape',
+ 'dugtrio',
+ 'venomoth',
+ 'dewgong',
+ 'missingno.',
+ 'missingno.',
+ 'caterpie',
+ 'metapod',
+ 'butterfree',
+ 'machamp',
+ 'missingno.',
+ 'golduck',
+ 'hypno',
+ 'golbat',
+ 'mewtwo',
+ 'snorlax',
+ 'magikarp',
+ 'missingno.',
+ 'missingno.',
+ 'muk',
+ 'missingno.',
+ 'kingler',
+ 'cloyster',
+ 'missingno.',
+ 'electrode',
+ 'clefable',
+ 'weezing',
+ 'persian',
+ 'marowak',
+ 'missingno.',
+ 'haunter',
+ 'abra',
+ 'alakazam',
+ 'pidgeotto',
+ 'pidgeot',
+ 'starmie',
+ 'bulbasaur',
+ 'venusaur',
+ 'tentacruel',
+ 'missingno.',
+ 'goldeen',
+ 'seaking',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'ponyta',
+ 'rapidash',
+ 'rattata',
+ 'raticate',
+ 'nidorino',
+ 'nidorina',
+ 'geodude',
+ 'porygon',
+ 'aerodactyl',
+ 'missingno.',
+ 'magnemite',
+ 'missingno.',
+ 'missingno.',
+ 'charmander',
+ 'squirtle',
+ 'charmeleon',
+ 'wartortle',
+ 'charizard',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'missingno.',
+ 'oddish',
+ 'gloom',
+ 'vileplume',
+ 'bellsprout',
+ 'weepinbell',
+ 'victreebel',
+ '191',
+ '192',
+ '193',
+ '194',
+ '195',
+ '196',
+ '197',
+ '198',
+ '199',
+ '200',
+ '201',
+ '202',
+ '203',
+ '204',
+ '205',
+ '206',
+ '207',
+ '208',
+ '209',
+ '210',
+ '211',
+ '212',
+ '213',
+ '214',
+ '215',
+ '216',
+ '217',
+ '218',
+ '219',
+ '220',
+ '221',
+ '222',
+ '223',
+ '224',
+ '225',
+ '226',
+ '227',
+ '228',
+ '229',
+ '230',
+ '231',
+ '232',
+ '233',
+ '234',
+ '235',
+ '236',
+ '237',
+ '238',
+ '239',
+ '240',
+ '241',
+ '242',
+ '243',
+ '244',
+ '245',
+ '246',
+ '247',
+ '248',
+ '249',
+ '250',
+ '251',
+ '252',
+ '253',
+ '254',
+ '']
+pokedex_rb = ['#000 Missingno',
+ '#001 Bulbasaur',
+ '#002 Ivysaur',
+ '#003 Venusaur',
+ '#004 Charmander',
+ '#005 Charmeleon',
+ '#006 Charizard',
+ '#007 Squirtle',
+ '#008 Wartortle',
+ '#009 Blastoise',
+ '#010 Caterpie',
+ '#011 Metapod',
+ '#012 Butterfree',
+ '#013 Weedle',
+ '#014 Kakuna',
+ '#015 Beedrill',
+ '#016 Pidgey',
+ '#017 Pidgeotto',
+ '#018 Pidgeot',
+ '#019 Rattata',
+ '#020 Raticate',
+ '#021 Spearow',
+ '#022 Fearow',
+ '#023 Ekans',
+ '#024 Arbok',
+ '#025 Pikachu',
+ '#026 Raichu',
+ '#027 Sandshrew',
+ '#028 Sandslash',
+ '#029 Nidoranh',
+ '#030 Nidorina',
+ '#031 Nidoqueen',
+ '#032 Nidoranm',
+ '#033 Nidorino',
+ '#034 Nidoking',
+ '#035 Clefairy',
+ '#036 Clefable',
+ '#037 Vulpix',
+ '#038 Ninetales',
+ '#039 Jigglypuff',
+ '#040 Wigglytuff',
+ '#041 Zubat',
+ '#042 Golbat',
+ '#043 Oddish',
+ '#044 Gloom',
+ '#045 Vileplume',
+ '#046 Paras',
+ '#047 Parasect',
+ '#048 Venonat',
+ '#049 Venomoth',
+ '#050 Diglett',
+ '#051 Dugtrio',
+ '#052 Meowth',
+ '#053 Persian',
+ '#054 Psyduck',
+ '#055 Golduck',
+ '#056 Mankey',
+ '#057 Primeape',
+ '#058 Growlithe',
+ '#059 Arcanine',
+ '#060 Poliwag',
+ '#061 Poliwhirl',
+ '#062 Poliwrath',
+ '#063 Abra',
+ '#064 Kadabra',
+ '#065 Alakazam',
+ '#066 Machop',
+ '#067 Machoke',
+ '#068 Machamp',
+ '#069 Bellsprout',
+ '#070 Weepinbell',
+ '#071 Victreebel',
+ '#072 Tentacool',
+ '#073 Tentacruel',
+ '#074 Geodude',
+ '#075 Graveler',
+ '#076 Golem',
+ '#077 Ponyta',
+ '#078 Rapidash',
+ '#079 Slowpoke',
+ '#080 Slowbro',
+ '#081 Magnemite',
+ '#082 Magneton',
+ "#083 Farfetch'd",
+ '#084 Doduo',
+ '#085 Dodrio',
+ '#086 Seel',
+ '#087 Dewgong',
+ '#088 Grimer',
+ '#089 Muk',
+ '#090 Shellder',
+ '#091 Cloyster',
+ '#092 Gastly',
+ '#093 Haunter',
+ '#094 Gengar',
+ '#095 Onix',
+ '#096 Drowzee',
+ '#097 Hypno',
+ '#098 Krabby',
+ '#099 Kingler',
+ '#100 Voltorb',
+ '#101 Electrode',
+ '#102 Exeggcute',
+ '#103 Exeggutor',
+ '#104 Cubone',
+ '#105 Marowak',
+ '#106 Hitmonlee',
+ '#107 Hitmonchan',
+ '#108 Lickitung',
+ '#109 Koffing',
+ '#110 Weezing',
+ '#111 Rhyhorn',
+ '#112 Rhydon',
+ '#113 Chansey',
+ '#163 Tangela',
+ '#115 Kangaskhan',
+ '#116 Horsea',
+ '#117 Seadra',
+ '#118 Goldeen',
+ '#119 Seaking',
+ '#120 Staryu',
+ '#121 Starmie',
+ '#122 Mr.Mime',
+ '#123 Scyther',
+ '#124 Jynx',
+ '#125 Electabuzz',
+ '#126 Magmar',
+ '#127 Pinsir',
+ '#128 Tauros',
+ '#129 Magikarp',
+ '#130 Gyarados',
+ '#131 Lapras',
+ '#132 Ditto',
+ '#133 Eevee',
+ '#134 Vaporeon',
+ '#135 Jolteon',
+ '#136 Flareon',
+ '#137 Porygon',
+ '#138 Omanyte',
+ '#139 Omastar',
+ '#140 Kabuto',
+ '#141 Kabutops',
+ '#142 Aerodactyl',
+ '#143 Snorlax',
+ '#144 Articuno',
+ '#145 Zapdos',
+ '#146 Moltres',
+ '#147 Dratini',
+ '#148 Dragonair',
+ '#149 Dragonite',
+ '#150 Mewtwo',
+ '#151 Mew',
+ '#152',
+ '#153',
+ '#154',
+ '#155',
+ '#156',
+ '#163',
+ '#158',
+ '#159',
+ '#160',
+ '#161',
+ '#162',
+ '#163',
+ '#164',
+ '#165',
+ '#166',
+ '#167',
+ '#168',
+ '#169',
+ '#170',
+ '#171',
+ '#172',
+ '#173',
+ '#174',
+ '#175',
+ '#176',
+ '#177',
+ '#178',
+ '#179',
+ '#180',
+ '#181',
+ '#182',
+ '#183',
+ '#184',
+ '#185',
+ '#186',
+ '#187',
+ '#188',
+ '#189',
+ '#190',
+ '#191',
+ '#192',
+ '#193',
+ '#194',
+ '#195',
+ '#196',
+ '#197',
+ '#198',
+ '#199',
+ '#200',
+ '#201',
+ '#202',
+ '#203',
+ '#204',
+ '#205',
+ '#206',
+ '#207',
+ '#208',
+ '#209',
+ '#210',
+ '#211',
+ '#212',
+ '#213',
+ '#214',
+ '#215',
+ '#216',
+ '#217',
+ '#218',
+ '#219',
+ '#220',
+ '#221',
+ '#222',
+ '#223',
+ '#224',
+ '#225',
+ '#226',
+ '#227',
+ '#228',
+ '#229',
+ '#230',
+ '#231',
+ '#232',
+ '#233',
+ '#234',
+ '#235',
+ '#236',
+ '#237',
+ '#238',
+ '#239',
+ '#240',
+ '#241',
+ '#242',
+ '#243',
+ '#244',
+ '#245',
+ '#246',
+ '#247',
+ '#248',
+ '#249',
+ '#250',
+ '#251',
+ '#252',
+ '#253',
+ '#254',
+ '#255']
+moves_rb = ['-- No Move -- (0)',
+ 'Pound (1)',
+ 'Karate Chop (2)',
+ 'Doubleslap (3)',
+ 'Comet Punch (4)',
+ 'Mega Punch (5)',
+ 'Pay Day (6)',
+ 'Fire Punch (7)',
+ 'Ice Punch (8)',
+ 'Thunderpunch (9)',
+ 'Scratch (10)',
+ 'Vicegrip (11)',
+ 'Guillotine (12)',
+ 'Razor Wind (13)',
+ 'Swords Dance (14)',
+ 'Cut (15)',
+ 'Gust (16)',
+ 'Wing Attack (17)',
+ 'Whirlwind (18)',
+ 'Fly (19)',
+ 'Bind (20)',
+ 'Slam (21)',
+ 'Vine Whip (22)',
+ 'Stomp (23)',
+ 'Double Kick (24)',
+ 'Mega Kick (25)',
+ 'Jump Kick (26)',
+ 'Rolling Kick (27)',
+ 'Sand-attack (28)',
+ 'Headbutt (29)',
+ 'Horn Attack (30)',
+ 'Fury Attack (31)',
+ 'Horn Drill (32)',
+ 'Tackle (33)',
+ 'Body Slam (34)',
+ 'Wrap (35)',
+ 'Take Down (36)',
+ 'Thrash (37)',
+ 'Double-edge (38)',
+ 'Tail Whip (39)',
+ 'Poison Sting (40)',
+ 'Twineedle (41)',
+ 'Pin Missile (42)',
+ 'Leer (43)',
+ 'Bite (44)',
+ 'Growl (45)',
+ 'Roar (46)',
+ 'Sing (47)',
+ 'Supersonic (48)',
+ 'Sonicboom (49)',
+ 'Disable (50)',
+ 'Acid (51)',
+ 'Ember (52)',
+ 'Flamethrower (53)',
+ 'Mist (54)',
+ 'Water Gun (55)',
+ 'Hydro Pump (56)',
+ 'Surf (57)',
+ 'Ice Beam (58)',
+ 'Blizzard (59)',
+ 'Psybeam (60)',
+ 'Bubblebeam (61)',
+ 'Aurora Beam (62)',
+ 'Hyper Beam (63)',
+ 'Peck (64)',
+ 'Drill Peck (65)',
+ 'Submission (66)',
+ 'Low Kick (67)',
+ 'Counter (68)',
+ 'Seismic Toss (69)',
+ 'Strength (70)',
+ 'Absorb (71)',
+ 'Mega Drain (72)',
+ 'Leech Seed (73)',
+ 'Growth (74)',
+ 'Razor Leaf (75)',
+ 'Solarbeam (76)',
+ 'Poisonpowder (77)',
+ 'Stun Spore (78)',
+ 'Sleep Powder (79)',
+ 'Petal Dance (80)',
+ 'String Shot (81)',
+ 'Dragon Rage (82)',
+ 'Fire Spin (83)',
+ 'Thundershock (84)',
+ 'Thunderbolt (85)',
+ 'Thunder Wave (86)',
+ 'Thunder (87)',
+ 'Rock Throw (88)',
+ 'Earthquake (89)',
+ 'Fissure (90)',
+ 'Dig (91)',
+ 'Toxic (92)',
+ 'Confusion (93)',
+ 'Psychic (94)',
+ 'Hypnosis (95)',
+ 'Meditate (96)',
+ 'Agility (97)',
+ 'Quick Attack (98)',
+ 'Rage (99)',
+ 'Teleport (100)',
+ 'Night Shade (101)',
+ 'Mimic (102)',
+ 'Screech (103)',
+ 'Double Team (104)',
+ 'Recover (105)',
+ 'Harden (106)',
+ 'Minimize (107)',
+ 'Smokescreen (108)',
+ 'Confuse Ray (109)',
+ 'Withdraw (110)',
+ 'Defense Curl (111)',
+ 'Barrier (112)',
+ 'Light Screen (113)',
+ 'Haze (163)',
+ 'Reflect (115)',
+ 'Focus Energy (116)',
+ 'Bide (117)',
+ 'Metronome (118)',
+ 'Mirror Move (119)',
+ 'Selfdestruct (120)',
+ 'Egg Bomb (121)',
+ 'Lick (122)',
+ 'Smog (123)',
+ 'Sludge (124)',
+ 'Bone Club (125)',
+ 'Fire Blast (126)',
+ 'Waterfall (127)',
+ 'Clamp (128)',
+ 'Swift (129)',
+ 'Skull Bash (130)',
+ 'Spike Cannon (131)',
+ 'Constrict (132)',
+ 'Amnesia (133)',
+ 'Kinesis (134)',
+ 'Softboiled (135)',
+ 'Hi Jump Kick (136)',
+ 'Glare (137)',
+ 'Dream Eater (138)',
+ 'Poison Gas (139)',
+ 'Barrage (140)',
+ 'Leech Life (141)',
+ 'Lovely Kiss (142)',
+ 'Sky Attack (143)',
+ 'Transform (144)',
+ 'Bubble (145)',
+ 'Dizzy Punch (146)',
+ 'Spore (147)',
+ 'Flash (148)',
+ 'Psywave (149)',
+ 'Splash (150)',
+ 'Acid Armor (151)',
+ 'Crabhammer (152)',
+ 'Explosion (153)',
+ 'Fury Swipes (154)',
+ 'Bonemerang (155)',
+ 'Rest (156)',
+ 'Rock Slide (163)',
+ 'Hyper Fang (158)',
+ 'Sharpen (159)',
+ 'Conversion (160)',
+ 'Tri Attack (161)',
+ 'Super Fang (162)',
+ 'Slash (163)',
+ 'Substitute (164)',
+ 'Struggle (165)',
+ '~166',
+ '~167',
+ '~168',
+ '~169',
+ '~170',
+ '~171',
+ '~172',
+ '~173',
+ '~174',
+ '~175',
+ '~176',
+ '~177',
+ '~178',
+ '~179',
+ '~180',
+ '~181',
+ '~182',
+ '~183',
+ '~184',
+ '~185',
+ '~186',
+ '~187',
+ '~188',
+ '~189',
+ '~190',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ '~196',
+ '~197',
+ '~198',
+ '~199',
+ '~200',
+ '~201',
+ '~202',
+ '~203',
+ '~204',
+ '~205',
+ '~206',
+ '~207',
+ '~208',
+ '~209',
+ '~210',
+ '~211',
+ '~212',
+ '~213',
+ '~214',
+ '~215',
+ '~216',
+ '~217',
+ '~218',
+ '~219',
+ '~220',
+ '~221',
+ '~222',
+ '~223',
+ '~224',
+ '~225',
+ '~226',
+ '~227',
+ '~228',
+ '~229',
+ '~230',
+ '~231',
+ '~232',
+ '~233',
+ '~234',
+ '~235',
+ '~236',
+ '~237',
+ '~238',
+ '~239',
+ '~240',
+ '~241',
+ '~242',
+ '~243',
+ '~244',
+ '~245',
+ '~246',
+ '~247',
+ '~248',
+ '~249',
+ '~250',
+ '~251',
+ '~252',
+ '~253',
+ '~254',
+ '~255']
+types_rb = ['Normal (0)',
+ 'Fighting (1)',
+ 'Flying (2)',
+ 'Poison (3)',
+ 'Ground (4)',
+ 'Rock (5)',
+ 'Bird (6)',
+ 'Bug (7)',
+ 'Ghost (8)',
+ '~9',
+ '~10',
+ '~11',
+ '~12',
+ '~13',
+ '~14',
+ '~15',
+ '~16',
+ '~17',
+ '~18',
+ '~19',
+ 'Fire (20)',
+ 'Water (21)',
+ 'Grass (22)',
+ 'Electric (23)',
+ 'Psychic (24)',
+ 'Ice (25)',
+ 'Dragon (26)',
+ '~27',
+ '~28',
+ '~29',
+ '~30',
+ '~31',
+ '~32',
+ '~33',
+ '~34',
+ '~35',
+ '~36',
+ '~37',
+ '~38',
+ '~39',
+ '~40',
+ '~41',
+ '~42',
+ '~43',
+ '~44',
+ '~45',
+ '~46',
+ '~47',
+ '~48',
+ '~49',
+ '~50',
+ '~51',
+ '~52',
+ '~53',
+ '~54',
+ '~55',
+ '~56',
+ '~57',
+ '~58',
+ '~59',
+ '~60',
+ '~61',
+ '~62',
+ '~63',
+ '~64',
+ '~65',
+ '~66',
+ '~67',
+ '~68',
+ '~69',
+ '~70',
+ '~71',
+ '~72',
+ '~73',
+ '~74',
+ '~75',
+ '~76',
+ '~77',
+ '~78',
+ '~79',
+ '~80',
+ '~81',
+ '~82',
+ '~83',
+ '~84',
+ '~85',
+ '~86',
+ '~87',
+ '~88',
+ '~89',
+ '~90',
+ '~91',
+ '~92',
+ '~93',
+ '~94',
+ '~95',
+ '~96',
+ '~97',
+ '~98',
+ '~99',
+ '~100',
+ '~101',
+ '~102',
+ '~103',
+ '~104',
+ '~105',
+ '~106',
+ '~107',
+ '~108',
+ '~109',
+ '~110',
+ '~111',
+ '~112',
+ '~113',
+ '~163',
+ '~115',
+ '~116',
+ '~117',
+ '~118',
+ '~119',
+ '~120',
+ '~121',
+ '~122',
+ '~123',
+ '~124',
+ '~125',
+ '~126',
+ '~127',
+ '~128',
+ '~129',
+ '~130',
+ '~131',
+ '~132',
+ '~133',
+ '~134',
+ '~135',
+ '~136',
+ '~137',
+ '~138',
+ '~139',
+ '~140',
+ '~141',
+ '~142',
+ '~143',
+ '~144',
+ '~145',
+ '~146',
+ '~147',
+ '~148',
+ '~149',
+ '~150',
+ '~151',
+ '~152',
+ '~153',
+ '~154',
+ '~155',
+ '~156',
+ '~163',
+ '~158',
+ '~159',
+ '~160',
+ '~161',
+ '~162',
+ '~163',
+ '~164',
+ '~165',
+ '~166',
+ '~167',
+ '~168',
+ '~169',
+ '~170',
+ '~171',
+ '~172',
+ '~173',
+ '~174',
+ '~175',
+ '~176',
+ '~177',
+ '~178',
+ '~179',
+ '~180',
+ '~181',
+ '~182',
+ '~183',
+ '~184',
+ '~185',
+ '~186',
+ '~187',
+ '~188',
+ '~189',
+ '~190',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ '~196',
+ '~197',
+ '~198',
+ '~199',
+ '~200',
+ '~201',
+ '~202',
+ '~203',
+ '~204',
+ '~205',
+ '~206',
+ '~207',
+ '~208',
+ '~209',
+ '~210',
+ '~211',
+ '~212',
+ '~213',
+ '~214',
+ '~215',
+ '~216',
+ '~217',
+ '~218',
+ '~219',
+ '~220',
+ '~221',
+ '~222',
+ '~223',
+ '~224',
+ '~225',
+ '~226',
+ '~227',
+ '~228',
+ '~229',
+ '~230',
+ '~231',
+ '~232',
+ '~233',
+ '~234',
+ '~235',
+ '~236',
+ '~237',
+ '~238',
+ '~239',
+ '~240',
+ '~241',
+ '~242',
+ '~243',
+ '~244',
+ '~245',
+ '~246',
+ '~247',
+ '~248',
+ '~249',
+ '~250',
+ '~251',
+ '~252',
+ '~253',
+ '~254',
+ '~255']
+items_gs = ['~0',
+ 'Master Ball (1)',
+ 'Ultra Ball (2)',
+ 'Brightpowder (3)',
+ 'Great Ball (4)',
+ 'Pok\xc3\xa9 Ball (5)',
+ 'Teru-sama (6)',
+ 'Bicycle (7)',
+ 'Moon Stone (8)',
+ 'Antidote (9)',
+ 'Burn Heal (10)',
+ 'Ice Heal (11)',
+ 'Awakening (12)',
+ 'Parlyz Heal (13)',
+ 'Full Restore (14)',
+ 'Max Potion (15)',
+ 'Hyper Potion (16)',
+ 'Super Potion (17)',
+ 'Potion (18)',
+ 'Escape Rope (19)',
+ 'Repel (20)',
+ 'Max Elixer (21)',
+ 'Fire Stone (22)',
+ 'Thunderstone (23)',
+ 'Water Stone (24)',
+ 'Teru-sama (25)',
+ 'HP Up (26)',
+ 'Protein (27)',
+ 'Iron (28)',
+ 'Carbos (29)',
+ 'Lucky Punch (30)',
+ 'Calcium (31)',
+ 'Rare Candy (32)',
+ 'X Accuracy (33)',
+ 'Leaf Stone (34)',
+ 'Metal Powder (35)',
+ 'Nugget (36)',
+ 'Pok\xc3\xa9 Doll (37)',
+ 'Full Heal (38)',
+ 'Revive (39)',
+ 'Max Revive (40)',
+ 'Guard Spec. (41)',
+ 'Super Repel (42)',
+ 'Max Repel (43)',
+ 'Dire Hit (44)',
+ 'Teru-sama (45)',
+ 'Fresh Water (46)',
+ 'Soda Pop (47)',
+ 'Lemonade (48)',
+ 'X Attack (49)',
+ 'Teru-sama (50)',
+ 'X Defend (51)',
+ 'X Speed (52)',
+ 'X Special (53)',
+ 'Coin Case (54)',
+ 'Itemfinder (55)',
+ 'Teru-sama (56)',
+ 'Exp.share (57)',
+ 'Old Rod (58)',
+ 'Good Rod (59)',
+ 'Silver Leaf (60)',
+ 'Super Rod (61)',
+ 'PP Up (62)',
+ 'Ether (63)',
+ 'Max Ether (64)',
+ 'Elixer (65)',
+ 'Red Scale (66)',
+ 'Secretpotion (67)',
+ 'S.s.ticket (68)',
+ 'Mystery Egg (69)',
+ 'Teru-sama (70)',
+ 'Silver Wing (71)',
+ 'Moomoo Milk (72)',
+ 'Quick Claw (73)',
+ 'Psncureberry (74)',
+ 'Gold Leaf (75)',
+ 'Soft Sand (76)',
+ 'Sharp Beak (77)',
+ 'Przcureberry (78)',
+ 'Burnt Berry (79)',
+ 'Ice Berry (80)',
+ 'Poison Barb (81)',
+ "King's Rock (82)",
+ 'Bitter Berry (83)',
+ 'Mint Berry (84)',
+ 'Red Apricorn (85)',
+ 'Tinymushroom (86)',
+ 'Big Mushroom (87)',
+ 'Silverpowder (88)',
+ 'Blu Apricorn (89)',
+ 'Teru-sama (90)',
+ 'Amulet Coin (91)',
+ 'Ylw Apricorn (92)',
+ 'Grn Apricorn (93)',
+ 'Cleanse Tag (94)',
+ 'Mystic Water (95)',
+ 'Twistedspoon (96)',
+ 'Wht Apricorn (97)',
+ 'Blackbelt (98)',
+ 'Blk Apricorn (99)',
+ 'Teru-sama (100)',
+ 'Pnk Apricorn (101)',
+ 'Blackglasses (102)',
+ 'Slowpoketail (103)',
+ 'Pink Bow (104)',
+ 'Stick (105)',
+ 'Smoke Ball (106)',
+ 'Nevermeltice (107)',
+ 'Magnet (108)',
+ 'Miracleberry (109)',
+ 'Pearl (110)',
+ 'Big Pearl (111)',
+ 'Everstone (112)',
+ 'Spell Tag (113)',
+ 'Ragecandybar (163)',
+ 'Teru-sama (115)',
+ 'Teru-sama (116)',
+ 'Miracle Seed (117)',
+ 'Thick Club (118)',
+ 'Focus Band (119)',
+ 'Teru-sama (120)',
+ 'Energypowder (121)',
+ 'Energy Root (122)',
+ 'Heal Powder (123)',
+ 'Revival Herb (124)',
+ 'Hard Stone (125)',
+ 'Lucky Egg (126)',
+ 'Card Key (127)',
+ 'Machine Part (128)',
+ 'Teru-sama (129)',
+ 'Lost Item (130)',
+ 'Stardust (131)',
+ 'Star Piece (132)',
+ 'Basement Key (133)',
+ 'Pass (134)',
+ 'Teru-sama (135)',
+ 'Teru-sama (136)',
+ 'Teru-sama (137)',
+ 'Charcoal (138)',
+ 'Berry Juice (139)',
+ 'Scope Lens (140)',
+ 'Teru-sama (141)',
+ 'Teru-sama (142)',
+ 'Metal Coat (143)',
+ 'Dragon Fang (144)',
+ 'Teru-sama (145)',
+ 'Leftovers (146)',
+ 'Teru-sama (147)',
+ 'Teru-sama (148)',
+ 'Teru-sama (149)',
+ 'Mysteryberry (150)',
+ 'Dragon Scale (151)',
+ 'Berserk Gene (152)',
+ 'Teru-sama (153)',
+ 'Teru-sama (154)',
+ 'Teru-sama (155)',
+ 'Sacred Ash (156)',
+ 'Heavy Ball (163)',
+ 'Flower Mail (158)',
+ 'Level Ball (159)',
+ 'Lure Ball (160)',
+ 'Fast Ball (161)',
+ 'Teru-sama (162)',
+ 'Light Ball (163)',
+ 'Friend Ball (164)',
+ 'Moon Ball (165)',
+ 'Love Ball (166)',
+ 'Normal Box (167)',
+ 'Gorgeous Box (168)',
+ 'Sun Stone (169)',
+ 'Polkadot Bow (170)',
+ 'Teru-sama (171)',
+ 'Up-grade (172)',
+ 'Berry (173)',
+ 'Gold Berry (174)',
+ 'Squirtbottle (175)',
+ 'Teru-sama (176)',
+ 'Park Ball (177)',
+ 'Rainbow Wing (178)',
+ 'Teru-sama (179)',
+ 'Brick Piece (180)',
+ 'Surf Mail (181)',
+ 'Litebluemail (182)',
+ 'Portraitmail (183)',
+ 'Lovely Mail (184)',
+ 'Eon Mail (185)',
+ 'Morph Mail (186)',
+ 'Bluesky Mail (187)',
+ 'Music Mail (188)',
+ 'Mirage Mail (189)',
+ 'Teru-sama (190)',
+ 'TM01 (191)',
+ 'TM02 (192)',
+ 'TM03 (193)',
+ 'TM04 (194)',
+ 'Teru-sama (195)',
+ 'TM05 (196)',
+ 'TM06 (197)',
+ 'TM07 (198)',
+ 'TM08 (199)',
+ 'TM09 (200)',
+ 'TM10 (201)',
+ 'TM11 (202)',
+ 'TM12 (203)',
+ 'TM13 (204)',
+ 'TM14 (205)',
+ 'TM15 (206)',
+ 'TM16 (207)',
+ 'TM17 (208)',
+ 'TM18 (209)',
+ 'TM19 (210)',
+ 'TM20 (211)',
+ 'TM21 (212)',
+ 'TM22 (213)',
+ 'TM23 (214)',
+ 'TM24 (215)',
+ 'TM25 (216)',
+ 'TM26 (217)',
+ 'TM27 (218)',
+ 'TM28 (219)',
+ 'Teru-sama (220)',
+ 'TM29 (221)',
+ 'TM30 (222)',
+ 'TM31 (223)',
+ 'TM32 (224)',
+ 'TM33 (225)',
+ 'TM34 (226)',
+ 'TM35 (227)',
+ 'TM36 (228)',
+ 'TM37 (229)',
+ 'TM38 (230)',
+ 'TM39 (231)',
+ 'TM40 (232)',
+ 'TM41 (233)',
+ 'TM42 (234)',
+ 'TM43 (235)',
+ 'TM44 (236)',
+ 'TM45 (237)',
+ 'TM46 (238)',
+ 'TM47 (239)',
+ 'TM48 (240)',
+ 'TM49 (241)',
+ 'TM50 (242)',
+ 'HM01 (243)',
+ 'HM02 (244)',
+ 'HM03 (245)',
+ 'HM04 (246)',
+ 'HM05 (247)',
+ 'HM06 (248)',
+ 'HM07 (249)',
+ 'Teru-sama (250)',
+ 'Teru-sama (251)',
+ 'Teru-sama (252)',
+ 'Teru-sama (253)',
+ 'Teru-sama (254)',
+ '-- Cancel -- (255)']
+pokemon_gs = ['0',
+ 'Bulbasaur (1)',
+ 'Ivysaur (2)',
+ 'Venusaur (3)',
+ 'Charmander (4)',
+ 'Charmeleon (5)',
+ 'Charizard (6)',
+ 'Squirtle (7)',
+ 'Wartortle (8)',
+ 'Blastoise (9)',
+ 'Caterpie (10)',
+ 'Metapod (11)',
+ 'Butterfree (12)',
+ 'Weedle (13)',
+ 'Kakuna (14)',
+ 'Beedrill (15)',
+ 'Pidgey (16)',
+ 'Pidgeotto (17)',
+ 'Pidgeot (18)',
+ 'Rattata (19)',
+ 'Raticate (20)',
+ 'Spearow (21)',
+ 'Fearow (22)',
+ 'Ekans (23)',
+ 'Arbok (24)',
+ 'Pikachu (25)',
+ 'Raichu (26)',
+ 'Sandshrew (27)',
+ 'Sandslash (28)',
+ 'Nidoranh (29)',
+ 'Nidorina (30)',
+ 'Nidoqueen (31)',
+ 'Nidoranm (32)',
+ 'Nidorino (33)',
+ 'Nidoking (34)',
+ 'Clefairy (35)',
+ 'Clefable (36)',
+ 'Vulpix (37)',
+ 'Ninetales (38)',
+ 'Jigglypuff (39)',
+ 'Wigglytuff (40)',
+ 'Zubat (41)',
+ 'Golbat (42)',
+ 'Oddish (43)',
+ 'Gloom (44)',
+ 'Vileplume (45)',
+ 'Paras (46)',
+ 'Parasect (47)',
+ 'Venonat (48)',
+ 'Venomoth (49)',
+ 'Diglett (50)',
+ 'Dugtrio (51)',
+ 'Meowth (52)',
+ 'Persian (53)',
+ 'Psyduck (54)',
+ 'Golduck (55)',
+ 'Mankey (56)',
+ 'Primeape (57)',
+ 'Growlithe (58)',
+ 'Arcanine (59)',
+ 'Poliwag (60)',
+ 'Poliwhirl (61)',
+ 'Poliwrath (62)',
+ 'Abra (63)',
+ 'Kadabra (64)',
+ 'Alakazam (65)',
+ 'Machop (66)',
+ 'Machoke (67)',
+ 'Machamp (68)',
+ 'Bellsprout (69)',
+ 'Weepinbell (70)',
+ 'Victreebel (71)',
+ 'Tentacool (72)',
+ 'Tentacruel (73)',
+ 'Geodude (74)',
+ 'Graveler (75)',
+ 'Golem (76)',
+ 'Ponyta (77)',
+ 'Rapidash (78)',
+ 'Slowpoke (79)',
+ 'Slowbro (80)',
+ 'Magnemite (81)',
+ 'Magneton (82)',
+ "Farfetch'd (83)",
+ 'Doduo (84)',
+ 'Dodrio (85)',
+ 'Seel (86)',
+ 'Dewgong (87)',
+ 'Grimer (88)',
+ 'Muk (89)',
+ 'Shellder (90)',
+ 'Cloyster (91)',
+ 'Gastly (92)',
+ 'Haunter (93)',
+ 'Gengar (94)',
+ 'Onix (95)',
+ 'Drowzee (96)',
+ 'Hypno (97)',
+ 'Krabby (98)',
+ 'Kingler (99)',
+ 'Voltorb (100)',
+ 'Electrode (101)',
+ 'Exeggcute (102)',
+ 'Exeggutor (103)',
+ 'Cubone (104)',
+ 'Marowak (105)',
+ 'Hitmonlee (106)',
+ 'Hitmonchan (107)',
+ 'Lickitung (108)',
+ 'Koffing (109)',
+ 'Weezing (110)',
+ 'Rhyhorn (111)',
+ 'Rhydon (112)',
+ 'Chansey (113)',
+ 'Tangela (163)',
+ 'Kangaskhan (115)',
+ 'Horsea (116)',
+ 'Seadra (117)',
+ 'Goldeen (118)',
+ 'Seaking (119)',
+ 'Staryu (120)',
+ 'Starmie (121)',
+ 'Mr.mime (122)',
+ 'Scyther (123)',
+ 'Jynx (124)',
+ 'Electabuzz (125)',
+ 'Magmar (126)',
+ 'Pinsir (127)',
+ 'Tauros (128)',
+ 'Magikarp (129)',
+ 'Gyarados (130)',
+ 'Lapras (131)',
+ 'Ditto (132)',
+ 'Eevee (133)',
+ 'Vaporeon (134)',
+ 'Jolteon (135)',
+ 'Flareon (136)',
+ 'Porygon (137)',
+ 'Omanyte (138)',
+ 'Omastar (139)',
+ 'Kabuto (140)',
+ 'Kabutops (141)',
+ 'Aerodactyl (142)',
+ 'Snorlax (143)',
+ 'Articuno (144)',
+ 'Zapdos (145)',
+ 'Moltres (146)',
+ 'Dratini (147)',
+ 'Dragonair (148)',
+ 'Dragonite (149)',
+ 'Mewtwo (150)',
+ 'Mew (151)',
+ 'Chikorita (152)',
+ 'Bayleef (153)',
+ 'Meganium (154)',
+ 'Cyndaquil (155)',
+ 'Quilava (156)',
+ 'Typhlosion (163)',
+ 'Totodile (158)',
+ 'Croconaw (159)',
+ 'Feraligatr (160)',
+ 'Sentret (161)',
+ 'Furret (162)',
+ 'Hoothoot (163)',
+ 'Noctowl (164)',
+ 'Ledyba (165)',
+ 'Ledian (166)',
+ 'Spinarak (167)',
+ 'Ariados (168)',
+ 'Crobat (169)',
+ 'Chinchou (170)',
+ 'Lanturn (171)',
+ 'Pichu (172)',
+ 'Cleffa (173)',
+ 'Igglybuff (174)',
+ 'Togepi (175)',
+ 'Togetic (176)',
+ 'Natu (177)',
+ 'Xatu (178)',
+ 'Mareep (179)',
+ 'Flaaffy (180)',
+ 'Ampharos (181)',
+ 'Bellossom (182)',
+ 'Marill (183)',
+ 'Azumarill (184)',
+ 'Sudowoodo (185)',
+ 'Politoed (186)',
+ 'Hoppip (187)',
+ 'Skiploom (188)',
+ 'Jumpluff (189)',
+ 'Aipom (190)',
+ 'Sunkern (191)',
+ 'Sunflora (192)',
+ 'Yanma (193)',
+ 'Wooper (194)',
+ 'Quagsire (195)',
+ 'Espeon (196)',
+ 'Umbreon (197)',
+ 'Murkrow (198)',
+ 'Slowking (199)',
+ 'Misdreavus (200)',
+ 'Unown (201)',
+ 'Wobbuffet (202)',
+ 'Girafarig (203)',
+ 'Pineco (204)',
+ 'Forretress (205)',
+ 'Dunsparce (206)',
+ 'Gligar (207)',
+ 'Steelix (208)',
+ 'Snubbull (209)',
+ 'Granbull (210)',
+ 'Qwilfish (211)',
+ 'Scizor (212)',
+ 'Shuckle (213)',
+ 'Heracross (214)',
+ 'Sneasel (215)',
+ 'Teddiursa (216)',
+ 'Ursaring (217)',
+ 'Slugma (218)',
+ 'Magcargo (219)',
+ 'Swinub (220)',
+ 'Piloswine (221)',
+ 'Corsola (222)',
+ 'Remoraid (223)',
+ 'Octillery (224)',
+ 'Delibird (225)',
+ 'Mantine (226)',
+ 'Skarmory (227)',
+ 'Houndour (228)',
+ 'Houndoom (229)',
+ 'Kingdra (230)',
+ 'Phanpy (231)',
+ 'Donphan (232)',
+ 'Porygon2 (233)',
+ 'Stantler (234)',
+ 'Smeargle (235)',
+ 'Tyrogue (236)',
+ 'Hitmontop (237)',
+ 'Smoochum (238)',
+ 'Elekid (239)',
+ 'Magby (240)',
+ 'Miltank (241)',
+ 'Blissey (242)',
+ 'Raikou (243)',
+ 'Entei (244)',
+ 'Suicune (245)',
+ 'Larvitar (246)',
+ 'Pupitar (247)',
+ 'Tyranitar (248)',
+ 'Lugia (249)',
+ 'Ho-oh (250)',
+ 'Celebi (251)',
+ '????? (252)',
+ 'Egg (253)',
+ '????? (254)',
+ '-- No Pokemon -- (255)']
+pokemon_lower_gs = ['er',
+ 'bulbasaur',
+ 'ivysaur',
+ 'venusaur',
+ 'charmander',
+ 'charmeleon',
+ 'charizard',
+ 'squirtle',
+ 'wartortle',
+ 'blastoise',
+ 'caterpie',
+ 'metapod',
+ 'butterfree',
+ 'weedle',
+ 'kakuna',
+ 'beedrill',
+ 'pidgey',
+ 'pidgeotto',
+ 'pidgeot',
+ 'rattata',
+ 'raticate',
+ 'spearow',
+ 'fearow',
+ 'ekans',
+ 'arbok',
+ 'pikachu',
+ 'raichu',
+ 'sandshrew',
+ 'sandslash',
+ 'nidoranh',
+ 'nidorina',
+ 'nidoqueen',
+ 'nidoranm',
+ 'nidorino',
+ 'nidoking',
+ 'clefairy',
+ 'clefable',
+ 'vulpix',
+ 'ninetales',
+ 'jigglypuff',
+ 'wigglytuff',
+ 'zubat',
+ 'golbat',
+ 'oddish',
+ 'gloom',
+ 'vileplume',
+ 'paras',
+ 'parasect',
+ 'venonat',
+ 'venomoth',
+ 'diglett',
+ 'dugtrio',
+ 'meowth',
+ 'persian',
+ 'psyduck',
+ 'golduck',
+ 'mankey',
+ 'primeape',
+ 'growlithe',
+ 'arcanine',
+ 'poliwag',
+ 'poliwhirl',
+ 'poliwrath',
+ 'abra',
+ 'kadabra',
+ 'alakazam',
+ 'machop',
+ 'machoke',
+ 'machamp',
+ 'bellsprout',
+ 'weepinbell',
+ 'victreebel',
+ 'tentacool',
+ 'tentacruel',
+ 'geodude',
+ 'graveler',
+ 'golem',
+ 'ponyta',
+ 'rapidash',
+ 'slowpoke',
+ 'slowbro',
+ 'magnemite',
+ 'magneton',
+ "farfetch'd",
+ 'doduo',
+ 'dodrio',
+ 'seel',
+ 'dewgong',
+ 'grimer',
+ 'muk',
+ 'shellder',
+ 'cloyster',
+ 'gastly',
+ 'haunter',
+ 'gengar',
+ 'onix',
+ 'drowzee',
+ 'hypno',
+ 'krabby',
+ 'kingler',
+ 'voltorb',
+ 'electrode',
+ 'exeggcute',
+ 'exeggutor',
+ 'cubone',
+ 'marowak',
+ 'hitmonlee',
+ 'hitmonchan',
+ 'lickitung',
+ 'koffing',
+ 'weezing',
+ 'rhyhorn',
+ 'rhydon',
+ 'chansey',
+ 'tangela',
+ 'kangaskhan',
+ 'horsea',
+ 'seadra',
+ 'goldeen',
+ 'seaking',
+ 'staryu',
+ 'starmie',
+ 'mr.mime',
+ 'scyther',
+ 'jynx',
+ 'electabuzz',
+ 'magmar',
+ 'pinsir',
+ 'tauros',
+ 'magikarp',
+ 'gyarados',
+ 'lapras',
+ 'ditto',
+ 'eevee',
+ 'vaporeon',
+ 'jolteon',
+ 'flareon',
+ 'porygon',
+ 'omanyte',
+ 'omastar',
+ 'kabuto',
+ 'kabutops',
+ 'aerodactyl',
+ 'snorlax',
+ 'articuno',
+ 'zapdos',
+ 'moltres',
+ 'dratini',
+ 'dragonair',
+ 'dragonite',
+ 'mewtwo',
+ 'mew',
+ 'chikorita',
+ 'bayleef',
+ 'meganium',
+ 'cyndaquil',
+ 'quilava',
+ 'typhlosion',
+ 'totodile',
+ 'croconaw',
+ 'feraligatr',
+ 'sentret',
+ 'furret',
+ 'hoothoot',
+ 'noctowl',
+ 'ledyba',
+ 'ledian',
+ 'spinarak',
+ 'ariados',
+ 'crobat',
+ 'chinchou',
+ 'lanturn',
+ 'pichu',
+ 'cleffa',
+ 'igglybuff',
+ 'togepi',
+ 'togetic',
+ 'natu',
+ 'xatu',
+ 'mareep',
+ 'flaaffy',
+ 'ampharos',
+ 'bellossom',
+ 'marill',
+ 'azumarill',
+ 'sudowoodo',
+ 'politoed',
+ 'hoppip',
+ 'skiploom',
+ 'jumpluff',
+ 'aipom',
+ 'sunkern',
+ 'sunflora',
+ 'yanma',
+ 'wooper',
+ 'quagsire',
+ 'espeon',
+ 'umbreon',
+ 'murkrow',
+ 'slowking',
+ 'misdreavus',
+ 'unown',
+ 'wobbuffet',
+ 'girafarig',
+ 'pineco',
+ 'forretress',
+ 'dunsparce',
+ 'gligar',
+ 'steelix',
+ 'snubbull',
+ 'granbull',
+ 'qwilfish',
+ 'scizor',
+ 'shuckle',
+ 'heracross',
+ 'sneasel',
+ 'teddiursa',
+ 'ursaring',
+ 'slugma',
+ 'magcargo',
+ 'swinub',
+ 'piloswine',
+ 'corsola',
+ 'remoraid',
+ 'octillery',
+ 'delibird',
+ 'mantine',
+ 'skarmory',
+ 'houndour',
+ 'houndoom',
+ 'kingdra',
+ 'phanpy',
+ 'donphan',
+ 'porygon2',
+ 'stantler',
+ 'smeargle',
+ 'tyrogue',
+ 'hitmontop',
+ 'smoochum',
+ 'elekid',
+ 'magby',
+ 'miltank',
+ 'blissey',
+ 'raikou',
+ 'entei',
+ 'suicune',
+ 'larvitar',
+ 'pupitar',
+ 'tyranitar',
+ 'lugia',
+ 'ho-oh',
+ 'celebi',
+ '?????',
+ 'egg',
+ '?????',
+ '']
+pokedex_gs = ['#000 Er',
+ '#001 Bulbasaur',
+ '#002 Ivysaur',
+ '#003 Venusaur',
+ '#004 Charmander',
+ '#005 Charmeleon',
+ '#006 Charizard',
+ '#007 Squirtle',
+ '#008 Wartortle',
+ '#009 Blastoise',
+ '#010 Caterpie',
+ '#011 Metapod',
+ '#012 Butterfree',
+ '#013 Weedle',
+ '#014 Kakuna',
+ '#015 Beedrill',
+ '#016 Pidgey',
+ '#017 Pidgeotto',
+ '#018 Pidgeot',
+ '#019 Rattata',
+ '#020 Raticate',
+ '#021 Spearow',
+ '#022 Fearow',
+ '#023 Ekans',
+ '#024 Arbok',
+ '#025 Pikachu',
+ '#026 Raichu',
+ '#027 Sandshrew',
+ '#028 Sandslash',
+ '#029 Nidoranh',
+ '#030 Nidorina',
+ '#031 Nidoqueen',
+ '#032 Nidoranm',
+ '#033 Nidorino',
+ '#034 Nidoking',
+ '#035 Clefairy',
+ '#036 Clefable',
+ '#037 Vulpix',
+ '#038 Ninetales',
+ '#039 Jigglypuff',
+ '#040 Wigglytuff',
+ '#041 Zubat',
+ '#042 Golbat',
+ '#043 Oddish',
+ '#044 Gloom',
+ '#045 Vileplume',
+ '#046 Paras',
+ '#047 Parasect',
+ '#048 Venonat',
+ '#049 Venomoth',
+ '#050 Diglett',
+ '#051 Dugtrio',
+ '#052 Meowth',
+ '#053 Persian',
+ '#054 Psyduck',
+ '#055 Golduck',
+ '#056 Mankey',
+ '#057 Primeape',
+ '#058 Growlithe',
+ '#059 Arcanine',
+ '#060 Poliwag',
+ '#061 Poliwhirl',
+ '#062 Poliwrath',
+ '#063 Abra',
+ '#064 Kadabra',
+ '#065 Alakazam',
+ '#066 Machop',
+ '#067 Machoke',
+ '#068 Machamp',
+ '#069 Bellsprout',
+ '#070 Weepinbell',
+ '#071 Victreebel',
+ '#072 Tentacool',
+ '#073 Tentacruel',
+ '#074 Geodude',
+ '#075 Graveler',
+ '#076 Golem',
+ '#077 Ponyta',
+ '#078 Rapidash',
+ '#079 Slowpoke',
+ '#080 Slowbro',
+ '#081 Magnemite',
+ '#082 Magneton',
+ "#083 Farfetch'd",
+ '#084 Doduo',
+ '#085 Dodrio',
+ '#086 Seel',
+ '#087 Dewgong',
+ '#088 Grimer',
+ '#089 Muk',
+ '#090 Shellder',
+ '#091 Cloyster',
+ '#092 Gastly',
+ '#093 Haunter',
+ '#094 Gengar',
+ '#095 Onix',
+ '#096 Drowzee',
+ '#097 Hypno',
+ '#098 Krabby',
+ '#099 Kingler',
+ '#100 Voltorb',
+ '#101 Electrode',
+ '#102 Exeggcute',
+ '#103 Exeggutor',
+ '#104 Cubone',
+ '#105 Marowak',
+ '#106 Hitmonlee',
+ '#107 Hitmonchan',
+ '#108 Lickitung',
+ '#109 Koffing',
+ '#110 Weezing',
+ '#111 Rhyhorn',
+ '#112 Rhydon',
+ '#113 Chansey',
+ '#163 Tangela',
+ '#115 Kangaskhan',
+ '#116 Horsea',
+ '#117 Seadra',
+ '#118 Goldeen',
+ '#119 Seaking',
+ '#120 Staryu',
+ '#121 Starmie',
+ '#122 Mr.mime',
+ '#123 Scyther',
+ '#124 Jynx',
+ '#125 Electabuzz',
+ '#126 Magmar',
+ '#127 Pinsir',
+ '#128 Tauros',
+ '#129 Magikarp',
+ '#130 Gyarados',
+ '#131 Lapras',
+ '#132 Ditto',
+ '#133 Eevee',
+ '#134 Vaporeon',
+ '#135 Jolteon',
+ '#136 Flareon',
+ '#137 Porygon',
+ '#138 Omanyte',
+ '#139 Omastar',
+ '#140 Kabuto',
+ '#141 Kabutops',
+ '#142 Aerodactyl',
+ '#143 Snorlax',
+ '#144 Articuno',
+ '#145 Zapdos',
+ '#146 Moltres',
+ '#147 Dratini',
+ '#148 Dragonair',
+ '#149 Dragonite',
+ '#150 Mewtwo',
+ '#151 Mew',
+ '#152 Chikorita',
+ '#153 Bayleef',
+ '#154 Meganium',
+ '#155 Cyndaquil',
+ '#156 Quilava',
+ '#163 Typhlosion',
+ '#158 Totodile',
+ '#159 Croconaw',
+ '#160 Feraligatr',
+ '#161 Sentret',
+ '#162 Furret',
+ '#163 Hoothoot',
+ '#164 Noctowl',
+ '#165 Ledyba',
+ '#166 Ledian',
+ '#167 Spinarak',
+ '#168 Ariados',
+ '#169 Crobat',
+ '#170 Chinchou',
+ '#171 Lanturn',
+ '#172 Pichu',
+ '#173 Cleffa',
+ '#174 Igglybuff',
+ '#175 Togepi',
+ '#176 Togetic',
+ '#177 Natu',
+ '#178 Xatu',
+ '#179 Mareep',
+ '#180 Flaaffy',
+ '#181 Ampharos',
+ '#182 Bellossom',
+ '#183 Marill',
+ '#184 Azumarill',
+ '#185 Sudowoodo',
+ '#186 Politoed',
+ '#187 Hoppip',
+ '#188 Skiploom',
+ '#189 Jumpluff',
+ '#190 Aipom',
+ '#191 Sunkern',
+ '#192 Sunflora',
+ '#193 Yanma',
+ '#194 Wooper',
+ '#195 Quagsire',
+ '#196 Espeon',
+ '#197 Umbreon',
+ '#198 Murkrow',
+ '#199 Slowking',
+ '#200 Misdreavus',
+ '#201 Unown',
+ '#202 Wobbuffet',
+ '#203 Girafarig',
+ '#204 Pineco',
+ '#205 Forretress',
+ '#206 Dunsparce',
+ '#207 Gligar',
+ '#208 Steelix',
+ '#209 Snubbull',
+ '#210 Granbull',
+ '#211 Qwilfish',
+ '#212 Scizor',
+ '#213 Shuckle',
+ '#214 Heracross',
+ '#215 Sneasel',
+ '#216 Teddiursa',
+ '#217 Ursaring',
+ '#218 Slugma',
+ '#219 Magcargo',
+ '#220 Swinub',
+ '#221 Piloswine',
+ '#222 Corsola',
+ '#223 Remoraid',
+ '#224 Octillery',
+ '#225 Delibird',
+ '#226 Mantine',
+ '#227 Skarmory',
+ '#228 Houndour',
+ '#229 Houndoom',
+ '#230 Kingdra',
+ '#231 Phanpy',
+ '#232 Donphan',
+ '#233 Porygon2',
+ '#234 Stantler',
+ '#235 Smeargle',
+ '#236 Tyrogue',
+ '#237 Hitmontop',
+ '#238 Smoochum',
+ '#239 Elekid',
+ '#240 Magby',
+ '#241 Miltank',
+ '#242 Blissey',
+ '#243 Raikou',
+ '#244 Entei',
+ '#245 Suicune',
+ '#246 Larvitar',
+ '#247 Pupitar',
+ '#248 Tyranitar',
+ '#249 Lugia',
+ '#250 Ho-oh',
+ '#251 Celebi',
+ '#252 ?????',
+ '#253 Egg',
+ '#254 ?????',
+ '#255 ?????']
+moves_gs = ['-- No Move -- (0)',
+ 'Pound (1)',
+ 'Karate Chop (2)',
+ 'Doubleslap (3)',
+ 'Comet Punch (4)',
+ 'Mega Punch (5)',
+ 'Pay Day (6)',
+ 'Fire Punch (7)',
+ 'Ice Punch (8)',
+ 'Thunderpunch (9)',
+ 'Scratch (10)',
+ 'Vicegrip (11)',
+ 'Guillotine (12)',
+ 'Razor Wind (13)',
+ 'Swords Dance (14)',
+ 'Cut (15)',
+ 'Gust (16)',
+ 'Wing Attack (17)',
+ 'Whirlwind (18)',
+ 'Fly (19)',
+ 'Bind (20)',
+ 'Slam (21)',
+ 'Vine Whip (22)',
+ 'Stomp (23)',
+ 'Double Kick (24)',
+ 'Mega Kick (25)',
+ 'Jump Kick (26)',
+ 'Rolling Kick (27)',
+ 'Sand-attack (28)',
+ 'Headbutt (29)',
+ 'Horn Attack (30)',
+ 'Fury Attack (31)',
+ 'Horn Drill (32)',
+ 'Tackle (33)',
+ 'Body Slam (34)',
+ 'Wrap (35)',
+ 'Take Down (36)',
+ 'Thrash (37)',
+ 'Double-edge (38)',
+ 'Tail Whip (39)',
+ 'Poison Sting (40)',
+ 'Twineedle (41)',
+ 'Pin Missile (42)',
+ 'Leer (43)',
+ 'Bite (44)',
+ 'Growl (45)',
+ 'Roar (46)',
+ 'Sing (47)',
+ 'Supersonic (48)',
+ 'Sonicboom (49)',
+ 'Disable (50)',
+ 'Acid (51)',
+ 'Ember (52)',
+ 'Flamethrower (53)',
+ 'Mist (54)',
+ 'Water Gun (55)',
+ 'Hydro Pump (56)',
+ 'Surf (57)',
+ 'Ice Beam (58)',
+ 'Blizzard (59)',
+ 'Psybeam (60)',
+ 'Bubblebeam (61)',
+ 'Aurora Beam (62)',
+ 'Hyper Beam (63)',
+ 'Peck (64)',
+ 'Drill Peck (65)',
+ 'Submission (66)',
+ 'Low Kick (67)',
+ 'Counter (68)',
+ 'Seismic Toss (69)',
+ 'Strength (70)',
+ 'Absorb (71)',
+ 'Mega Drain (72)',
+ 'Leech Seed (73)',
+ 'Growth (74)',
+ 'Razor Leaf (75)',
+ 'Solarbeam (76)',
+ 'Poisonpowder (77)',
+ 'Stun Spore (78)',
+ 'Sleep Powder (79)',
+ 'Petal Dance (80)',
+ 'String Shot (81)',
+ 'Dragon Rage (82)',
+ 'Fire Spin (83)',
+ 'Thundershock (84)',
+ 'Thunderbolt (85)',
+ 'Thunder Wave (86)',
+ 'Thunder (87)',
+ 'Rock Throw (88)',
+ 'Earthquake (89)',
+ 'Fissure (90)',
+ 'Dig (91)',
+ 'Toxic (92)',
+ 'Confusion (93)',
+ 'Psychic (94)',
+ 'Hypnosis (95)',
+ 'Meditate (96)',
+ 'Agility (97)',
+ 'Quick Attack (98)',
+ 'Rage (99)',
+ 'Teleport (100)',
+ 'Night Shade (101)',
+ 'Mimic (102)',
+ 'Screech (103)',
+ 'Double Team (104)',
+ 'Recover (105)',
+ 'Harden (106)',
+ 'Minimize (107)',
+ 'Smokescreen (108)',
+ 'Confuse Ray (109)',
+ 'Withdraw (110)',
+ 'Defense Curl (111)',
+ 'Barrier (112)',
+ 'Light Screen (113)',
+ 'Haze (163)',
+ 'Reflect (115)',
+ 'Focus Energy (116)',
+ 'Bide (117)',
+ 'Metronome (118)',
+ 'Mirror Move (119)',
+ 'Selfdestruct (120)',
+ 'Egg Bomb (121)',
+ 'Lick (122)',
+ 'Smog (123)',
+ 'Sludge (124)',
+ 'Bone Club (125)',
+ 'Fire Blast (126)',
+ 'Waterfall (127)',
+ 'Clamp (128)',
+ 'Swift (129)',
+ 'Skull Bash (130)',
+ 'Spike Cannon (131)',
+ 'Constrict (132)',
+ 'Amnesia (133)',
+ 'Kinesis (134)',
+ 'Softboiled (135)',
+ 'Hi Jump Kick (136)',
+ 'Glare (137)',
+ 'Dream Eater (138)',
+ 'Poison Gas (139)',
+ 'Barrage (140)',
+ 'Leech Life (141)',
+ 'Lovely Kiss (142)',
+ 'Sky Attack (143)',
+ 'Transform (144)',
+ 'Bubble (145)',
+ 'Dizzy Punch (146)',
+ 'Spore (147)',
+ 'Flash (148)',
+ 'Psywave (149)',
+ 'Splash (150)',
+ 'Acid Armor (151)',
+ 'Crabhammer (152)',
+ 'Explosion (153)',
+ 'Fury Swipes (154)',
+ 'Bonemerang (155)',
+ 'Rest (156)',
+ 'Rock Slide (163)',
+ 'Hyper Fang (158)',
+ 'Sharpen (159)',
+ 'Conversion (160)',
+ 'Tri Attack (161)',
+ 'Super Fang (162)',
+ 'Slash (163)',
+ 'Substitute (164)',
+ 'Struggle (165)',
+ 'Sketch (166)',
+ 'Triple Kick (167)',
+ 'Thief (168)',
+ 'Spider Web (169)',
+ 'Mind Reader (170)',
+ 'Nightmare (171)',
+ 'Flame Wheel (172)',
+ 'Snore (173)',
+ 'Curse (174)',
+ 'Flail (175)',
+ 'Conversion2 (176)',
+ 'Aeroblast (177)',
+ 'Cotton Spore (178)',
+ 'Reversal (179)',
+ 'Spite (180)',
+ 'Powder Snow (181)',
+ 'Protect (182)',
+ 'Mach Punch (183)',
+ 'Scary Face (184)',
+ 'Faint Attack (185)',
+ 'Sweet Kiss (186)',
+ 'Belly Drum (187)',
+ 'Sludge Bomb (188)',
+ 'Mud-slap (189)',
+ 'Octazooka (190)',
+ 'Spikes (191)',
+ 'Zap Cannon (192)',
+ 'Foresight (193)',
+ 'Destiny Bond (194)',
+ 'Perish Song (195)',
+ 'Icy Wind (196)',
+ 'Detect (197)',
+ 'Bone Rush (198)',
+ 'Lock-on (199)',
+ 'Outrage (200)',
+ 'Sandstorm (201)',
+ 'Giga Drain (202)',
+ 'Endure (203)',
+ 'Charm (204)',
+ 'Rollout (205)',
+ 'False Swipe (206)',
+ 'Swagger (207)',
+ 'Milk Drink (208)',
+ 'Spark (209)',
+ 'Fury Cutter (210)',
+ 'Steel Wing (211)',
+ 'Mean Look (212)',
+ 'Attract (213)',
+ 'Sleep Talk (214)',
+ 'Heal Bell (215)',
+ 'Return (216)',
+ 'Present (217)',
+ 'Frustration (218)',
+ 'Safeguard (219)',
+ 'Pain Split (220)',
+ 'Sacred Fire (221)',
+ 'Magnitude (222)',
+ 'Dynamicpunch (223)',
+ 'Megahorn (224)',
+ 'Dragonbreath (225)',
+ 'Baton Pass (226)',
+ 'Encore (227)',
+ 'Pursuit (228)',
+ 'Rapid Spin (229)',
+ 'Sweet Scent (230)',
+ 'Iron Tail (231)',
+ 'Metal Claw (232)',
+ 'Vital Throw (233)',
+ 'Morning Sun (234)',
+ 'Synthesis (235)',
+ 'Moonlight (236)',
+ 'Hidden Power (237)',
+ 'Cross Chop (238)',
+ 'Twister (239)',
+ 'Rain Dance (240)',
+ 'Sunny Day (241)',
+ 'Crunch (242)',
+ 'Mirror Coat (243)',
+ 'Psych Up (244)',
+ 'Extremespeed (245)',
+ 'Ancientpower (246)',
+ 'Shadow Ball (247)',
+ 'Future Sight (248)',
+ 'Rock Smash (249)',
+ 'Whirlpool (250)',
+ 'Beat Up (251)',
+ '~252',
+ '~253',
+ '~254',
+ '~255']
+types_gs = ['Normal (0)',
+ 'Fighting (1)',
+ 'Flying (2)',
+ 'Poison (3)',
+ 'Ground (4)',
+ 'Rock (5)',
+ 'Bird (6)',
+ 'Bug (7)',
+ 'Ghost (8)',
+ 'Steel (9)',
+ '~10',
+ '~11',
+ '~12',
+ '~13',
+ '~14',
+ '~15',
+ '~16',
+ '~17',
+ '~18',
+ '~19',
+ 'Fire (20)',
+ 'Water (21)',
+ 'Grass (22)',
+ 'Electric (23)',
+ 'Psychic (24)',
+ 'Ice (25)',
+ 'Dragon (26)',
+ 'Dark (27)',
+ '~28',
+ '~29',
+ '~30',
+ '~31',
+ '~32',
+ '~33',
+ '~34',
+ '~35',
+ '~36',
+ '~37',
+ '~38',
+ '~39',
+ '~40',
+ '~41',
+ '~42',
+ '~43',
+ '~44',
+ '~45',
+ '~46',
+ '~47',
+ '~48',
+ '~49',
+ '~50',
+ '~51',
+ '~52',
+ '~53',
+ '~54',
+ '~55',
+ '~56',
+ '~57',
+ '~58',
+ '~59',
+ '~60',
+ '~61',
+ '~62',
+ '~63',
+ '~64',
+ '~65',
+ '~66',
+ '~67',
+ '~68',
+ '~69',
+ '~70',
+ '~71',
+ '~72',
+ '~73',
+ '~74',
+ '~75',
+ '~76',
+ '~77',
+ '~78',
+ '~79',
+ '~80',
+ '~81',
+ '~82',
+ '~83',
+ '~84',
+ '~85',
+ '~86',
+ '~87',
+ '~88',
+ '~89',
+ '~90',
+ '~91',
+ '~92',
+ '~93',
+ '~94',
+ '~95',
+ '~96',
+ '~97',
+ '~98',
+ '~99',
+ '~100',
+ '~101',
+ '~102',
+ '~103',
+ '~104',
+ '~105',
+ '~106',
+ '~107',
+ '~108',
+ '~109',
+ '~110',
+ '~111',
+ '~112',
+ '~113',
+ '~163',
+ '~115',
+ '~116',
+ '~117',
+ '~118',
+ '~119',
+ '~120',
+ '~121',
+ '~122',
+ '~123',
+ '~124',
+ '~125',
+ '~126',
+ '~127',
+ '~128',
+ '~129',
+ '~130',
+ '~131',
+ '~132',
+ '~133',
+ '~134',
+ '~135',
+ '~136',
+ '~137',
+ '~138',
+ '~139',
+ '~140',
+ '~141',
+ '~142',
+ '~143',
+ '~144',
+ '~145',
+ '~146',
+ '~147',
+ '~148',
+ '~149',
+ '~150',
+ '~151',
+ '~152',
+ '~153',
+ '~154',
+ '~155',
+ '~156',
+ '~163',
+ '~158',
+ '~159',
+ '~160',
+ '~161',
+ '~162',
+ '~163',
+ '~164',
+ '~165',
+ '~166',
+ '~167',
+ '~168',
+ '~169',
+ '~170',
+ '~171',
+ '~172',
+ '~173',
+ '~174',
+ '~175',
+ '~176',
+ '~177',
+ '~178',
+ '~179',
+ '~180',
+ '~181',
+ '~182',
+ '~183',
+ '~184',
+ '~185',
+ '~186',
+ '~187',
+ '~188',
+ '~189',
+ '~190',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ '~196',
+ '~197',
+ '~198',
+ '~199',
+ '~200',
+ '~201',
+ '~202',
+ '~203',
+ '~204',
+ '~205',
+ '~206',
+ '~207',
+ '~208',
+ '~209',
+ '~210',
+ '~211',
+ '~212',
+ '~213',
+ '~214',
+ '~215',
+ '~216',
+ '~217',
+ '~218',
+ '~219',
+ '~220',
+ '~221',
+ '~222',
+ '~223',
+ '~224',
+ '~225',
+ '~226',
+ '~227',
+ '~228',
+ '~229',
+ '~230',
+ '~231',
+ '~232',
+ '~233',
+ '~234',
+ '~235',
+ '~236',
+ '~237',
+ '~238',
+ '~239',
+ '~240',
+ '~241',
+ '~242',
+ '~243',
+ '~244',
+ '~245',
+ '~246',
+ '~247',
+ '~248',
+ '~249',
+ '~250',
+ '~251',
+ '~252',
+ '~253',
+ '~254',
+ '~255']
+types_gs_hp = ['Fighting',
+ 'Flying',
+ 'Poison',
+ 'Ground',
+ 'Rock',
+ 'Bug',
+ 'Ghost',
+ 'Steel',
+ 'Fire',
+ 'Water',
+ 'Grass',
+ 'Electric',
+ 'Psychic',
+ 'Ice',
+ 'Dragon',
+ 'Dark']
+items_rs = ['-- No Item --',
+ 'Master Ball (1)',
+ 'Ultra Ball (2)',
+ 'Great Ball (3)',
+ 'Poke Ball (4)',
+ 'Safari Ball (5)',
+ 'Net Ball (6)',
+ 'Dive Ball (7)',
+ 'Nest Ball (8)',
+ 'Repeat Ball (9)',
+ 'Timer Ball (10)',
+ 'Luxury Ball (11)',
+ 'Premier Ball (12)',
+ 'Potion (13)',
+ 'Antidote (14)',
+ 'Burn Heal (15)',
+ 'Ice Heal (16)',
+ 'Awakening (17)',
+ 'Parlyz Heal (18)',
+ 'Full Restore (19)',
+ 'Max Potion (20)',
+ 'Hyper Potion (21)',
+ 'Super Potion (22)',
+ 'Full Heal (23)',
+ 'Revive (24)',
+ 'Max Revive (25)',
+ 'Fresh Water (26)',
+ 'Soda Pop (27)',
+ 'Lemonade (28)',
+ 'Moomoo Milk (29)',
+ 'Energypowder (30)',
+ 'Energy Root (31)',
+ 'Heal Powder (32)',
+ 'Revival Herb (33)',
+ 'Ether (34)',
+ 'Max Ether (35)',
+ 'Elixir (36)',
+ 'Max Elixir (37)',
+ 'Lava Cookie (38)',
+ 'Blue Flute (39)',
+ 'Yellow Flute (40)',
+ 'Red Flute (41)',
+ 'Black Flute (42)',
+ 'White Flute (43)',
+ 'Berry Juice (44)',
+ 'Sacred Ash (45)',
+ 'Shoal Salt (46)',
+ 'Shoal Shell (47)',
+ 'Red Shard (48)',
+ 'Blue Shard (49)',
+ 'Yellow Shard (50)',
+ 'Green Shard (51)',
+ '???????? (52)',
+ '???????? (53)',
+ '???????? (54)',
+ '???????? (55)',
+ '???????? (56)',
+ '???????? (57)',
+ '???????? (58)',
+ '???????? (59)',
+ '???????? (60)',
+ '???????? (61)',
+ '???????? (62)',
+ 'Hp Up (63)',
+ 'Protein (64)',
+ 'Iron (65)',
+ 'Carbos (66)',
+ 'Calcium (67)',
+ 'Rare Candy (68)',
+ 'Pp Up (69)',
+ 'Zinc (70)',
+ 'Pp Max (71)',
+ '???????? (72)',
+ 'Guard Spec. (73)',
+ 'Dire Hit (74)',
+ 'X Attack (75)',
+ 'X Defend (76)',
+ 'X Speed (77)',
+ 'X Accuracy (78)',
+ 'X Special (79)',
+ 'Poke Doll (80)',
+ 'Fluffy Tail (81)',
+ '???????? (82)',
+ 'Super Repel (83)',
+ 'Max Repel (84)',
+ 'Escape Rope (85)',
+ 'Repel (86)',
+ '???????? (87)',
+ '???????? (88)',
+ '???????? (89)',
+ '???????? (90)',
+ '???????? (91)',
+ '???????? (92)',
+ 'Sun Stone (93)',
+ 'Moon Stone (94)',
+ 'Fire Stone (95)',
+ 'Thunderstone (96)',
+ 'Water Stone (97)',
+ 'Leaf Stone (98)',
+ '???????? (99)',
+ '???????? (100)',
+ '???????? (101)',
+ '???????? (102)',
+ 'Tinymushroom (103)',
+ 'Big Mushroom (104)',
+ '???????? (105)',
+ 'Pearl (106)',
+ 'Big Pearl (107)',
+ 'Stardust (108)',
+ 'Star Piece (109)',
+ 'Nugget (110)',
+ 'Heart Scale (111)',
+ '???????? (112)',
+ '???????? (113)',
+ '???????? (163)',
+ '???????? (115)',
+ '???????? (116)',
+ '???????? (117)',
+ '???????? (118)',
+ '???????? (119)',
+ '???????? (120)',
+ 'Orange Mail (121)',
+ 'Harbor Mail (122)',
+ 'Glitter Mail (123)',
+ 'Mech Mail (124)',
+ 'Wood Mail (125)',
+ 'Wave Mail (126)',
+ 'Bead Mail (127)',
+ 'Shadow Mail (128)',
+ 'Tropic Mail (129)',
+ 'Dream Mail (130)',
+ 'Fab Mail (131)',
+ 'Retro Mail (132)',
+ 'Cheri Berry (133)',
+ 'Chesto Berry (134)',
+ 'Pecha Berry (135)',
+ 'Rawst Berry (136)',
+ 'Aspear Berry (137)',
+ 'Leppa Berry (138)',
+ 'Oran Berry (139)',
+ 'Persim Berry (140)',
+ 'Lum Berry (141)',
+ 'Sitrus Berry (142)',
+ 'Figy Berry (143)',
+ 'Wiki Berry (144)',
+ 'Mago Berry (145)',
+ 'Aguav Berry (146)',
+ 'Iapapa Berry (147)',
+ 'Razz Berry (148)',
+ 'Bluk Berry (149)',
+ 'Nanab Berry (150)',
+ 'Wepear Berry (151)',
+ 'Pinap Berry (152)',
+ 'Pomeg Berry (153)',
+ 'Kelpsy Berry (154)',
+ 'Qualot Berry (155)',
+ 'Hondew Berry (156)',
+ 'Grepa Berry (163)',
+ 'Tamato Berry (158)',
+ 'Cornn Berry (159)',
+ 'Magost Berry (160)',
+ 'Rabuta Berry (161)',
+ 'Nomel Berry (162)',
+ 'Spelon Berry (163)',
+ 'Pamtre Berry (164)',
+ 'Watmel Berry (165)',
+ 'Durin Berry (166)',
+ 'Belue Berry (167)',
+ 'Liechi Berry (168)',
+ 'Ganlon Berry (169)',
+ 'Salac Berry (170)',
+ 'Petaya Berry (171)',
+ 'Apicot Berry (172)',
+ 'Lansat Berry (173)',
+ 'Starf Berry (174)',
+ 'Enigma Berry (175)',
+ '???????? (176)',
+ '???????? (177)',
+ '???????? (178)',
+ 'Brightpowder (179)',
+ 'White Herb (180)',
+ 'Macho Brace (181)',
+ 'Exp. Share (182)',
+ 'Quick Claw (183)',
+ 'Soothe Bell (184)',
+ 'Mental Herb (185)',
+ 'Choice Band (186)',
+ "King's Rock (187)",
+ 'Silverpowder (188)',
+ 'Amulet Coin (189)',
+ 'Cleanse Tag (190)',
+ 'Soul Dew (191)',
+ 'Deepseatooth (192)',
+ 'Deepseascale (193)',
+ 'Smoke Ball (194)',
+ 'Everstone (195)',
+ 'Focus Band (196)',
+ 'Lucky Egg (197)',
+ 'Scope Lens (198)',
+ 'Metal Coat (199)',
+ 'Leftovers (200)',
+ 'Dragon Scale (201)',
+ 'Light Ball (202)',
+ 'Soft Sand (203)',
+ 'Hard Stone (204)',
+ 'Miracle Seed (205)',
+ 'Blackglasses (206)',
+ 'Black Belt (207)',
+ 'Magnet (208)',
+ 'Mystic Water (209)',
+ 'Sharp Beak (210)',
+ 'Poison Barb (211)',
+ 'Nevermeltice (212)',
+ 'Spell Tag (213)',
+ 'Twistedspoon (214)',
+ 'Charcoal (215)',
+ 'Dragon Fang (216)',
+ 'Silk Scarf (217)',
+ 'Up-grade (218)',
+ 'Shell Bell (219)',
+ 'Sea Incense (220)',
+ 'Lax Incense (221)',
+ 'Lucky Punch (222)',
+ 'Metal Powder (223)',
+ 'Thick Club (224)',
+ 'Stick (225)',
+ '???????? (226)',
+ '???????? (227)',
+ '???????? (228)',
+ '???????? (229)',
+ '???????? (230)',
+ '???????? (231)',
+ '???????? (232)',
+ '???????? (233)',
+ '???????? (234)',
+ '???????? (235)',
+ '???????? (236)',
+ '???????? (237)',
+ '???????? (238)',
+ '???????? (239)',
+ '???????? (240)',
+ '???????? (241)',
+ '???????? (242)',
+ '???????? (243)',
+ '???????? (244)',
+ '???????? (245)',
+ '???????? (246)',
+ '???????? (247)',
+ '???????? (248)',
+ '???????? (249)',
+ '???????? (250)',
+ '???????? (251)',
+ '???????? (252)',
+ '???????? (253)',
+ 'Red Scarf (254)',
+ 'Blue Scarf (255)',
+ 'Pink Scarf (256)',
+ 'Green Scarf (257)',
+ 'Yellow Scarf (258)',
+ 'Mach Bike (259)',
+ 'Coin Case (260)',
+ 'Itemfinder (261)',
+ 'Old Rod (262)',
+ 'Good Rod (263)',
+ 'Super Rod (264)',
+ 'S.s. Ticket (265)',
+ 'Contest Pass (266)',
+ '???????? (267)',
+ 'Wailmer Pail (268)',
+ 'Devon Goods (269)',
+ 'Soot Sack (270)',
+ 'Basement Key (271)',
+ 'Acro Bike (272)',
+ 'Pokeblock Case (273)',
+ 'Letter (274)',
+ 'Eon Ticket (275)',
+ 'Red Orb (276)',
+ 'Blue Orb (277)',
+ 'Scanner (278)',
+ 'Go-goggles (279)',
+ 'Meteorite (280)',
+ 'Rm. 1 Key (281)',
+ 'Rm. 2 Key (282)',
+ 'Rm. 4 Key (283)',
+ 'Rm. 6 Key (284)',
+ 'Storage Key (285)',
+ 'Root Fossil (286)',
+ 'Claw Fossil (287)',
+ 'Devon Scope (288)',
+ 'TM01 (289)',
+ 'TM02 (290)',
+ 'TM03 (291)',
+ 'TM04 (292)',
+ 'TM05 (293)',
+ 'TM06 (294)',
+ 'TM07 (295)',
+ 'TM08 (296)',
+ 'TM09 (297)',
+ 'TM10 (298)',
+ 'TM11 (299)',
+ 'TM12 (300)',
+ 'TM13 (301)',
+ 'TM14 (302)',
+ 'TM15 (303)',
+ 'TM16 (304)',
+ 'TM17 (305)',
+ 'TM18 (306)',
+ 'TM19 (307)',
+ 'TM20 (308)',
+ 'TM21 (309)',
+ 'TM22 (310)',
+ 'TM23 (311)',
+ 'TM24 (312)',
+ 'TM25 (313)',
+ 'TM26 (314)',
+ 'TM27 (315)',
+ 'TM28 (316)',
+ 'TM29 (317)',
+ 'TM30 (318)',
+ 'TM31 (319)',
+ 'TM32 (320)',
+ 'TM33 (321)',
+ 'TM34 (322)',
+ 'TM35 (323)',
+ 'TM36 (324)',
+ 'TM37 (325)',
+ 'TM38 (326)',
+ 'TM39 (327)',
+ 'TM40 (328)',
+ 'TM41 (329)',
+ 'TM42 (330)',
+ 'TM43 (331)',
+ 'TM44 (332)',
+ 'TM45 (333)',
+ 'TM46 (334)',
+ 'TM47 (335)',
+ 'TM48 (336)',
+ 'TM49 (337)',
+ 'TM50 (338)',
+ 'HM01 (339)',
+ 'HM02 (340)',
+ 'HM03 (341)',
+ 'HM04 (342)',
+ 'HM05 (343)',
+ 'HM06 (344)',
+ 'HM07 (345)',
+ 'HM08 (346)',
+ '???????? (347)',
+ '???????? (348)']
+pokemon_rs = ['-- No Pokemon -- (0)',
+ 'Bulbasaur (1)',
+ 'Ivysaur (2)',
+ 'Venusaur (3)',
+ 'Charmander (4)',
+ 'Charmeleon (5)',
+ 'Charizard (6)',
+ 'Squirtle (7)',
+ 'Wartortle (8)',
+ 'Blastoise (9)',
+ 'Caterpie (10)',
+ 'Metapod (11)',
+ 'Butterfree (12)',
+ 'Weedle (13)',
+ 'Kakuna (14)',
+ 'Beedrill (15)',
+ 'Pidgey (16)',
+ 'Pidgeotto (17)',
+ 'Pidgeot (18)',
+ 'Rattata (19)',
+ 'Raticate (20)',
+ 'Spearow (21)',
+ 'Fearow (22)',
+ 'Ekans (23)',
+ 'Arbok (24)',
+ 'Pikachu (25)',
+ 'Raichu (26)',
+ 'Sandshrew (27)',
+ 'Sandslash (28)',
+ 'Nidoranf (29)',
+ 'Nidorina (30)',
+ 'Nidoqueen (31)',
+ 'Nidoranm (32)',
+ 'Nidorino (33)',
+ 'Nidoking (34)',
+ 'Clefairy (35)',
+ 'Clefable (36)',
+ 'Vulpix (37)',
+ 'Ninetales (38)',
+ 'Jigglypuff (39)',
+ 'Wigglytuff (40)',
+ 'Zubat (41)',
+ 'Golbat (42)',
+ 'Oddish (43)',
+ 'Gloom (44)',
+ 'Vileplume (45)',
+ 'Paras (46)',
+ 'Parasect (47)',
+ 'Venonat (48)',
+ 'Venomoth (49)',
+ 'Diglett (50)',
+ 'Dugtrio (51)',
+ 'Meowth (52)',
+ 'Persian (53)',
+ 'Psyduck (54)',
+ 'Golduck (55)',
+ 'Mankey (56)',
+ 'Primeape (57)',
+ 'Growlithe (58)',
+ 'Arcanine (59)',
+ 'Poliwag (60)',
+ 'Poliwhirl (61)',
+ 'Poliwrath (62)',
+ 'Abra (63)',
+ 'Kadabra (64)',
+ 'Alakazam (65)',
+ 'Machop (66)',
+ 'Machoke (67)',
+ 'Machamp (68)',
+ 'Bellsprout (69)',
+ 'Weepinbell (70)',
+ 'Victreebel (71)',
+ 'Tentacool (72)',
+ 'Tentacruel (73)',
+ 'Geodude (74)',
+ 'Graveler (75)',
+ 'Golem (76)',
+ 'Ponyta (77)',
+ 'Rapidash (78)',
+ 'Slowpoke (79)',
+ 'Slowbro (80)',
+ 'Magnemite (81)',
+ 'Magneton (82)',
+ "Farfetch'd (83)",
+ 'Doduo (84)',
+ 'Dodrio (85)',
+ 'Seel (86)',
+ 'Dewgong (87)',
+ 'Grimer (88)',
+ 'Muk (89)',
+ 'Shellder (90)',
+ 'Cloyster (91)',
+ 'Gastly (92)',
+ 'Haunter (93)',
+ 'Gengar (94)',
+ 'Onix (95)',
+ 'Drowzee (96)',
+ 'Hypno (97)',
+ 'Krabby (98)',
+ 'Kingler (99)',
+ 'Voltorb (100)',
+ 'Electrode (101)',
+ 'Exeggcute (102)',
+ 'Exeggutor (103)',
+ 'Cubone (104)',
+ 'Marowak (105)',
+ 'Hitmonlee (106)',
+ 'Hitmonchan (107)',
+ 'Lickitung (108)',
+ 'Koffing (109)',
+ 'Weezing (110)',
+ 'Rhyhorn (111)',
+ 'Rhydon (112)',
+ 'Chansey (113)',
+ 'Tangela (163)',
+ 'Kangaskhan (115)',
+ 'Horsea (116)',
+ 'Seadra (117)',
+ 'Goldeen (118)',
+ 'Seaking (119)',
+ 'Staryu (120)',
+ 'Starmie (121)',
+ 'Mr. Mime (122)',
+ 'Scyther (123)',
+ 'Jynx (124)',
+ 'Electabuzz (125)',
+ 'Magmar (126)',
+ 'Pinsir (127)',
+ 'Tauros (128)',
+ 'Magikarp (129)',
+ 'Gyarados (130)',
+ 'Lapras (131)',
+ 'Ditto (132)',
+ 'Eevee (133)',
+ 'Vaporeon (134)',
+ 'Jolteon (135)',
+ 'Flareon (136)',
+ 'Porygon (137)',
+ 'Omanyte (138)',
+ 'Omastar (139)',
+ 'Kabuto (140)',
+ 'Kabutops (141)',
+ 'Aerodactyl (142)',
+ 'Snorlax (143)',
+ 'Articuno (144)',
+ 'Zapdos (145)',
+ 'Moltres (146)',
+ 'Dratini (147)',
+ 'Dragonair (148)',
+ 'Dragonite (149)',
+ 'Mewtwo (150)',
+ 'Mew (151)',
+ 'Chikorita (152)',
+ 'Bayleef (153)',
+ 'Meganium (154)',
+ 'Cyndaquil (155)',
+ 'Quilava (156)',
+ 'Typhlosion (163)',
+ 'Totodile (158)',
+ 'Croconaw (159)',
+ 'Feraligatr (160)',
+ 'Sentret (161)',
+ 'Furret (162)',
+ 'Hoothoot (163)',
+ 'Noctowl (164)',
+ 'Ledyba (165)',
+ 'Ledian (166)',
+ 'Spinarak (167)',
+ 'Ariados (168)',
+ 'Crobat (169)',
+ 'Chinchou (170)',
+ 'Lanturn (171)',
+ 'Pichu (172)',
+ 'Cleffa (173)',
+ 'Igglybuff (174)',
+ 'Togepi (175)',
+ 'Togetic (176)',
+ 'Natu (177)',
+ 'Xatu (178)',
+ 'Mareep (179)',
+ 'Flaaffy (180)',
+ 'Ampharos (181)',
+ 'Bellossom (182)',
+ 'Marill (183)',
+ 'Azumarill (184)',
+ 'Sudowoodo (185)',
+ 'Politoed (186)',
+ 'Hoppip (187)',
+ 'Skiploom (188)',
+ 'Jumpluff (189)',
+ 'Aipom (190)',
+ 'Sunkern (191)',
+ 'Sunflora (192)',
+ 'Yanma (193)',
+ 'Wooper (194)',
+ 'Quagsire (195)',
+ 'Espeon (196)',
+ 'Umbreon (197)',
+ 'Murkrow (198)',
+ 'Slowking (199)',
+ 'Misdreavus (200)',
+ 'Unown (201)',
+ 'Wobbuffet (202)',
+ 'Girafarig (203)',
+ 'Pineco (204)',
+ 'Forretress (205)',
+ 'Dunsparce (206)',
+ 'Gligar (207)',
+ 'Steelix (208)',
+ 'Snubbull (209)',
+ 'Granbull (210)',
+ 'Qwilfish (211)',
+ 'Scizor (212)',
+ 'Shuckle (213)',
+ 'Heracross (214)',
+ 'Sneasel (215)',
+ 'Teddiursa (216)',
+ 'Ursaring (217)',
+ 'Slugma (218)',
+ 'Magcargo (219)',
+ 'Swinub (220)',
+ 'Piloswine (221)',
+ 'Corsola (222)',
+ 'Remoraid (223)',
+ 'Octillery (224)',
+ 'Delibird (225)',
+ 'Mantine (226)',
+ 'Skarmory (227)',
+ 'Houndour (228)',
+ 'Houndoom (229)',
+ 'Kingdra (230)',
+ 'Phanpy (231)',
+ 'Donphan (232)',
+ 'Porygon2 (233)',
+ 'Stantler (234)',
+ 'Smeargle (235)',
+ 'Tyrogue (236)',
+ 'Hitmontop (237)',
+ 'Smoochum (238)',
+ 'Elekid (239)',
+ 'Magby (240)',
+ 'Miltank (241)',
+ 'Blissey (242)',
+ 'Raikou (243)',
+ 'Entei (244)',
+ 'Suicune (245)',
+ 'Larvitar (246)',
+ 'Pupitar (247)',
+ 'Tyranitar (248)',
+ 'Lugia (249)',
+ 'Ho-oh (250)',
+ 'Celebi (251)',
+ '? (252)',
+ '? (253)',
+ '? (254)',
+ '? (255)',
+ '? (256)',
+ '? (257)',
+ '? (258)',
+ '? (259)',
+ '? (260)',
+ '? (261)',
+ '? (262)',
+ '? (263)',
+ '? (264)',
+ '? (265)',
+ '? (266)',
+ '? (267)',
+ '? (268)',
+ '? (269)',
+ '? (270)',
+ '? (271)',
+ '? (272)',
+ '? (273)',
+ '? (274)',
+ '? (275)',
+ '? (276)',
+ 'Treecko (277)',
+ 'Grovyle (278)',
+ 'Sceptile (279)',
+ 'Torchic (280)',
+ 'Combusken (281)',
+ 'Blaziken (282)',
+ 'Mudkip (283)',
+ 'Marshtomp (284)',
+ 'Swampert (285)',
+ 'Poochyena (286)',
+ 'Mightyena (287)',
+ 'Zigzagoon (288)',
+ 'Linoone (289)',
+ 'Wurmple (290)',
+ 'Silcoon (291)',
+ 'Beautifly (292)',
+ 'Cascoon (293)',
+ 'Dustox (294)',
+ 'Lotad (295)',
+ 'Lombre (296)',
+ 'Ludicolo (297)',
+ 'Seedot (298)',
+ 'Nuzleaf (299)',
+ 'Shiftry (300)',
+ 'Nincada (301)',
+ 'Ninjask (302)',
+ 'Shedinja (303)',
+ 'Taillow (304)',
+ 'Swellow (305)',
+ 'Shroomish (306)',
+ 'Breloom (307)',
+ 'Spinda (308)',
+ 'Wingull (309)',
+ 'Pelipper (310)',
+ 'Surskit (311)',
+ 'Masquerain (312)',
+ 'Wailmer (313)',
+ 'Wailord (314)',
+ 'Skitty (315)',
+ 'Delcatty (316)',
+ 'Kecleon (317)',
+ 'Baltoy (318)',
+ 'Claydol (319)',
+ 'Nosepass (320)',
+ 'Torkoal (321)',
+ 'Sableye (322)',
+ 'Barboach (323)',
+ 'Whiscash (324)',
+ 'Luvdisc (325)',
+ 'Corphish (326)',
+ 'Crawdaunt (327)',
+ 'Feebas (328)',
+ 'Milotic (329)',
+ 'Carvanha (330)',
+ 'Sharpedo (331)',
+ 'Trapinch (332)',
+ 'Vibrava (333)',
+ 'Flygon (334)',
+ 'Makuhita (335)',
+ 'Hariyama (336)',
+ 'Electrike (337)',
+ 'Manectric (338)',
+ 'Numel (339)',
+ 'Camerupt (340)',
+ 'Spheal (341)',
+ 'Sealeo (342)',
+ 'Walrein (343)',
+ 'Cacnea (344)',
+ 'Cacturne (345)',
+ 'Snorunt (346)',
+ 'Glalie (347)',
+ 'Lunatone (348)',
+ 'Solrock (349)',
+ 'Azurill (350)',
+ 'Spoink (351)',
+ 'Grumpig (352)',
+ 'Plusle (353)',
+ 'Minun (354)',
+ 'Mawile (355)',
+ 'Meditite (356)',
+ 'Medicham (357)',
+ 'Swablu (358)',
+ 'Altaria (359)',
+ 'Wynaut (360)',
+ 'Duskull (361)',
+ 'Dusclops (362)',
+ 'Roselia (363)',
+ 'Slakoth (364)',
+ 'Vigoroth (365)',
+ 'Slaking (366)',
+ 'Gulpin (367)',
+ 'Swalot (368)',
+ 'Tropius (369)',
+ 'Whismur (370)',
+ 'Loudred (371)',
+ 'Exploud (372)',
+ 'Clamperl (373)',
+ 'Huntail (374)',
+ 'Gorebyss (375)',
+ 'Absol (376)',
+ 'Shuppet (377)',
+ 'Banette (378)',
+ 'Seviper (379)',
+ 'Zangoose (380)',
+ 'Relicanth (381)',
+ 'Aron (382)',
+ 'Lairon (383)',
+ 'Aggron (384)',
+ 'Castform (385)',
+ 'Volbeat (386)',
+ 'Illumise (387)',
+ 'Lileep (388)',
+ 'Cradily (389)',
+ 'Anorith (390)',
+ 'Armaldo (391)',
+ 'Ralts (392)',
+ 'Kirlia (393)',
+ 'Gardevoir (394)',
+ 'Bagon (395)',
+ 'Shelgon (396)',
+ 'Salamence (397)',
+ 'Beldum (398)',
+ 'Metang (399)',
+ 'Metagross (400)',
+ 'Regirock (401)',
+ 'Regice (402)',
+ 'Registeel (403)',
+ 'Kyogre (404)',
+ 'Groudon (405)',
+ 'Rayquaza (406)',
+ 'Latias (407)',
+ 'Latios (408)',
+ 'Jirachi (409)',
+ 'Deoxys (410)',
+ 'Chimecho (411)',
+ '- (412)']
+pokemon_lower_rs = ['',
+ 'bulbasaur',
+ 'ivysaur',
+ 'venusaur',
+ 'charmander',
+ 'charmeleon',
+ 'charizard',
+ 'squirtle',
+ 'wartortle',
+ 'blastoise',
+ 'caterpie',
+ 'metapod',
+ 'butterfree',
+ 'weedle',
+ 'kakuna',
+ 'beedrill',
+ 'pidgey',
+ 'pidgeotto',
+ 'pidgeot',
+ 'rattata',
+ 'raticate',
+ 'spearow',
+ 'fearow',
+ 'ekans',
+ 'arbok',
+ 'pikachu',
+ 'raichu',
+ 'sandshrew',
+ 'sandslash',
+ 'nidoran?',
+ 'nidorina',
+ 'nidoqueen',
+ 'nidoran?',
+ 'nidorino',
+ 'nidoking',
+ 'clefairy',
+ 'clefable',
+ 'vulpix',
+ 'ninetales',
+ 'jigglypuff',
+ 'wigglytuff',
+ 'zubat',
+ 'golbat',
+ 'oddish',
+ 'gloom',
+ 'vileplume',
+ 'paras',
+ 'parasect',
+ 'venonat',
+ 'venomoth',
+ 'diglett',
+ 'dugtrio',
+ 'meowth',
+ 'persian',
+ 'psyduck',
+ 'golduck',
+ 'mankey',
+ 'primeape',
+ 'growlithe',
+ 'arcanine',
+ 'poliwag',
+ 'poliwhirl',
+ 'poliwrath',
+ 'abra',
+ 'kadabra',
+ 'alakazam',
+ 'machop',
+ 'machoke',
+ 'machamp',
+ 'bellsprout',
+ 'weepinbell',
+ 'victreebel',
+ 'tentacool',
+ 'tentacruel',
+ 'geodude',
+ 'graveler',
+ 'golem',
+ 'ponyta',
+ 'rapidash',
+ 'slowpoke',
+ 'slowbro',
+ 'magnemite',
+ 'magneton',
+ "farfetch'd",
+ 'doduo',
+ 'dodrio',
+ 'seel',
+ 'dewgong',
+ 'grimer',
+ 'muk',
+ 'shellder',
+ 'cloyster',
+ 'gastly',
+ 'haunter',
+ 'gengar',
+ 'onix',
+ 'drowzee',
+ 'hypno',
+ 'krabby',
+ 'kingler',
+ 'voltorb',
+ 'electrode',
+ 'exeggcute',
+ 'exeggutor',
+ 'cubone',
+ 'marowak',
+ 'hitmonlee',
+ 'hitmonchan',
+ 'lickitung',
+ 'koffing',
+ 'weezing',
+ 'rhyhorn',
+ 'rhydon',
+ 'chansey',
+ 'tangela',
+ 'kangaskhan',
+ 'horsea',
+ 'seadra',
+ 'goldeen',
+ 'seaking',
+ 'staryu',
+ 'starmie',
+ 'mr. mime',
+ 'scyther',
+ 'jynx',
+ 'electabuzz',
+ 'magmar',
+ 'pinsir',
+ 'tauros',
+ 'magikarp',
+ 'gyarados',
+ 'lapras',
+ 'ditto',
+ 'eevee',
+ 'vaporeon',
+ 'jolteon',
+ 'flareon',
+ 'porygon',
+ 'omanyte',
+ 'omastar',
+ 'kabuto',
+ 'kabutops',
+ 'aerodactyl',
+ 'snorlax',
+ 'articuno',
+ 'zapdos',
+ 'moltres',
+ 'dratini',
+ 'dragonair',
+ 'dragonite',
+ 'mewtwo',
+ 'mew',
+ 'chikorita',
+ 'bayleef',
+ 'meganium',
+ 'cyndaquil',
+ 'quilava',
+ 'typhlosion',
+ 'totodile',
+ 'croconaw',
+ 'feraligatr',
+ 'sentret',
+ 'furret',
+ 'hoothoot',
+ 'noctowl',
+ 'ledyba',
+ 'ledian',
+ 'spinarak',
+ 'ariados',
+ 'crobat',
+ 'chinchou',
+ 'lanturn',
+ 'pichu',
+ 'cleffa',
+ 'igglybuff',
+ 'togepi',
+ 'togetic',
+ 'natu',
+ 'xatu',
+ 'mareep',
+ 'flaaffy',
+ 'ampharos',
+ 'bellossom',
+ 'marill',
+ 'azumarill',
+ 'sudowoodo',
+ 'politoed',
+ 'hoppip',
+ 'skiploom',
+ 'jumpluff',
+ 'aipom',
+ 'sunkern',
+ 'sunflora',
+ 'yanma',
+ 'wooper',
+ 'quagsire',
+ 'espeon',
+ 'umbreon',
+ 'murkrow',
+ 'slowking',
+ 'misdreavus',
+ 'unown',
+ 'wobbuffet',
+ 'girafarig',
+ 'pineco',
+ 'forretress',
+ 'dunsparce',
+ 'gligar',
+ 'steelix',
+ 'snubbull',
+ 'granbull',
+ 'qwilfish',
+ 'scizor',
+ 'shuckle',
+ 'heracross',
+ 'sneasel',
+ 'teddiursa',
+ 'ursaring',
+ 'slugma',
+ 'magcargo',
+ 'swinub',
+ 'piloswine',
+ 'corsola',
+ 'remoraid',
+ 'octillery',
+ 'delibird',
+ 'mantine',
+ 'skarmory',
+ 'houndour',
+ 'houndoom',
+ 'kingdra',
+ 'phanpy',
+ 'donphan',
+ 'porygon2',
+ 'stantler',
+ 'smeargle',
+ 'tyrogue',
+ 'hitmontop',
+ 'smoochum',
+ 'elekid',
+ 'magby',
+ 'miltank',
+ 'blissey',
+ 'raikou',
+ 'entei',
+ 'suicune',
+ 'larvitar',
+ 'pupitar',
+ 'tyranitar',
+ 'lugia',
+ 'ho-oh',
+ 'celebi',
+ 'treecko',
+ 'grovyle',
+ 'sceptile',
+ 'torchic',
+ 'combusken',
+ 'blaziken',
+ 'mudkip',
+ 'marshtomp',
+ 'swampert',
+ 'poochyena',
+ 'mightyena',
+ 'zigzagoon',
+ 'linoone',
+ 'wurmple',
+ 'silcoon',
+ 'beautifly',
+ 'cascoon',
+ 'dustox',
+ 'lotad',
+ 'lombre',
+ 'ludicolo',
+ 'seedot',
+ 'nuzleaf',
+ 'shiftry',
+ 'taillow',
+ 'swellow',
+ 'wingull',
+ 'pelipper',
+ 'ralts',
+ 'kirlia',
+ 'gardevoir',
+ 'surskit',
+ 'masquerain',
+ 'shroomish',
+ 'breloom',
+ 'slakoth',
+ 'vigoroth',
+ 'slaking',
+ 'nincada',
+ 'ninjask',
+ 'shedinja',
+ 'whismur',
+ 'loudred',
+ 'exploud',
+ 'makuhita',
+ 'hariyama',
+ 'azurill',
+ 'nosepass',
+ 'skitty',
+ 'delcatty',
+ 'sableye',
+ 'mawile',
+ 'aron',
+ 'lairon',
+ 'aggron',
+ 'meditite',
+ 'medicham',
+ 'electrike',
+ 'manectric',
+ 'plusle',
+ 'minun',
+ 'volbeat',
+ 'illumise',
+ 'roselia',
+ 'gulpin',
+ 'swalot',
+ 'carvanha',
+ 'sharpedo',
+ 'wailmer',
+ 'wailord',
+ 'numel',
+ 'camerupt',
+ 'torkoal',
+ 'spoink',
+ 'grumpig',
+ 'spinda',
+ 'trapinch',
+ 'vibrava',
+ 'flygon',
+ 'cacnea',
+ 'cacturne',
+ 'swablu',
+ 'altaria',
+ 'zangoose',
+ 'seviper',
+ 'lunatone',
+ 'solrock',
+ 'barboach',
+ 'whiscash',
+ 'corphish',
+ 'crawdaunt',
+ 'baltoy',
+ 'claydol',
+ 'lileep',
+ 'cradily',
+ 'anorith',
+ 'armaldo',
+ 'feebas',
+ 'milotic',
+ 'castform',
+ 'kecleon',
+ 'shuppet',
+ 'banette',
+ 'duskull',
+ 'dusclops',
+ 'tropius',
+ 'chimecho',
+ 'absol',
+ 'wynaut',
+ 'snorunt',
+ 'glalie',
+ 'spheal',
+ 'sealeo',
+ 'walrein',
+ 'clamperl',
+ 'huntail',
+ 'gorebyss',
+ 'relicanth',
+ 'luvdisc',
+ 'bagon',
+ 'shelgon',
+ 'salamence',
+ 'beldum',
+ 'metang',
+ 'metagross',
+ 'regirock',
+ 'regice',
+ 'registeel',
+ 'latias',
+ 'latios',
+ 'kyogre',
+ 'groudon',
+ 'rayquaza',
+ 'jirachi',
+ 'deoxys']
+pokedex_rs = ['#000 ?????',
+ '#001 Bulbasaur',
+ '#002 Ivysaur',
+ '#003 Venusaur',
+ '#004 Charmander',
+ '#005 Charmeleon',
+ '#006 Charizard',
+ '#007 Squirtle',
+ '#008 Wartortle',
+ '#009 Blastoise',
+ '#010 Caterpie',
+ '#011 Metapod',
+ '#012 Butterfree',
+ '#013 Weedle',
+ '#014 Kakuna',
+ '#015 Beedrill',
+ '#016 Pidgey',
+ '#017 Pidgeotto',
+ '#018 Pidgeot',
+ '#019 Rattata',
+ '#020 Raticate',
+ '#021 Spearow',
+ '#022 Fearow',
+ '#023 Ekans',
+ '#024 Arbok',
+ '#025 Pikachu',
+ '#026 Raichu',
+ '#027 Sandshrew',
+ '#028 Sandslash',
+ '#029 Nidoran?',
+ '#030 Nidorina',
+ '#031 Nidoqueen',
+ '#032 Nidoran?',
+ '#033 Nidorino',
+ '#034 Nidoking',
+ '#035 Clefairy',
+ '#036 Clefable',
+ '#037 Vulpix',
+ '#038 Ninetales',
+ '#039 Jigglypuff',
+ '#040 Wigglytuff',
+ '#041 Zubat',
+ '#042 Golbat',
+ '#043 Oddish',
+ '#044 Gloom',
+ '#045 Vileplume',
+ '#046 Paras',
+ '#047 Parasect',
+ '#048 Venonat',
+ '#049 Venomoth',
+ '#050 Diglett',
+ '#051 Dugtrio',
+ '#052 Meowth',
+ '#053 Persian',
+ '#054 Psyduck',
+ '#055 Golduck',
+ '#056 Mankey',
+ '#057 Primeape',
+ '#058 Growlithe',
+ '#059 Arcanine',
+ '#060 Poliwag',
+ '#061 Poliwhirl',
+ '#062 Poliwrath',
+ '#063 Abra',
+ '#064 Kadabra',
+ '#065 Alakazam',
+ '#066 Machop',
+ '#067 Machoke',
+ '#068 Machamp',
+ '#069 Bellsprout',
+ '#070 Weepinbell',
+ '#071 Victreebel',
+ '#072 Tentacool',
+ '#073 Tentacruel',
+ '#074 Geodude',
+ '#075 Graveler',
+ '#076 Golem',
+ '#077 Ponyta',
+ '#078 Rapidash',
+ '#079 Slowpoke',
+ '#080 Slowbro',
+ '#081 Magnemite',
+ '#082 Magneton',
+ "#083 Farfetch'd",
+ '#084 Doduo',
+ '#085 Dodrio',
+ '#086 Seel',
+ '#087 Dewgong',
+ '#088 Grimer',
+ '#089 Muk',
+ '#090 Shellder',
+ '#091 Cloyster',
+ '#092 Gastly',
+ '#093 Haunter',
+ '#094 Gengar',
+ '#095 Onix',
+ '#096 Drowzee',
+ '#097 Hypno',
+ '#098 Krabby',
+ '#099 Kingler',
+ '#100 Voltorb',
+ '#101 Electrode',
+ '#102 Exeggcute',
+ '#103 Exeggutor',
+ '#104 Cubone',
+ '#105 Marowak',
+ '#106 Hitmonlee',
+ '#107 Hitmonchan',
+ '#108 Lickitung',
+ '#109 Koffing',
+ '#110 Weezing',
+ '#111 Rhyhorn',
+ '#112 Rhydon',
+ '#113 Chansey',
+ '#163 Tangela',
+ '#115 Kangaskhan',
+ '#116 Horsea',
+ '#117 Seadra',
+ '#118 Goldeen',
+ '#119 Seaking',
+ '#120 Staryu',
+ '#121 Starmie',
+ '#122 Mr. Mime',
+ '#123 Scyther',
+ '#124 Jynx',
+ '#125 Electabuzz',
+ '#126 Magmar',
+ '#127 Pinsir',
+ '#128 Tauros',
+ '#129 Magikarp',
+ '#130 Gyarados',
+ '#131 Lapras',
+ '#132 Ditto',
+ '#133 Eevee',
+ '#134 Vaporeon',
+ '#135 Jolteon',
+ '#136 Flareon',
+ '#137 Porygon',
+ '#138 Omanyte',
+ '#139 Omastar',
+ '#140 Kabuto',
+ '#141 Kabutops',
+ '#142 Aerodactyl',
+ '#143 Snorlax',
+ '#144 Articuno',
+ '#145 Zapdos',
+ '#146 Moltres',
+ '#147 Dratini',
+ '#148 Dragonair',
+ '#149 Dragonite',
+ '#150 Mewtwo',
+ '#151 Mew',
+ '#152 Chikorita',
+ '#153 Bayleef',
+ '#154 Meganium',
+ '#155 Cyndaquil',
+ '#156 Quilava',
+ '#163 Typhlosion',
+ '#158 Totodile',
+ '#159 Croconaw',
+ '#160 Feraligatr',
+ '#161 Sentret',
+ '#162 Furret',
+ '#163 Hoothoot',
+ '#164 Noctowl',
+ '#165 Ledyba',
+ '#166 Ledian',
+ '#167 Spinarak',
+ '#168 Ariados',
+ '#169 Crobat',
+ '#170 Chinchou',
+ '#171 Lanturn',
+ '#172 Pichu',
+ '#173 Cleffa',
+ '#174 Igglybuff',
+ '#175 Togepi',
+ '#176 Togetic',
+ '#177 Natu',
+ '#178 Xatu',
+ '#179 Mareep',
+ '#180 Flaaffy',
+ '#181 Ampharos',
+ '#182 Bellossom',
+ '#183 Marill',
+ '#184 Azumarill',
+ '#185 Sudowoodo',
+ '#186 Politoed',
+ '#187 Hoppip',
+ '#188 Skiploom',
+ '#189 Jumpluff',
+ '#190 Aipom',
+ '#191 Sunkern',
+ '#192 Sunflora',
+ '#193 Yanma',
+ '#194 Wooper',
+ '#195 Quagsire',
+ '#196 Espeon',
+ '#197 Umbreon',
+ '#198 Murkrow',
+ '#199 Slowking',
+ '#200 Misdreavus',
+ '#201 Unown',
+ '#202 Wobbuffet',
+ '#203 Girafarig',
+ '#204 Pineco',
+ '#205 Forretress',
+ '#206 Dunsparce',
+ '#207 Gligar',
+ '#208 Steelix',
+ '#209 Snubbull',
+ '#210 Granbull',
+ '#211 Qwilfish',
+ '#212 Scizor',
+ '#213 Shuckle',
+ '#214 Heracross',
+ '#215 Sneasel',
+ '#216 Teddiursa',
+ '#217 Ursaring',
+ '#218 Slugma',
+ '#219 Magcargo',
+ '#220 Swinub',
+ '#221 Piloswine',
+ '#222 Corsola',
+ '#223 Remoraid',
+ '#224 Octillery',
+ '#225 Delibird',
+ '#226 Mantine',
+ '#227 Skarmory',
+ '#228 Houndour',
+ '#229 Houndoom',
+ '#230 Kingdra',
+ '#231 Phanpy',
+ '#232 Donphan',
+ '#233 Porygon2',
+ '#234 Stantler',
+ '#235 Smeargle',
+ '#236 Tyrogue',
+ '#237 Hitmontop',
+ '#238 Smoochum',
+ '#239 Elekid',
+ '#240 Magby',
+ '#241 Miltank',
+ '#242 Blissey',
+ '#243 Raikou',
+ '#244 Entei',
+ '#245 Suicune',
+ '#246 Larvitar',
+ '#247 Pupitar',
+ '#248 Tyranitar',
+ '#249 Lugia',
+ '#250 Ho-oh',
+ '#251 Celebi',
+ '#252 Treecko',
+ '#253 Grovyle',
+ '#254 Sceptile',
+ '#255 Torchic',
+ '#256 Combusken',
+ '#257 Blaziken',
+ '#258 Mudkip',
+ '#259 Marshtomp',
+ '#260 Swampert',
+ '#261 Poochyena',
+ '#262 Mightyena',
+ '#263 Zigzagoon',
+ '#264 Linoone',
+ '#265 Wurmple',
+ '#266 Silcoon',
+ '#267 Beautifly',
+ '#268 Cascoon',
+ '#269 Dustox',
+ '#270 Lotad',
+ '#271 Lombre',
+ '#272 Ludicolo',
+ '#273 Seedot',
+ '#274 Nuzleaf',
+ '#275 Shiftry',
+ '#276 Taillow',
+ '#277 Swellow',
+ '#278 Wingull',
+ '#279 Pelipper',
+ '#280 Ralts',
+ '#281 Kirlia',
+ '#282 Gardevoir',
+ '#283 Surskit',
+ '#284 Masquerain',
+ '#285 Shroomish',
+ '#286 Breloom',
+ '#287 Slakoth',
+ '#288 Vigoroth',
+ '#289 Slaking',
+ '#290 Nincada',
+ '#291 Ninjask',
+ '#292 Shedinja',
+ '#293 Whismur',
+ '#294 Loudred',
+ '#295 Exploud',
+ '#296 Makuhita',
+ '#297 Hariyama',
+ '#298 Azurill',
+ '#299 Nosepass',
+ '#300 Skitty',
+ '#301 Delcatty',
+ '#302 Sableye',
+ '#303 Mawile',
+ '#304 Aron',
+ '#305 Lairon',
+ '#306 Aggron',
+ '#307 Meditite',
+ '#308 Medicham',
+ '#309 Electrike',
+ '#310 Manectric',
+ '#311 Plusle',
+ '#312 Minun',
+ '#313 Volbeat',
+ '#314 Illumise',
+ '#315 Roselia',
+ '#316 Gulpin',
+ '#317 Swalot',
+ '#318 Carvanha',
+ '#319 Sharpedo',
+ '#320 Wailmer',
+ '#321 Wailord',
+ '#322 Numel',
+ '#323 Camerupt',
+ '#324 Torkoal',
+ '#325 Spoink',
+ '#326 Grumpig',
+ '#327 Spinda',
+ '#328 Trapinch',
+ '#329 Vibrava',
+ '#330 Flygon',
+ '#331 Cacnea',
+ '#332 Cacturne',
+ '#333 Swablu',
+ '#334 Altaria',
+ '#335 Zangoose',
+ '#336 Seviper',
+ '#337 Lunatone',
+ '#338 Solrock',
+ '#339 Barboach',
+ '#340 Whiscash',
+ '#341 Corphish',
+ '#342 Crawdaunt',
+ '#343 Baltoy',
+ '#344 Claydol',
+ '#345 Lileep',
+ '#346 Cradily',
+ '#347 Anorith',
+ '#348 Armaldo',
+ '#349 Feebas',
+ '#350 Milotic',
+ '#351 Castform',
+ '#352 Kecleon',
+ '#353 Shuppet',
+ '#354 Banette',
+ '#355 Duskull',
+ '#356 Dusclops',
+ '#357 Tropius',
+ '#358 Chimecho',
+ '#359 Absol',
+ '#360 Wynaut',
+ '#361 Snorunt',
+ '#362 Glalie',
+ '#363 Spheal',
+ '#364 Sealeo',
+ '#365 Walrein',
+ '#366 Clamperl',
+ '#367 Huntail',
+ '#368 Gorebyss',
+ '#369 Relicanth',
+ '#370 Luvdisc',
+ '#371 Bagon',
+ '#372 Shelgon',
+ '#373 Salamence',
+ '#374 Beldum',
+ '#375 Metang',
+ '#376 Metagross',
+ '#377 Regirock',
+ '#378 Regice',
+ '#379 Registeel',
+ '#380 Latias',
+ '#381 Latios',
+ '#382 Kyogre',
+ '#383 Groudon',
+ '#384 Rayquaza',
+ '#385 Jirachi',
+ '#386 Deoxys']
+moves_rs = ['-- No Move -- (0)',
+ 'Pound (1)',
+ 'Karate Chop (2)',
+ 'Doubleslap (3)',
+ 'Comet Punch (4)',
+ 'Mega Punch (5)',
+ 'Pay Day (6)',
+ 'Fire Punch (7)',
+ 'Ice Punch (8)',
+ 'Thunderpunch (9)',
+ 'Scratch (10)',
+ 'Vicegrip (11)',
+ 'Guillotine (12)',
+ 'Razor Wind (13)',
+ 'Swords Dance (14)',
+ 'Cut (15)',
+ 'Gust (16)',
+ 'Wing Attack (17)',
+ 'Whirlwind (18)',
+ 'Fly (19)',
+ 'Bind (20)',
+ 'Slam (21)',
+ 'Vine Whip (22)',
+ 'Stomp (23)',
+ 'Double Kick (24)',
+ 'Mega Kick (25)',
+ 'Jump Kick (26)',
+ 'Rolling Kick (27)',
+ 'Sand-attack (28)',
+ 'Headbutt (29)',
+ 'Horn Attack (30)',
+ 'Fury Attack (31)',
+ 'Horn Drill (32)',
+ 'Tackle (33)',
+ 'Body Slam (34)',
+ 'Wrap (35)',
+ 'Take Down (36)',
+ 'Thrash (37)',
+ 'Double-edge (38)',
+ 'Tail Whip (39)',
+ 'Poison Sting (40)',
+ 'Twineedle (41)',
+ 'Pin Missile (42)',
+ 'Leer (43)',
+ 'Bite (44)',
+ 'Growl (45)',
+ 'Roar (46)',
+ 'Sing (47)',
+ 'Supersonic (48)',
+ 'Sonicboom (49)',
+ 'Disable (50)',
+ 'Acid (51)',
+ 'Ember (52)',
+ 'Flamethrower (53)',
+ 'Mist (54)',
+ 'Water Gun (55)',
+ 'Hydro Pump (56)',
+ 'Surf (57)',
+ 'Ice Beam (58)',
+ 'Blizzard (59)',
+ 'Psybeam (60)',
+ 'Bubblebeam (61)',
+ 'Aurora Beam (62)',
+ 'Hyper Beam (63)',
+ 'Peck (64)',
+ 'Drill Peck (65)',
+ 'Submission (66)',
+ 'Low Kick (67)',
+ 'Counter (68)',
+ 'Seismic Toss (69)',
+ 'Strength (70)',
+ 'Absorb (71)',
+ 'Mega Drain (72)',
+ 'Leech Seed (73)',
+ 'Growth (74)',
+ 'Razor Leaf (75)',
+ 'Solarbeam (76)',
+ 'Poisonpowder (77)',
+ 'Stun Spore (78)',
+ 'Sleep Powder (79)',
+ 'Petal Dance (80)',
+ 'String Shot (81)',
+ 'Dragon Rage (82)',
+ 'Fire Spin (83)',
+ 'Thundershock (84)',
+ 'Thunderbolt (85)',
+ 'Thunder Wave (86)',
+ 'Thunder (87)',
+ 'Rock Throw (88)',
+ 'Earthquake (89)',
+ 'Fissure (90)',
+ 'Dig (91)',
+ 'Toxic (92)',
+ 'Confusion (93)',
+ 'Psychic (94)',
+ 'Hypnosis (95)',
+ 'Meditate (96)',
+ 'Agility (97)',
+ 'Quick Attack (98)',
+ 'Rage (99)',
+ 'Teleport (100)',
+ 'Night Shade (101)',
+ 'Mimic (102)',
+ 'Screech (103)',
+ 'Double Team (104)',
+ 'Recover (105)',
+ 'Harden (106)',
+ 'Minimize (107)',
+ 'Smokescreen (108)',
+ 'Confuse Ray (109)',
+ 'Withdraw (110)',
+ 'Defense Curl (111)',
+ 'Barrier (112)',
+ 'Light Screen (113)',
+ 'Haze (163)',
+ 'Reflect (115)',
+ 'Focus Energy (116)',
+ 'Bide (117)',
+ 'Metronome (118)',
+ 'Mirror Move (119)',
+ 'Selfdestruct (120)',
+ 'Egg Bomb (121)',
+ 'Lick (122)',
+ 'Smog (123)',
+ 'Sludge (124)',
+ 'Bone Club (125)',
+ 'Fire Blast (126)',
+ 'Waterfall (127)',
+ 'Clamp (128)',
+ 'Swift (129)',
+ 'Skull Bash (130)',
+ 'Spike Cannon (131)',
+ 'Constrict (132)',
+ 'Amnesia (133)',
+ 'Kinesis (134)',
+ 'Softboiled (135)',
+ 'Hi Jump Kick (136)',
+ 'Glare (137)',
+ 'Dream Eater (138)',
+ 'Poison Gas (139)',
+ 'Barrage (140)',
+ 'Leech Life (141)',
+ 'Lovely Kiss (142)',
+ 'Sky Attack (143)',
+ 'Transform (144)',
+ 'Bubble (145)',
+ 'Dizzy Punch (146)',
+ 'Spore (147)',
+ 'Flash (148)',
+ 'Psywave (149)',
+ 'Splash (150)',
+ 'Acid Armor (151)',
+ 'Crabhammer (152)',
+ 'Explosion (153)',
+ 'Fury Swipes (154)',
+ 'Bonemerang (155)',
+ 'Rest (156)',
+ 'Rock Slide (163)',
+ 'Hyper Fang (158)',
+ 'Sharpen (159)',
+ 'Conversion (160)',
+ 'Tri Attack (161)',
+ 'Super Fang (162)',
+ 'Slash (163)',
+ 'Substitute (164)',
+ 'Struggle (165)',
+ 'Sketch (166)',
+ 'Triple Kick (167)',
+ 'Thief (168)',
+ 'Spider Web (169)',
+ 'Mind Reader (170)',
+ 'Nightmare (171)',
+ 'Flame Wheel (172)',
+ 'Snore (173)',
+ 'Curse (174)',
+ 'Flail (175)',
+ 'Conversion 2 (176)',
+ 'Aeroblast (177)',
+ 'Cotton Spore (178)',
+ 'Reversal (179)',
+ 'Spite (180)',
+ 'Powder Snow (181)',
+ 'Protect (182)',
+ 'Mach Punch (183)',
+ 'Scary Face (184)',
+ 'Faint Attack (185)',
+ 'Sweet Kiss (186)',
+ 'Belly Drum (187)',
+ 'Sludge Bomb (188)',
+ 'Mud-slap (189)',
+ 'Octazooka (190)',
+ 'Spikes (191)',
+ 'Zap Cannon (192)',
+ 'Foresight (193)',
+ 'Destiny Bond (194)',
+ 'Perish Song (195)',
+ 'Icy Wind (196)',
+ 'Detect (197)',
+ 'Bone Rush (198)',
+ 'Lock-on (199)',
+ 'Outrage (200)',
+ 'Sandstorm (201)',
+ 'Giga Drain (202)',
+ 'Endure (203)',
+ 'Charm (204)',
+ 'Rollout (205)',
+ 'False Swipe (206)',
+ 'Swagger (207)',
+ 'Milk Drink (208)',
+ 'Spark (209)',
+ 'Fury Cutter (210)',
+ 'Steel Wing (211)',
+ 'Mean Look (212)',
+ 'Attract (213)',
+ 'Sleep Talk (214)',
+ 'Heal Bell (215)',
+ 'Return (216)',
+ 'Present (217)',
+ 'Frustration (218)',
+ 'Safeguard (219)',
+ 'Pain Split (220)',
+ 'Sacred Fire (221)',
+ 'Magnitude (222)',
+ 'Dynamicpunch (223)',
+ 'Megahorn (224)',
+ 'Dragonbreath (225)',
+ 'Baton Pass (226)',
+ 'Encore (227)',
+ 'Pursuit (228)',
+ 'Rapid Spin (229)',
+ 'Sweet Scent (230)',
+ 'Iron Tail (231)',
+ 'Metal Claw (232)',
+ 'Vital Throw (233)',
+ 'Morning Sun (234)',
+ 'Synthesis (235)',
+ 'Moonlight (236)',
+ 'Hidden Power (237)',
+ 'Cross Chop (238)',
+ 'Twister (239)',
+ 'Rain Dance (240)',
+ 'Sunny Day (241)',
+ 'Crunch (242)',
+ 'Mirror Coat (243)',
+ 'Psych Up (244)',
+ 'Extremespeed (245)',
+ 'Ancientpower (246)',
+ 'Shadow Ball (247)',
+ 'Future Sight (248)',
+ 'Rock Smash (249)',
+ 'Whirlpool (250)',
+ 'Beat Up (251)',
+ 'Fake Out (252)',
+ 'Uproar (253)',
+ 'Stockpile (254)',
+ 'Spit Up (255)',
+ 'Swallow (256)',
+ 'Heat Wave (257)',
+ 'Hail (258)',
+ 'Torment (259)',
+ 'Flatter (260)',
+ 'Will-o-wisp (261)',
+ 'Memento (262)',
+ 'Facade (263)',
+ 'Focus Punch (264)',
+ 'Smellingsalt (265)',
+ 'Follow Me (266)',
+ 'Nature Power (267)',
+ 'Charge (268)',
+ 'Taunt (269)',
+ 'Helping Hand (270)',
+ 'Trick (271)',
+ 'Role Play (272)',
+ 'Wish (273)',
+ 'Assist (274)',
+ 'Ingrain (275)',
+ 'Superpower (276)',
+ 'Magic Coat (277)',
+ 'Recycle (278)',
+ 'Revenge (279)',
+ 'Brick Break (280)',
+ 'Yawn (281)',
+ 'Knock Off (282)',
+ 'Endeavor (283)',
+ 'Eruption (284)',
+ 'Skill Swap (285)',
+ 'Imprison (286)',
+ 'Refresh (287)',
+ 'Grudge (288)',
+ 'Snatch (289)',
+ 'Secret Power (290)',
+ 'Dive (291)',
+ 'Arm Thrust (292)',
+ 'Camouflage (293)',
+ 'Tail Glow (294)',
+ 'Luster Purge (295)',
+ 'Mist Ball (296)',
+ 'Featherdance (297)',
+ 'Teeter Dance (298)',
+ 'Blaze Kick (299)',
+ 'Mud Sport (300)',
+ 'Ice Ball (301)',
+ 'Needle Arm (302)',
+ 'Slack Off (303)',
+ 'Hyper Voice (304)',
+ 'Poison Fang (305)',
+ 'Crush Claw (306)',
+ 'Blast Burn (307)',
+ 'Hydro Cannon (308)',
+ 'Meteor Mash (309)',
+ 'Astonish (310)',
+ 'Weather Ball (311)',
+ 'Aromatherapy (312)',
+ 'Fake Tears (313)',
+ 'Air Cutter (314)',
+ 'Overheat (315)',
+ 'Odor Sleuth (316)',
+ 'Rock Tomb (317)',
+ 'Silver Wind (318)',
+ 'Metal Sound (319)',
+ 'Grasswhistle (320)',
+ 'Tickle (321)',
+ 'Cosmic Power (322)',
+ 'Water Spout (323)',
+ 'Signal Beam (324)',
+ 'Shadow Punch (325)',
+ 'Extrasensory (326)',
+ 'Sky Uppercut (327)',
+ 'Sand Tomb (328)',
+ 'Sheer Cold (329)',
+ 'Muddy Water (330)',
+ 'Bullet Seed (331)',
+ 'Aerial Ace (332)',
+ 'Icicle Spear (333)',
+ 'Iron Defense (334)',
+ 'Block (335)',
+ 'Howl (336)',
+ 'Dragon Claw (337)',
+ 'Frenzy Plant (338)',
+ 'Bulk Up (339)',
+ 'Bounce (340)',
+ 'Mud Shot (341)',
+ 'Poison Tail (342)',
+ 'Covet (343)',
+ 'Volt Tackle (344)',
+ 'Magical Leaf (345)',
+ 'Water Sport (346)',
+ 'Calm Mind (347)',
+ 'Leaf Blade (348)',
+ 'Dragon Dance (349)',
+ 'Rock Blast (350)',
+ 'Shock Wave (351)',
+ 'Water Pulse (352)',
+ 'Doom Desire (353)',
+ 'Psycho Boost (354)']
+types_rs = ['Normal (0)',
+ 'Fighting (1)',
+ 'Flying (2)',
+ 'Poison (3)',
+ 'Ground (4)',
+ 'Rock (5)',
+ 'Bird (6)',
+ 'Bug (7)',
+ 'Ghost (8)',
+ 'Steel (9)',
+ '~10',
+ '~11',
+ '~12',
+ '~13',
+ '~14',
+ '~15',
+ '~16',
+ '~17',
+ '~18',
+ '~19',
+ 'Fire (20)',
+ 'Water (21)',
+ 'Grass (22)',
+ 'Electric (23)',
+ 'Psychic (24)',
+ 'Ice (25)',
+ 'Dragon (26)',
+ 'Dark (27)',
+ '~28',
+ '~29',
+ '~30',
+ '~31',
+ '~32',
+ '~33',
+ '~34',
+ '~35',
+ '~36',
+ '~37',
+ '~38',
+ '~39',
+ '~40',
+ '~41',
+ '~42',
+ '~43',
+ '~44',
+ '~45',
+ '~46',
+ '~47',
+ '~48',
+ '~49',
+ '~50',
+ '~51',
+ '~52',
+ '~53',
+ '~54',
+ '~55',
+ '~56',
+ '~57',
+ '~58',
+ '~59',
+ '~60',
+ '~61',
+ '~62',
+ '~63',
+ '~64',
+ '~65',
+ '~66',
+ '~67',
+ '~68',
+ '~69',
+ '~70',
+ '~71',
+ '~72',
+ '~73',
+ '~74',
+ '~75',
+ '~76',
+ '~77',
+ '~78',
+ '~79',
+ '~80',
+ '~81',
+ '~82',
+ '~83',
+ '~84',
+ '~85',
+ '~86',
+ '~87',
+ '~88',
+ '~89',
+ '~90',
+ '~91',
+ '~92',
+ '~93',
+ '~94',
+ '~95',
+ '~96',
+ '~97',
+ '~98',
+ '~99',
+ '~100',
+ '~101',
+ '~102',
+ '~103',
+ '~104',
+ '~105',
+ '~106',
+ '~107',
+ '~108',
+ '~109',
+ '~110',
+ '~111',
+ '~112',
+ '~113',
+ '~163',
+ '~115',
+ '~116',
+ '~117',
+ '~118',
+ '~119',
+ '~120',
+ '~121',
+ '~122',
+ '~123',
+ '~124',
+ '~125',
+ '~126',
+ '~127',
+ '~128',
+ '~129',
+ '~130',
+ '~131',
+ '~132',
+ '~133',
+ '~134',
+ '~135',
+ '~136',
+ '~137',
+ '~138',
+ '~139',
+ '~140',
+ '~141',
+ '~142',
+ '~143',
+ '~144',
+ '~145',
+ '~146',
+ '~147',
+ '~148',
+ '~149',
+ '~150',
+ '~151',
+ '~152',
+ '~153',
+ '~154',
+ '~155',
+ '~156',
+ '~163',
+ '~158',
+ '~159',
+ '~160',
+ '~161',
+ '~162',
+ '~163',
+ '~164',
+ '~165',
+ '~166',
+ '~167',
+ '~168',
+ '~169',
+ '~170',
+ '~171',
+ '~172',
+ '~173',
+ '~174',
+ '~175',
+ '~176',
+ '~177',
+ '~178',
+ '~179',
+ '~180',
+ '~181',
+ '~182',
+ '~183',
+ '~184',
+ '~185',
+ '~186',
+ '~187',
+ '~188',
+ '~189',
+ '~190',
+ '~191',
+ '~192',
+ '~193',
+ '~194',
+ '~195',
+ '~196',
+ '~197',
+ '~198',
+ '~199',
+ '~200',
+ '~201',
+ '~202',
+ '~203',
+ '~204',
+ '~205',
+ '~206',
+ '~207',
+ '~208',
+ '~209',
+ '~210',
+ '~211',
+ '~212',
+ '~213',
+ '~214',
+ '~215',
+ '~216',
+ '~217',
+ '~218',
+ '~219',
+ '~220',
+ '~221',
+ '~222',
+ '~223',
+ '~224',
+ '~225',
+ '~226',
+ '~227',
+ '~228',
+ '~229',
+ '~230',
+ '~231',
+ '~232',
+ '~233',
+ '~234',
+ '~235',
+ '~236',
+ '~237',
+ '~238',
+ '~239',
+ '~240',
+ '~241',
+ '~242',
+ '~243',
+ '~244',
+ '~245',
+ '~246',
+ '~247',
+ '~248',
+ '~249',
+ '~250',
+ '~251',
+ '~252',
+ '~253',
+ '~254',
+ '~255']
+growthrates = [205,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 4,
+ 4,
+ 0,
+ 0,
+ 4,
+ 4,
+ 0,
+ 0,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 5,
+ 5,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 4,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 4,
+ 4,
+ 4,
+ 4,
+ 0,
+ 5,
+ 5,
+ 0,
+ 4,
+ 4,
+ 4,
+ 4,
+ 0,
+ 0,
+ 3,
+ 3,
+ 3,
+ 3,
+ 4,
+ 4,
+ 0,
+ 3,
+ 3,
+ 3,
+ 3,
+ 4,
+ 3,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 3,
+ 0,
+ 4,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 3,
+ 0,
+ 4,
+ 4,
+ 0,
+ 0,
+ 3,
+ 5,
+ 3,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 5,
+ 4,
+ 0,
+ 0,
+ 4,
+ 5,
+ 5,
+ 5,
+ 5,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 4,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 5,
+ 4,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 5,
+ 3,
+ 255,
+ 15,
+ 224,
+ 255]
+base_hp = [255,
+ 45,
+ 60,
+ 80,
+ 39,
+ 58,
+ 78,
+ 44,
+ 59,
+ 79,
+ 45,
+ 50,
+ 60,
+ 40,
+ 45,
+ 65,
+ 40,
+ 63,
+ 83,
+ 30,
+ 55,
+ 40,
+ 65,
+ 35,
+ 60,
+ 35,
+ 60,
+ 50,
+ 75,
+ 55,
+ 70,
+ 90,
+ 46,
+ 61,
+ 81,
+ 70,
+ 95,
+ 38,
+ 73,
+ 115,
+ 140,
+ 40,
+ 75,
+ 45,
+ 60,
+ 75,
+ 35,
+ 60,
+ 60,
+ 70,
+ 10,
+ 35,
+ 40,
+ 65,
+ 50,
+ 80,
+ 40,
+ 65,
+ 55,
+ 90,
+ 40,
+ 65,
+ 90,
+ 25,
+ 40,
+ 55,
+ 70,
+ 80,
+ 90,
+ 50,
+ 65,
+ 80,
+ 40,
+ 80,
+ 40,
+ 55,
+ 80,
+ 50,
+ 65,
+ 90,
+ 95,
+ 25,
+ 50,
+ 52,
+ 35,
+ 60,
+ 65,
+ 90,
+ 80,
+ 105,
+ 30,
+ 50,
+ 30,
+ 45,
+ 60,
+ 35,
+ 60,
+ 85,
+ 30,
+ 55,
+ 40,
+ 60,
+ 60,
+ 95,
+ 50,
+ 60,
+ 50,
+ 50,
+ 90,
+ 40,
+ 65,
+ 80,
+ 105,
+ 250,
+ 65,
+ 105,
+ 30,
+ 55,
+ 45,
+ 80,
+ 30,
+ 60,
+ 40,
+ 70,
+ 65,
+ 65,
+ 65,
+ 65,
+ 75,
+ 20,
+ 95,
+ 130,
+ 48,
+ 55,
+ 130,
+ 65,
+ 65,
+ 65,
+ 35,
+ 70,
+ 30,
+ 60,
+ 80,
+ 160,
+ 90,
+ 90,
+ 90,
+ 41,
+ 61,
+ 91,
+ 106,
+ 100,
+ 45,
+ 60,
+ 80,
+ 39,
+ 58,
+ 78,
+ 50,
+ 65,
+ 85,
+ 35,
+ 85,
+ 60,
+ 100,
+ 40,
+ 55,
+ 40,
+ 70,
+ 85,
+ 75,
+ 125,
+ 20,
+ 50,
+ 90,
+ 35,
+ 55,
+ 40,
+ 65,
+ 55,
+ 70,
+ 90,
+ 75,
+ 70,
+ 100,
+ 70,
+ 90,
+ 35,
+ 55,
+ 75,
+ 55,
+ 30,
+ 75,
+ 65,
+ 55,
+ 95,
+ 65,
+ 95,
+ 60,
+ 95,
+ 60,
+ 48,
+ 190,
+ 70,
+ 50,
+ 75,
+ 100,
+ 65,
+ 75,
+ 60,
+ 90,
+ 65,
+ 70,
+ 20,
+ 80,
+ 55,
+ 60,
+ 90,
+ 40,
+ 50,
+ 50,
+ 100,
+ 55,
+ 35,
+ 75,
+ 45,
+ 65,
+ 65,
+ 45,
+ 75,
+ 75,
+ 90,
+ 90,
+ 85,
+ 73,
+ 55,
+ 35,
+ 50,
+ 45,
+ 45,
+ 45,
+ 95,
+ 255,
+ 90,
+ 115,
+ 100,
+ 50,
+ 70,
+ 100,
+ 106,
+ 106,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255]
+base_attack = [255,
+ 49,
+ 62,
+ 82,
+ 52,
+ 64,
+ 84,
+ 48,
+ 63,
+ 83,
+ 30,
+ 20,
+ 45,
+ 35,
+ 25,
+ 80,
+ 45,
+ 60,
+ 80,
+ 56,
+ 81,
+ 60,
+ 90,
+ 60,
+ 85,
+ 55,
+ 90,
+ 75,
+ 100,
+ 47,
+ 62,
+ 82,
+ 57,
+ 72,
+ 92,
+ 45,
+ 70,
+ 41,
+ 76,
+ 45,
+ 70,
+ 45,
+ 80,
+ 50,
+ 65,
+ 80,
+ 70,
+ 95,
+ 55,
+ 65,
+ 55,
+ 80,
+ 45,
+ 70,
+ 52,
+ 82,
+ 80,
+ 105,
+ 70,
+ 110,
+ 50,
+ 65,
+ 85,
+ 20,
+ 35,
+ 50,
+ 80,
+ 100,
+ 130,
+ 75,
+ 90,
+ 105,
+ 40,
+ 70,
+ 80,
+ 95,
+ 110,
+ 85,
+ 100,
+ 65,
+ 75,
+ 35,
+ 60,
+ 65,
+ 85,
+ 110,
+ 45,
+ 70,
+ 80,
+ 105,
+ 65,
+ 95,
+ 35,
+ 50,
+ 65,
+ 45,
+ 48,
+ 73,
+ 105,
+ 130,
+ 30,
+ 50,
+ 40,
+ 95,
+ 50,
+ 80,
+ 120,
+ 105,
+ 55,
+ 65,
+ 90,
+ 85,
+ 130,
+ 5,
+ 55,
+ 95,
+ 40,
+ 65,
+ 67,
+ 92,
+ 45,
+ 75,
+ 45,
+ 110,
+ 50,
+ 83,
+ 95,
+ 125,
+ 100,
+ 10,
+ 125,
+ 85,
+ 48,
+ 55,
+ 65,
+ 65,
+ 130,
+ 60,
+ 40,
+ 60,
+ 80,
+ 115,
+ 105,
+ 110,
+ 85,
+ 90,
+ 100,
+ 64,
+ 84,
+ 134,
+ 110,
+ 100,
+ 49,
+ 62,
+ 82,
+ 52,
+ 64,
+ 84,
+ 65,
+ 80,
+ 105,
+ 46,
+ 76,
+ 30,
+ 50,
+ 20,
+ 35,
+ 60,
+ 90,
+ 90,
+ 38,
+ 58,
+ 40,
+ 25,
+ 30,
+ 20,
+ 40,
+ 50,
+ 75,
+ 40,
+ 55,
+ 75,
+ 80,
+ 20,
+ 50,
+ 100,
+ 75,
+ 35,
+ 45,
+ 55,
+ 70,
+ 30,
+ 75,
+ 65,
+ 45,
+ 85,
+ 65,
+ 65,
+ 85,
+ 75,
+ 60,
+ 72,
+ 33,
+ 80,
+ 65,
+ 90,
+ 70,
+ 75,
+ 85,
+ 80,
+ 120,
+ 95,
+ 130,
+ 10,
+ 125,
+ 95,
+ 80,
+ 130,
+ 40,
+ 50,
+ 50,
+ 100,
+ 55,
+ 65,
+ 105,
+ 55,
+ 40,
+ 80,
+ 60,
+ 90,
+ 95,
+ 60,
+ 120,
+ 80,
+ 95,
+ 20,
+ 35,
+ 95,
+ 30,
+ 63,
+ 75,
+ 80,
+ 10,
+ 85,
+ 115,
+ 75,
+ 64,
+ 84,
+ 134,
+ 90,
+ 130,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255]
+base_defense = [255,
+ 49,
+ 63,
+ 83,
+ 43,
+ 58,
+ 78,
+ 65,
+ 80,
+ 100,
+ 35,
+ 55,
+ 50,
+ 30,
+ 50,
+ 40,
+ 40,
+ 55,
+ 75,
+ 35,
+ 60,
+ 30,
+ 65,
+ 44,
+ 69,
+ 30,
+ 55,
+ 85,
+ 110,
+ 52,
+ 67,
+ 87,
+ 40,
+ 57,
+ 77,
+ 48,
+ 73,
+ 40,
+ 75,
+ 20,
+ 45,
+ 35,
+ 70,
+ 55,
+ 70,
+ 85,
+ 55,
+ 80,
+ 50,
+ 60,
+ 25,
+ 50,
+ 35,
+ 60,
+ 48,
+ 78,
+ 35,
+ 60,
+ 45,
+ 80,
+ 40,
+ 65,
+ 95,
+ 15,
+ 30,
+ 45,
+ 50,
+ 70,
+ 80,
+ 35,
+ 50,
+ 65,
+ 35,
+ 65,
+ 100,
+ 115,
+ 130,
+ 55,
+ 70,
+ 65,
+ 110,
+ 70,
+ 95,
+ 55,
+ 45,
+ 70,
+ 55,
+ 80,
+ 50,
+ 75,
+ 100,
+ 180,
+ 30,
+ 45,
+ 60,
+ 160,
+ 45,
+ 70,
+ 90,
+ 115,
+ 50,
+ 70,
+ 80,
+ 85,
+ 95,
+ 110,
+ 53,
+ 79,
+ 75,
+ 95,
+ 120,
+ 95,
+ 120,
+ 5,
+ 115,
+ 80,
+ 70,
+ 95,
+ 60,
+ 65,
+ 55,
+ 85,
+ 65,
+ 80,
+ 35,
+ 57,
+ 57,
+ 100,
+ 95,
+ 55,
+ 79,
+ 80,
+ 48,
+ 50,
+ 60,
+ 60,
+ 60,
+ 70,
+ 100,
+ 125,
+ 90,
+ 105,
+ 65,
+ 65,
+ 100,
+ 85,
+ 90,
+ 45,
+ 65,
+ 95,
+ 90,
+ 100,
+ 65,
+ 80,
+ 100,
+ 43,
+ 58,
+ 78,
+ 64,
+ 80,
+ 100,
+ 34,
+ 64,
+ 30,
+ 50,
+ 30,
+ 50,
+ 40,
+ 70,
+ 80,
+ 38,
+ 58,
+ 15,
+ 28,
+ 15,
+ 65,
+ 85,
+ 45,
+ 70,
+ 40,
+ 55,
+ 75,
+ 85,
+ 50,
+ 80,
+ 115,
+ 75,
+ 40,
+ 50,
+ 70,
+ 55,
+ 30,
+ 55,
+ 45,
+ 45,
+ 85,
+ 60,
+ 110,
+ 42,
+ 80,
+ 60,
+ 48,
+ 58,
+ 65,
+ 90,
+ 140,
+ 70,
+ 105,
+ 200,
+ 50,
+ 75,
+ 75,
+ 100,
+ 230,
+ 75,
+ 55,
+ 50,
+ 75,
+ 40,
+ 120,
+ 40,
+ 80,
+ 85,
+ 35,
+ 75,
+ 45,
+ 70,
+ 140,
+ 30,
+ 50,
+ 95,
+ 60,
+ 120,
+ 90,
+ 62,
+ 35,
+ 35,
+ 95,
+ 15,
+ 37,
+ 37,
+ 105,
+ 10,
+ 75,
+ 85,
+ 115,
+ 50,
+ 70,
+ 110,
+ 130,
+ 90,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255]
+base_speed = [255,
+ 45,
+ 60,
+ 80,
+ 65,
+ 80,
+ 100,
+ 43,
+ 58,
+ 78,
+ 45,
+ 30,
+ 70,
+ 50,
+ 35,
+ 75,
+ 56,
+ 71,
+ 91,
+ 72,
+ 97,
+ 70,
+ 100,
+ 55,
+ 80,
+ 90,
+ 100,
+ 40,
+ 65,
+ 41,
+ 56,
+ 76,
+ 50,
+ 65,
+ 85,
+ 35,
+ 60,
+ 65,
+ 100,
+ 20,
+ 45,
+ 55,
+ 90,
+ 30,
+ 40,
+ 50,
+ 25,
+ 30,
+ 45,
+ 90,
+ 95,
+ 120,
+ 90,
+ 115,
+ 55,
+ 85,
+ 70,
+ 95,
+ 60,
+ 95,
+ 90,
+ 90,
+ 70,
+ 90,
+ 105,
+ 120,
+ 35,
+ 45,
+ 55,
+ 40,
+ 55,
+ 70,
+ 70,
+ 100,
+ 20,
+ 35,
+ 45,
+ 90,
+ 105,
+ 15,
+ 30,
+ 45,
+ 70,
+ 60,
+ 75,
+ 100,
+ 45,
+ 70,
+ 25,
+ 50,
+ 40,
+ 70,
+ 80,
+ 95,
+ 110,
+ 70,
+ 42,
+ 67,
+ 50,
+ 75,
+ 100,
+ 140,
+ 40,
+ 55,
+ 35,
+ 45,
+ 87,
+ 76,
+ 30,
+ 35,
+ 60,
+ 25,
+ 40,
+ 50,
+ 60,
+ 90,
+ 60,
+ 85,
+ 63,
+ 68,
+ 85,
+ 115,
+ 90,
+ 105,
+ 95,
+ 105,
+ 93,
+ 85,
+ 110,
+ 80,
+ 81,
+ 60,
+ 48,
+ 55,
+ 65,
+ 130,
+ 65,
+ 40,
+ 35,
+ 55,
+ 55,
+ 80,
+ 130,
+ 30,
+ 85,
+ 100,
+ 90,
+ 50,
+ 70,
+ 80,
+ 130,
+ 100,
+ 45,
+ 60,
+ 80,
+ 65,
+ 80,
+ 100,
+ 43,
+ 58,
+ 78,
+ 20,
+ 90,
+ 50,
+ 70,
+ 55,
+ 85,
+ 30,
+ 40,
+ 130,
+ 67,
+ 67,
+ 60,
+ 15,
+ 15,
+ 20,
+ 40,
+ 70,
+ 95,
+ 35,
+ 45,
+ 55,
+ 50,
+ 40,
+ 50,
+ 30,
+ 70,
+ 50,
+ 80,
+ 110,
+ 85,
+ 30,
+ 30,
+ 95,
+ 15,
+ 35,
+ 110,
+ 65,
+ 91,
+ 30,
+ 85,
+ 48,
+ 33,
+ 85,
+ 15,
+ 40,
+ 45,
+ 85,
+ 30,
+ 30,
+ 45,
+ 85,
+ 65,
+ 5,
+ 85,
+ 115,
+ 40,
+ 55,
+ 20,
+ 30,
+ 50,
+ 50,
+ 35,
+ 65,
+ 45,
+ 75,
+ 70,
+ 70,
+ 65,
+ 95,
+ 85,
+ 40,
+ 50,
+ 60,
+ 85,
+ 75,
+ 35,
+ 70,
+ 65,
+ 95,
+ 83,
+ 100,
+ 55,
+ 115,
+ 100,
+ 85,
+ 41,
+ 51,
+ 61,
+ 110,
+ 90,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255]
+base_specialattack = [255,
+ 65,
+ 80,
+ 100,
+ 60,
+ 80,
+ 109,
+ 50,
+ 65,
+ 85,
+ 20,
+ 25,
+ 80,
+ 20,
+ 25,
+ 45,
+ 35,
+ 50,
+ 70,
+ 25,
+ 50,
+ 31,
+ 61,
+ 40,
+ 65,
+ 50,
+ 90,
+ 20,
+ 45,
+ 40,
+ 55,
+ 75,
+ 40,
+ 55,
+ 85,
+ 60,
+ 85,
+ 50,
+ 81,
+ 45,
+ 75,
+ 30,
+ 65,
+ 75,
+ 85,
+ 100,
+ 45,
+ 60,
+ 40,
+ 90,
+ 35,
+ 50,
+ 40,
+ 65,
+ 65,
+ 95,
+ 35,
+ 60,
+ 70,
+ 100,
+ 40,
+ 50,
+ 70,
+ 105,
+ 120,
+ 135,
+ 35,
+ 50,
+ 65,
+ 70,
+ 85,
+ 100,
+ 50,
+ 80,
+ 30,
+ 45,
+ 55,
+ 65,
+ 80,
+ 40,
+ 100,
+ 95,
+ 120,
+ 58,
+ 35,
+ 60,
+ 45,
+ 70,
+ 40,
+ 65,
+ 45,
+ 85,
+ 100,
+ 115,
+ 130,
+ 30,
+ 43,
+ 73,
+ 25,
+ 50,
+ 55,
+ 80,
+ 60,
+ 125,
+ 40,
+ 50,
+ 35,
+ 35,
+ 60,
+ 60,
+ 85,
+ 30,
+ 45,
+ 35,
+ 100,
+ 40,
+ 70,
+ 95,
+ 35,
+ 65,
+ 70,
+ 100,
+ 100,
+ 55,
+ 115,
+ 95,
+ 100,
+ 55,
+ 40,
+ 15,
+ 60,
+ 85,
+ 48,
+ 45,
+ 110,
+ 110,
+ 95,
+ 85,
+ 90,
+ 115,
+ 55,
+ 65,
+ 60,
+ 65,
+ 95,
+ 125,
+ 125,
+ 50,
+ 70,
+ 100,
+ 154,
+ 100,
+ 49,
+ 63,
+ 83,
+ 60,
+ 80,
+ 109,
+ 44,
+ 59,
+ 79,
+ 35,
+ 45,
+ 36,
+ 76,
+ 40,
+ 55,
+ 40,
+ 60,
+ 70,
+ 56,
+ 76,
+ 35,
+ 45,
+ 40,
+ 40,
+ 80,
+ 70,
+ 95,
+ 65,
+ 80,
+ 115,
+ 90,
+ 20,
+ 50,
+ 30,
+ 90,
+ 35,
+ 45,
+ 55,
+ 40,
+ 30,
+ 105,
+ 75,
+ 25,
+ 65,
+ 130,
+ 60,
+ 85,
+ 100,
+ 85,
+ 72,
+ 33,
+ 90,
+ 35,
+ 60,
+ 65,
+ 35,
+ 55,
+ 40,
+ 60,
+ 55,
+ 55,
+ 10,
+ 40,
+ 35,
+ 50,
+ 75,
+ 70,
+ 80,
+ 30,
+ 60,
+ 65,
+ 65,
+ 105,
+ 65,
+ 80,
+ 40,
+ 80,
+ 110,
+ 95,
+ 40,
+ 60,
+ 105,
+ 85,
+ 20,
+ 35,
+ 35,
+ 85,
+ 65,
+ 70,
+ 40,
+ 75,
+ 115,
+ 90,
+ 90,
+ 45,
+ 65,
+ 95,
+ 90,
+ 110,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255]
+base_specialdefense = [255,
+ 65,
+ 80,
+ 100,
+ 50,
+ 65,
+ 85,
+ 64,
+ 80,
+ 105,
+ 20,
+ 25,
+ 80,
+ 20,
+ 25,
+ 80,
+ 35,
+ 50,
+ 70,
+ 35,
+ 70,
+ 31,
+ 61,
+ 54,
+ 79,
+ 40,
+ 80,
+ 30,
+ 55,
+ 40,
+ 55,
+ 85,
+ 40,
+ 55,
+ 75,
+ 65,
+ 90,
+ 65,
+ 100,
+ 25,
+ 50,
+ 40,
+ 75,
+ 65,
+ 75,
+ 90,
+ 55,
+ 80,
+ 55,
+ 75,
+ 45,
+ 70,
+ 40,
+ 65,
+ 50,
+ 80,
+ 45,
+ 70,
+ 50,
+ 80,
+ 40,
+ 50,
+ 90,
+ 55,
+ 70,
+ 85,
+ 35,
+ 60,
+ 85,
+ 30,
+ 45,
+ 60,
+ 100,
+ 120,
+ 30,
+ 45,
+ 65,
+ 65,
+ 80,
+ 40,
+ 80,
+ 55,
+ 70,
+ 62,
+ 35,
+ 60,
+ 70,
+ 95,
+ 50,
+ 100,
+ 25,
+ 45,
+ 35,
+ 55,
+ 75,
+ 45,
+ 90,
+ 115,
+ 25,
+ 50,
+ 55,
+ 80,
+ 45,
+ 65,
+ 50,
+ 80,
+ 110,
+ 110,
+ 75,
+ 45,
+ 70,
+ 30,
+ 45,
+ 105,
+ 40,
+ 80,
+ 25,
+ 45,
+ 50,
+ 80,
+ 55,
+ 85,
+ 120,
+ 80,
+ 95,
+ 85,
+ 85,
+ 70,
+ 70,
+ 20,
+ 100,
+ 95,
+ 48,
+ 65,
+ 95,
+ 95,
+ 110,
+ 75,
+ 55,
+ 70,
+ 45,
+ 70,
+ 75,
+ 110,
+ 125,
+ 90,
+ 85,
+ 50,
+ 70,
+ 100,
+ 90,
+ 100,
+ 65,
+ 80,
+ 100,
+ 50,
+ 65,
+ 85,
+ 48,
+ 63,
+ 83,
+ 45,
+ 55,
+ 56,
+ 96,
+ 80,
+ 110,
+ 40,
+ 60,
+ 80,
+ 56,
+ 76,
+ 35,
+ 55,
+ 20,
+ 65,
+ 105,
+ 45,
+ 70,
+ 45,
+ 60,
+ 90,
+ 100,
+ 50,
+ 80,
+ 65,
+ 100,
+ 55,
+ 65,
+ 85,
+ 55,
+ 30,
+ 85,
+ 45,
+ 25,
+ 65,
+ 95,
+ 130,
+ 42,
+ 110,
+ 85,
+ 48,
+ 58,
+ 65,
+ 35,
+ 60,
+ 65,
+ 65,
+ 65,
+ 40,
+ 60,
+ 55,
+ 80,
+ 230,
+ 95,
+ 75,
+ 50,
+ 75,
+ 40,
+ 80,
+ 30,
+ 60,
+ 85,
+ 35,
+ 75,
+ 45,
+ 140,
+ 70,
+ 50,
+ 80,
+ 95,
+ 40,
+ 60,
+ 95,
+ 65,
+ 45,
+ 35,
+ 110,
+ 65,
+ 55,
+ 55,
+ 70,
+ 135,
+ 100,
+ 75,
+ 115,
+ 50,
+ 70,
+ 100,
+ 154,
+ 154,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255]
+base_special = [255,
+ 65,
+ 80,
+ 100,
+ 50,
+ 65,
+ 85,
+ 50,
+ 65,
+ 85,
+ 20,
+ 25,
+ 80,
+ 20,
+ 25,
+ 45,
+ 35,
+ 50,
+ 70,
+ 25,
+ 50,
+ 31,
+ 61,
+ 40,
+ 65,
+ 50,
+ 90,
+ 30,
+ 55,
+ 40,
+ 55,
+ 75,
+ 40,
+ 55,
+ 75,
+ 60,
+ 85,
+ 65,
+ 100,
+ 25,
+ 50,
+ 40,
+ 75,
+ 75,
+ 85,
+ 100,
+ 55,
+ 80,
+ 40,
+ 90,
+ 45,
+ 70,
+ 40,
+ 65,
+ 50,
+ 80,
+ 35,
+ 60,
+ 50,
+ 80,
+ 40,
+ 50,
+ 70,
+ 105,
+ 120,
+ 135,
+ 35,
+ 50,
+ 65,
+ 70,
+ 85,
+ 100,
+ 100,
+ 120,
+ 30,
+ 45,
+ 55,
+ 65,
+ 80,
+ 40,
+ 80,
+ 95,
+ 120,
+ 58,
+ 35,
+ 60,
+ 70,
+ 95,
+ 40,
+ 65,
+ 45,
+ 85,
+ 100,
+ 115,
+ 130,
+ 30,
+ 90,
+ 115,
+ 25,
+ 50,
+ 55,
+ 80,
+ 60,
+ 125,
+ 40,
+ 50,
+ 35,
+ 35,
+ 60,
+ 60,
+ 85,
+ 30,
+ 45,
+ 105,
+ 100,
+ 40,
+ 70,
+ 95,
+ 50,
+ 80,
+ 70,
+ 100,
+ 100,
+ 55,
+ 95,
+ 85,
+ 85,
+ 55,
+ 70,
+ 20,
+ 100,
+ 95,
+ 48,
+ 65,
+ 110,
+ 110,
+ 110,
+ 75,
+ 90,
+ 115,
+ 45,
+ 70,
+ 60,
+ 65,
+ 125,
+ 125,
+ 125,
+ 50,
+ 70,
+ 100,
+ 154,
+ 100,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255,
+ 255]
+move_pp = [0,
+ 35,
+ 25,
+ 10,
+ 15,
+ 20,
+ 20,
+ 15,
+ 15,
+ 15,
+ 35,
+ 30,
+ 5,
+ 10,
+ 30,
+ 30,
+ 35,
+ 35,
+ 20,
+ 15,
+ 20,
+ 20,
+ 10,
+ 20,
+ 30,
+ 5,
+ 25,
+ 15,
+ 15,
+ 15,
+ 25,
+ 20,
+ 5,
+ 35,
+ 15,
+ 20,
+ 20,
+ 20,
+ 15,
+ 30,
+ 35,
+ 20,
+ 20,
+ 30,
+ 25,
+ 40,
+ 20,
+ 15,
+ 20,
+ 20,
+ 20,
+ 30,
+ 25,
+ 15,
+ 30,
+ 25,
+ 5,
+ 15,
+ 10,
+ 5,
+ 20,
+ 20,
+ 20,
+ 5,
+ 35,
+ 20,
+ 25,
+ 20,
+ 20,
+ 20,
+ 15,
+ 20,
+ 10,
+ 10,
+ 40,
+ 25,
+ 10,
+ 35,
+ 30,
+ 15,
+ 20,
+ 40,
+ 10,
+ 15,
+ 30,
+ 15,
+ 20,
+ 10,
+ 15,
+ 10,
+ 5,
+ 10,
+ 10,
+ 25,
+ 10,
+ 20,
+ 40,
+ 30,
+ 30,
+ 20,
+ 20,
+ 15,
+ 10,
+ 40,
+ 15,
+ 20,
+ 30,
+ 20,
+ 20,
+ 10,
+ 40,
+ 40,
+ 30,
+ 30,
+ 30,
+ 20,
+ 30,
+ 10,
+ 10,
+ 20,
+ 5,
+ 10,
+ 30,
+ 20,
+ 20,
+ 20,
+ 5,
+ 15,
+ 10,
+ 20,
+ 15,
+ 15,
+ 35,
+ 20,
+ 15,
+ 10,
+ 20,
+ 30,
+ 15,
+ 40,
+ 20,
+ 15,
+ 10,
+ 5,
+ 10,
+ 30,
+ 10,
+ 15,
+ 20,
+ 15,
+ 40,
+ 40,
+ 10,
+ 5,
+ 15,
+ 10,
+ 10,
+ 10,
+ 15,
+ 30,
+ 30,
+ 10,
+ 10,
+ 20,
+ 10,
+ 1,
+ 1,
+ 10,
+ 10,
+ 10,
+ 5,
+ 15,
+ 25,
+ 15,
+ 10,
+ 15,
+ 30,
+ 5,
+ 40,
+ 15,
+ 10,
+ 25,
+ 10,
+ 30,
+ 10,
+ 20,
+ 10,
+ 10,
+ 10,
+ 10,
+ 10,
+ 20,
+ 5,
+ 40,
+ 5,
+ 5,
+ 15,
+ 5,
+ 10,
+ 5,
+ 15,
+ 10,
+ 5,
+ 10,
+ 20,
+ 20,
+ 40,
+ 15,
+ 10,
+ 20,
+ 20,
+ 25,
+ 5,
+ 15,
+ 10,
+ 5,
+ 20,
+ 15,
+ 20,
+ 25,
+ 20,
+ 5,
+ 30,
+ 5,
+ 10,
+ 20,
+ 40,
+ 5,
+ 20,
+ 40,
+ 20,
+ 15,
+ 35,
+ 10,
+ 5,
+ 5,
+ 5,
+ 15,
+ 5,
+ 20,
+ 5,
+ 5,
+ 15,
+ 20,
+ 10,
+ 5,
+ 5,
+ 15,
+ 15,
+ 15,
+ 15,
+ 10,
+ 20,
+ 20,
+ 20,
+ 20]
+hidden_power_ivs = [[12,
+  12,
+  15,
+  15],
+ [12,
+  13,
+  15,
+  15],
+ [12,
+  14,
+  15,
+  15],
+ [12,
+  15,
+  15,
+  15],
+ [13,
+  12,
+  15,
+  15],
+ [13,
+  13,
+  15,
+  15],
+ [13,
+  14,
+  15,
+  15],
+ [13,
+  15,
+  15,
+  15],
+ [14,
+  12,
+  15,
+  15],
+ [14,
+  13,
+  15,
+  15],
+ [14,
+  14,
+  15,
+  15],
+ [14,
+  15,
+  15,
+  15],
+ [15,
+  12,
+  15,
+  15],
+ [15,
+  13,
+  15,
+  15],
+ [15,
+  14,
+  15,
+  15],
+ [15,
+  15,
+  15,
+  15]]
+rb2dex = [201,
+ 112,
+ 115,
+ 32,
+ 35,
+ 21,
+ 100,
+ 34,
+ 80,
+ 2,
+ 103,
+ 108,
+ 102,
+ 88,
+ 94,
+ 29,
+ 31,
+ 104,
+ 111,
+ 131,
+ 59,
+ 151,
+ 130,
+ 90,
+ 72,
+ 92,
+ 123,
+ 120,
+ 9,
+ 127,
+ 114,
+ 0,
+ 0,
+ 58,
+ 95,
+ 22,
+ 16,
+ 79,
+ 64,
+ 75,
+ 113,
+ 67,
+ 122,
+ 106,
+ 107,
+ 24,
+ 47,
+ 54,
+ 96,
+ 76,
+ 0,
+ 126,
+ 0,
+ 125,
+ 82,
+ 109,
+ 0,
+ 56,
+ 86,
+ 50,
+ 128,
+ 0,
+ 0,
+ 0,
+ 83,
+ 48,
+ 149,
+ 0,
+ 0,
+ 0,
+ 84,
+ 60,
+ 124,
+ 146,
+ 144,
+ 145,
+ 132,
+ 52,
+ 98,
+ 0,
+ 0,
+ 0,
+ 37,
+ 38,
+ 25,
+ 26,
+ 0,
+ 0,
+ 147,
+ 148,
+ 140,
+ 141,
+ 116,
+ 117,
+ 0,
+ 0,
+ 27,
+ 28,
+ 138,
+ 139,
+ 39,
+ 40,
+ 133,
+ 136,
+ 135,
+ 134,
+ 66,
+ 41,
+ 23,
+ 46,
+ 61,
+ 62,
+ 13,
+ 14,
+ 15,
+ 0,
+ 85,
+ 57,
+ 51,
+ 49,
+ 87,
+ 0,
+ 0,
+ 10,
+ 11,
+ 12,
+ 68,
+ 0,
+ 55,
+ 97,
+ 42,
+ 150,
+ 143,
+ 129,
+ 0,
+ 0,
+ 89,
+ 0,
+ 99,
+ 91,
+ 0,
+ 101,
+ 36,
+ 110,
+ 53,
+ 105,
+ 0,
+ 93,
+ 63,
+ 65,
+ 17,
+ 18,
+ 121,
+ 1,
+ 3,
+ 73,
+ 0,
+ 118,
+ 119,
+ 0,
+ 0,
+ 0,
+ 0,
+ 77,
+ 78,
+ 19,
+ 20,
+ 33,
+ 30,
+ 74,
+ 137,
+ 142,
+ 0,
+ 81,
+ 0,
+ 0,
+ 4,
+ 7,
+ 5,
+ 8,
+ 6,
+ 0,
+ 0,
+ 0,
+ 0,
+ 43,
+ 44,
+ 45,
+ 69,
+ 70,
+ 71,
+ 250,
+ 61,
+ 205,
+ 234,
+ 94,
+ 205,
+ 250,
+ 62,
+ 205,
+ 234,
+ 95,
+ 205,
+ 17,
+ 200,
+ 80,
+ 24,
+ 15,
+ 250,
+ 62,
+ 205,
+ 234,
+ 94,
+ 205,
+ 250,
+ 61,
+ 205,
+ 234,
+ 95,
+ 205,
+ 17,
+ 217,
+ 80,
+ 250,
+ 90,
+ 211,
+ 245,
+ 240,
+ 175,
+ 245,
+ 240,
+ 174,
+ 245,
+ 175,
+ 234,
+ 90,
+ 211,
+ 224,
+ 175,
+ 224,
+ 174,
+ 213,
+ 209,
+ 26,
+ 254,
+ 255,
+ 40,
+ 18,
+ 19,
+ 213,
+ 33,
+ 239,
+ 80,
+ 135,
+ 79,
+ 6]
 items = None
 pokemon = None
+pokemon_lower = None
 pokedex = None
 moves = None
 types = None
 
 class PikaSav():
-             
-             
+
     def repair_rby(self):
         global items
+        global pokemon_lower
+        global moves
         global pokemon
         global pokedex
-        global moves
         global types
-        file = askopenfilename(filetypes = [ ("R/B/Y SaveGame",".sav") ])
-        if (file):
-            sav=RBSav(file,True)
+        file = askopenfilename(filetypes=[('R/B/Y SaveGame', '.sav')])
+        if file:
+            sav = RBSav(file, True)
             self.gen = 1
             self.bn = 12
-            self.root.title(self.title + " - Red/Blue/Yellow")
+            self.root.title(self.title + ' - Red/Blue/Yellow')
             items = items_rb[:]
             pokemon = pokemon_rb[:]
+            pokemon_lower = pokemon_lower_rb[:]
             pokedex = pokedex_rb[:]
             moves = moves_rb[:]
-            types = types_rb[:]    
-            self.sav = sav           
+            types = types_rb[:]
+            self.sav = sav
             self.show_data()
             self.close_frames()
-            
+
     def repair_gs(self):
+        global pokemon_lower
         global items
+        global moves
         global pokemon
         global pokedex
-        global moves
         global types
-        file = askopenfilename(filetypes = [ ("G/S SaveGame",".sav") ])
-        if (file):
-            sav=GSSav(file,True)
+        file = askopenfilename(filetypes=[('G/S SaveGame', '.sav')])
+        if file:
+            sav = GSSav(file, True)
             items = items_gs[:]
             pokemon = pokemon_gs[:]
+            pokemon_lower = pokemon_lower_gs[:]
             pokedex = pokedex_gs[:]
             moves = moves_gs[:]
             types = types_gs[:]
             self.gen = 2
             self.bn = 14
-            self.root.title(self.title + " - Gold/Silver")
-            self.sav = sav           
+            self.root.title(self.title + ' - Gold/Silver')
+            self.sav = sav
             self.show_data()
             self.close_frames()
-        
+
     def repair_cr(self):
+        global pokemon_lower
         global items
+        global moves
         global pokemon
         global pokedex
-        global moves
         global types
-        file = askopenfilename(filetypes = [ ("Crystal SaveGame",".sav") ])
-        if (file):
-            sav=CRSav(file,True)
+        file = askopenfilename(filetypes=[('Crystal SaveGame', '.sav')])
+        if file:
+            sav = CRSav(file, True)
             items = items_gs[:]
             pokemon = pokemon_gs[:]
+            pokemon_lower = pokemon_lower_gs[:]
             pokedex = pokedex_gs[:]
             moves = moves_gs[:]
             types = types_gs[:]
             self.gen = 2
             self.bn = 14
-            self.root.title(self.title + " - Crystal")
-            self.sav = sav           
+            self.root.title(self.title + ' - Crystal')
+            self.sav = sav
             self.show_data()
             self.close_frames()
-    
+
     def repair_rs(self):
+        global pokemon_lower
         global items
+        global moves
         global pokemon
         global pokedex
-        global moves
         global types
-        file = askopenfilename(filetypes = [ ("Ruby/Sapphire SaveGame",".sav") ])
-        if (file):
-            sav=RSSav(file,1)
+        file = askopenfilename(filetypes=[('Ruby/Sapphire SaveGame', '.sav')])
+        if file:
+            sav = RSSav(file, 1)
             items = items_rs[:]
             pokemon = pokemon_rs[:]
+            pokemon_lower = pokemon_lower_rs[:]
             pokedex = pokedex_rs[:]
             moves = moves_rs[:]
             types = types_rs[:]
             self.gen = 3
             self.bn = 14
-            self.root.title(self.title + " - Ruby/Sapphire")
+            self.root.title(self.title + ' - Ruby/Sapphire')
             self.sav = sav
             self.show_data()
             self.close_frames()
-        
-            
+
     def open_sav(self):
+        global pokemon_lower
         global items
+        global moves
         global pokemon
         global pokedex
-        global moves
         global types
-        
-        file = askopenfilename(filetypes = [ ("RBY/GS/Cr/RS SaveGame",".sav"),("All files","*.*") ])
-        if (file):
+        file = askopenfilename(filetypes=[('RBY/GS/Cr/RS SaveGame', '.sav'), ('All files', '*.*')])
+        if file:
             sav = RSSav(file)
             if not sav.ok:
                 sav = CRSav(file)
                 if not sav.ok:
-                    sav=GSSav(file)
+                    sav = GSSav(file)
                     if not sav.ok:
-                        sav=RBSav(file)
+                        sav = RBSav(file)
                         if not sav.ok:
-                            showerror("Something went wrong =(","The .sav is corrupted or not supported by this program.\nIn case of corruption, use the 'File -> Force SAV' function.")
-                            return False;
-                        else:
-                            self.gen = 1
-                            self.bn = 12
-                            self.root.title(self.title + " - Red/Blue/Yellow")
-                            items = items_rb[:]
-                            pokemon = pokemon_rb[:]
-                            pokedex = pokedex_rb[:]
-                            moves = moves_rb[:]
-                            types = types_rb[:]
+                            showerror('Something went wrong =(', "The .sav is corrupted or not supported by this program.\nIn case of corruption, use the 'File -> Force SAV' function.")
+                            return False
+                        self.gen = 1
+                        self.bn = 12
+                        self.root.title(self.title + ' - Red/Blue/Yellow')
+                        items = items_rb[:]
+                        pokemon = pokemon_rb[:]
+                        pokemon_lower = pokemon_lower_rb[:]
+                        pokedex = pokedex_rb[:]
+                        moves = moves_rb[:]
+                        types = types_rb[:]
                     else:
                         items = items_gs[:]
                         pokemon = pokemon_gs[:]
+                        pokemon_lower = pokemon_lower_gs[:]
                         pokedex = pokedex_gs[:]
                         moves = moves_gs[:]
                         types = types_gs[:]
                         self.gen = 2
                         self.bn = 14
-                        self.root.title(self.title + " - Gold/Silver")
+                        self.root.title(self.title + ' - Gold/Silver')
                 else:
                     items = items_gs[:]
                     pokemon = pokemon_gs[:]
+                    pokemon_lower = pokemon_lower_gs[:]
                     pokedex = pokedex_gs[:]
                     moves = moves_gs[:]
                     types = types_gs[:]
                     self.gen = 2
                     self.bn = 14
-                    self.root.title(self.title + " - Crystal")
+                    self.root.title(self.title + ' - Crystal')
             else:
                 items = items_rs[:]
                 pokemon = pokemon_rs[:]
+                pokemon_lower = pokemon_lower_rs[:]
                 pokedex = pokedex_rs[:]
                 moves = moves_rs[:]
                 types = types_rs[:]
                 self.gen = 3
                 self.bn = 14
-                self.root.title(self.title + " - Ruby/Sapphire")
-                    
-            self.sav = sav           
+                self.root.title(self.title + ' - Ruby/Sapphire')
+            self.sav = sav
             self.show_data()
             self.close_frames()
-            
+
     def save_sav(self):
-        if (self.sav != None):
+        if self.sav != None:
             self.store_changes()
             self.sav.save()
         else:
-            showerror("Something went wrong =(","You need to load a .sav first")
-     
+            showerror('Something went wrong =(', 'You need to load a .sav first')
+
     def saveas_sav(self):
-        if (self.sav != None):
+        if self.sav != None:
             self.store_changes()
-            file = asksaveasfilename(filetypes = [ ("RBY/GS/Cr SaveGame",".sav") ])
-            
-            if (file):
+            file = asksaveasfilename(filetypes=[('RBY/GSC/RS SaveGame', '.sav')])
+            if file:
+                if file[-4:] != '.sav':
+                    file = '%s.sav' % file
                 self.sav.saveas(file)
         else:
-            showerror("Something went wrong =(","You need to load a .sav first")
-    
+            showerror('Something went wrong =(', 'You need to load a .sav first')
+
     def store_changes(self):
-        if (self.trname.get() != self.sav.name): self.sav.set("name",self.trname.get())
-        if (self.rivalname.get() != self.sav.rivalname): self.sav.set("rivalname",self.rivalname.get())
-        self.sav.set("money",self.money.get())
-        self.sav.set("chips",self.chips.get())
-        self.sav.set("hours",self.hours.get())
-        self.sav.set("minutes",self.minutes.get())
-        self.sav.set("seconds",self.seconds.get())
+        if self.trname.get() != self.sav.name:
+            self.sav.set('name', self.trname.get())
+        if self.rivalname.get() != self.sav.rivalname:
+            self.sav.set('rivalname', self.rivalname.get())
+        self.sav.set('money', self.money.get())
+        self.sav.set('chips', self.chips.get())
+        self.sav.set('hours', self.hours.get())
+        self.sav.set('minutes', self.minutes.get())
+        self.sav.set('seconds', self.seconds.get())
         self.store_items()
         self.store_pcitems()
         self.store_pokedex1()
@@ -221,108 +8072,380 @@ class PikaSav():
         self.store_pokeedit()
         self.store_boxedit()
         self.sav.refresh()
-                    
+
     def show_data(self):
         self.bp = 20
         if self.gen == 3:
             self.bp = 30
-        self.trname.delete(0,END);
-        self.trname.insert(0,self.sav.name);
-        self.rivalname.delete(0,END);
-        self.rivalname.insert(0,self.sav.rivalname);
-        self.money.delete(0,END);
-        self.money.insert(0,self.sav.money);
-        self.chips.delete(0,END);
-        self.chips.insert(0,self.sav.chips);
-        self.hours.delete(0,END);
-        self.hours.insert(0,self.sav.hours);
-        self.minutes.delete(0,END);
-        self.minutes.insert(0,self.sav.minutes);
-        self.seconds.delete(0,END);
-        self.seconds.insert(0,self.sav.seconds);
-        
+        self.trname.delete(0, END)
+        self.trname.insert(0, self.sav.name)
+        self.rivalname.delete(0, END)
+        self.rivalname.insert(0, self.sav.rivalname)
+        self.money.delete(0, END)
+        self.money.insert(0, self.sav.money)
+        self.chips.delete(0, END)
+        self.chips.insert(0, self.sav.chips)
+        self.hours.delete(0, END)
+        self.hours.insert(0, self.sav.hours)
+        self.minutes.delete(0, END)
+        self.minutes.insert(0, self.sav.minutes)
+        self.seconds.delete(0, END)
+        self.seconds.insert(0, self.sav.seconds)
+
     def add_menus(self):
         menu = Menu(self.root)
-        menu_repair = Menu(menu,tearoff=0)
-        menu_repair.add_command(label="Red/Blue/Yellow",command=self.repair_rby)
-        menu_repair.add_command(label="Gold/Silver",command=self.repair_gs)
-        menu_repair.add_command(label="Crystal",command=self.repair_cr)
-        menu_repair.add_command(label="Ruby/Sapphire",command=self.repair_rs)
-        
-        menu_file = Menu(menu,tearoff=0)
-        menu_file.add_command(label="Open SAV",command=self.open_sav)
+        menu_repair = Menu(menu, tearoff=0)
+        menu_repair.add_command(label='Red/Blue/Yellow', command=self.repair_rby)
+        menu_repair.add_command(label='Gold/Silver', command=self.repair_gs)
+        menu_repair.add_command(label='Crystal', command=self.repair_cr)
+        menu_repair.add_command(label='Ruby/Sapphire', command=self.repair_rs)
+        menu_file = Menu(menu, tearoff=0)
+        menu_file.add_command(label='Open SAV', command=self.open_sav)
         menu_file.add_separator()
-        menu_file.add_command(label="Save SAV",command=self.save_sav)
-        menu_file.add_command(label="Save SAV As..",command=self.saveas_sav)
+        menu_file.add_command(label='Save SAV', command=self.save_sav)
+        menu_file.add_command(label='Save SAV As..', command=self.saveas_sav)
         menu_file.add_separator()
-        menu_file.add_cascade(label="Force SAV",menu=menu_repair)
+        menu_file.add_cascade(label='Force SAV', menu=menu_repair)
         menu_file.add_separator()
-        menu_file.add_command(label="Exit",command=self.exit)
-        menu.add_cascade(label="File",menu=menu_file)    
-        menu_help = Menu(menu,tearoff=0)
-        menu_help.add_command(label="SAV Info",command=self.show_savinfo)
+        menu_file.add_command(label='Exit', command=self.exit)
+        menu.add_cascade(label='File', menu=menu_file)
+        menu_help = Menu(menu, tearoff=0)
+        menu_help.add_command(label='SAV Info', command=self.show_savinfo)
         menu_help.add_separator()
-        menu_help.add_command(label="About",command=self.show_about)
-        menu.add_cascade(label="Help",menu=menu_help)
+        menu_help.add_command(label='About', command=self.show_about)
+        menu.add_cascade(label='Help', menu=menu_help)
         self.root.configure(menu=menu)
 
-    
+    def add_pokeedit_menus(self):
+        menu = Menu(self.pokeedit)
+        menu_pkm = Menu(menu, tearoff=0)
+        menu_pkm.add_command(label='New from scratch', command=self.scratch_pkm)
+        menu_pkm.add_command(label='Open .PKM', command=self.open_pkm)
+        menu_pkm.add_separator()
+        menu_pkm.add_command(label='Save .PKM', command=self.save_pkm)
+        menu_pkm.add_separator()
+        menu_pkm.add_command(label='Finished', command=self.wmdel_pokeedit)
+        menu.add_cascade(label='Pokemon', menu=menu_pkm)
+        menu_edit = Menu(menu, tearoff=0)
+        menu_edit.add_command(label='Min everything', command=self.min_everything)
+        menu_edit.add_command(label='MAX EVERYTHING', command=self.max_everything)
+        menu_edit.add_separator()
+        menu_edit.add_command(label='Adjust exp to level', command=self.adjust_exp)
+        menu_edit.add_command(label='Adjust stats to level/values', command=self.adjust_stats)
+        menu_edit.add_separator()
+        menu_edit.add_command(label='Heal Pokemon', command=self.heal_pkm)
+        menu_edit.add_separator()
+        menu_edit.add_command(label='Make Shiny', command=self.make_shiny)
+        menu.add_cascade(label='Fast editing', menu=menu_edit)
+        menu_hp = Menu(menu, tearoff=0)
+        for t in range(len(types_gs_hp)):
+            menu_hp.add_command(label='Base 70, %s type' % types_gs_hp[t], command=lambda t = t: self.hidden_power_set(t))
+
+        menu.add_cascade(label='Hidden Power', menu=menu_hp)
+        menu_info = Menu(menu, tearoff=0)
+        menu_info.add_command(label='Hidden Power? Shiny? HP?', command=self.iv_info)
+        menu_info.add_separator()
+        menu_info.add_command(label='.PKM info', command=self.pkm_info)
+        menu.add_cascade(label='About this .PKM', menu=menu_info)
+        self.pokeedit.configure(menu=menu)
+
+    def hidden_power_set(self, type):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        iv_set = hidden_power_ivs[type]
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackiv', iv_set[0])
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseiv', iv_set[1])
+        self.pkm = self.sav.pkm_set(self.pkm, 'speediv', iv_set[2])
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialiv', iv_set[3])
+        self.adjust_stats()
+        self.reload_pkm()
+
+    def scratch_pkm(self):
+        if askyesno('About to delete this .PKM', 'Do you really want to delete this Pokemon?', parent=self.pokeedit):
+            if self.pokeedit != None:
+                self.wmdel_pokeedit()
+            self.pkm = chr(0) * len(self.pkm)
+            self.reload_pkm()
+
+    def pkm_info(self):
+        if self.b == None:
+            showinfo('.PKM info', 'This .PKM is located at Party, Pokemon %d.\nIt is %d bytes long (Gen %d, Party Pokemon)' % (self.p + 1, len(self.pkm), self.gen), parent=self.pokeedit)
+        else:
+            showinfo('.PKM info', 'This .PKM is located at Box %d, Pokemon %d.\nIt is %d bytes long (Gen %d, PC Pokemon)' % (self.b + 1,
+             self.p + 1,
+             len(self.pkm),
+             self.gen), parent=self.pokeedit)
+
+    def make_shiny(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseiv', 10)
+        self.pkm = self.sav.pkm_set(self.pkm, 'speediv', 10)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialiv', 10)
+        self.reload_pkm()
+
+    def iv_info(self):
+        self.reload_pkm()
+        iv_attack = self.sav.pkm_get(self.pkm, 'attackiv')
+        iv_defense = self.sav.pkm_get(self.pkm, 'defenseiv')
+        iv_speed = self.sav.pkm_get(self.pkm, 'speediv')
+        iv_special = self.sav.pkm_get(self.pkm, 'specialiv')
+        iv_hp = iv_attack % 2 * 8 + iv_defense % 2 * 4 + iv_speed % 2 * 2 + iv_special % 2
+        is_shiny = 'not shiny'
+        if iv_defense == 10 and iv_speed == 10 and iv_special == 10 and iv_attack & 2:
+            is_shiny = 'shiny'
+        hp_a = (iv_attack & 8) + (iv_defense & 8) / 2 + (iv_speed & 8) / 4 + (iv_special & 8) / 8
+        hp_b = iv_special & 3
+        hp_power = int((5 * hp_a + hp_b) / 2 + 31)
+        hp_type_id = (iv_attack & 3) * 4 + (iv_defense & 3)
+        hp_type = types_gs_hp[hp_type_id]
+        showinfo('About the IV combination', 'Your Pokemon is %s and its HP IV is %d.\nIts Hidden Power is %s type and its power is %d.' % (is_shiny,
+         iv_hp,
+         hp_type,
+         hp_power), parent=self.pokeedit)
+
+    def reload_pkm(self):
+        p = self.p
+        b = self.b
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        if b == None:
+            self.sav.setpokemon(p, self.pkm)
+            self.sav.refresh()
+            if self.pokemon != None:
+                self.wmdel_pokemon()
+                self.show_pokemon()
+        else:
+            self.sav.setpcpokemon(b * self.bp + p, self.pkm)
+            self.sav.refresh()
+            if self.boxedit != None:
+                self.wmdel_boxedit()
+                self.show_boxedit(b)
+        self.show_pokeedit(p, b)
+        self.pokeedit.focus_force()
+
+    def open_pkm(self):
+        file = askopenfilename(filetypes=[('PKM File', '.pkm')])
+        if not file:
+            return
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        fb = open(file, 'rb')
+        pkm = fb.read()
+        fb.close()
+        if len(pkm) == len(self.pkm):
+            self.pkm = pkm
+            self.reload_pkm()
+            showinfo('.PKM loaded', 'Loaded %d bytes from %s.' % (len(pkm), file), parent=self.pokeedit)
+        else:
+            showerror('Invalid .PKM file', "Invalid .PKM for this location. Your .PKM has %d bytes, but the savefile's one has %d." % (len(pkm), len(self.pkm)), parent=self.pokeedit)
+
+    def max_everything(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        self.pkm = self.sav.pkm_set(self.pkm, 'maxhpev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'speedev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialdefenseev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialattackev', 65535)
+        self.pkm = self.sav.pkm_set(self.pkm, 'happiness', 255)
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'speediv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialattackiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialdefenseiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialiv', 15)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move1ppup', 3)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move2ppup', 3)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move3ppup', 3)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move4ppup', 3)
+        self.pkm = self.sav.pkm_set(self.pkm, 'level', 100)
+        self.pkm = self.sav.pkm_set(self.pkm, 'curlevel', 100)
+        self.pkm = self.sav.pkm_set(self.pkm, 'pokerus', 255)
+        self.adjust_exp(100)
+        self.adjust_stats()
+        self.heal_pkm()
+
+    def heal_pkm(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        if self.b == None:
+            self.pkm = self.sav.pkm_set(self.pkm, 'hp', self.sav.pkm_get(self.pkm, 'maxhp'))
+        else:
+            num = self.sav.pkm_get(self.pkm, 'num')
+            if self.gen == 1:
+                num = rb2dex[num]
+            level = self.sav.pkm_get(self.pkm, 'level')
+            curlevel = 0
+            if self.b == None:
+                curlevel = self.sav.pkm_get(self.pkm, 'curlevel')
+            level = max(level, curlevel)
+            iv_attack = self.sav.pkm_get(self.pkm, 'attackiv')
+            iv_defense = self.sav.pkm_get(self.pkm, 'defenseiv')
+            iv_speed = self.sav.pkm_get(self.pkm, 'speediv')
+            iv_special = self.sav.pkm_get(self.pkm, 'specialiv')
+            iv_hp = iv_attack % 2 * 8 + iv_defense % 2 * 4 + iv_speed % 2 * 2 + iv_special % 2
+            ev_hp = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'maxhpev')) / 400)
+            self.pkm = self.sav.pkm_set(self.pkm, 'hp', int(10 + level * (base_hp[num] + iv_hp + 50) / 50) + ev_hp)
+        self.pkm = self.sav.pkm_set(self.pkm, 'asleep', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'poisoned', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'paralyzed', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'burned', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'frozen', 0)
+        for m in range(4):
+            base_pp = move_pp[self.sav.pkm_get(self.pkm, 'move%d' % (m + 1))]
+            ppup = self.sav.pkm_get(self.pkm, 'move%dppup' % (m + 1))
+            self.pkm = self.sav.pkm_set(self.pkm, 'move%dpp' % (m + 1), base_pp + base_pp * ppup / 5)
+
+        self.reload_pkm()
+
+    def adjust_stats(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        num = self.sav.pkm_get(self.pkm, 'num')
+        if self.gen == 1:
+            num = rb2dex[num]
+        level = self.sav.pkm_get(self.pkm, 'level')
+        curlevel = 0
+        if self.b == None:
+            curlevel = self.sav.pkm_get(self.pkm, 'curlevel')
+        level = max(level, curlevel)
+        iv_attack = self.sav.pkm_get(self.pkm, 'attackiv')
+        iv_defense = self.sav.pkm_get(self.pkm, 'defenseiv')
+        iv_speed = self.sav.pkm_get(self.pkm, 'speediv')
+        iv_special = self.sav.pkm_get(self.pkm, 'specialiv')
+        iv_hp = iv_attack % 2 * 8 + iv_defense % 2 * 4 + iv_speed % 2 * 2 + iv_special % 2
+        ev_hp = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'maxhpev')) / 400)
+        ev_attack = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'attackev')) / 400)
+        ev_defense = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'defenseev')) / 400)
+        ev_speed = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'speedev')) / 400)
+        ev_special = int(level * math.sqrt(self.sav.pkm_get(self.pkm, 'specialev')) / 400)
+        self.pkm = self.sav.pkm_set(self.pkm, 'hp', int(10 + level * (base_hp[num] + iv_hp + 50) / 50) + ev_hp)
+        if self.b == None:
+            self.pkm = self.sav.pkm_set(self.pkm, 'maxhp', int(10 + level * (base_hp[num] + iv_hp + 50) / 50) + ev_hp)
+            self.pkm = self.sav.pkm_set(self.pkm, 'attack', int(5 + level * (base_attack[num] + iv_attack) / 50) + ev_attack)
+            self.pkm = self.sav.pkm_set(self.pkm, 'defense', int(5 + level * (base_defense[num] + iv_defense) / 50) + ev_defense)
+            self.pkm = self.sav.pkm_set(self.pkm, 'speed', int(5 + level * (base_speed[num] + iv_speed) / 50) + ev_speed)
+            self.pkm = self.sav.pkm_set(self.pkm, 'specialattack', int(5 + level * (base_specialattack[num] + iv_special) / 50) + ev_special)
+            self.pkm = self.sav.pkm_set(self.pkm, 'specialdefense', int(5 + level * (base_specialdefense[num] + iv_special) / 50) + ev_special)
+            self.pkm = self.sav.pkm_set(self.pkm, 'special', int(5 + level * (base_special[num] + iv_special) / 50) + ev_attack)
+        self.reload_pkm()
+
+    def adjust_exp(self, level = None):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        num = self.sav.pkm_get(self.pkm, 'num')
+        if self.gen == 1:
+            num = rb2dex[num]
+        growth = growthrates[num]
+        if level == None:
+            level = self.sav.pkm_get(self.pkm, 'level')
+            curlevel = 0
+            if self.b == None:
+                curlevel = self.sav.pkm_get(self.pkm, 'curlevel')
+            level = max(level, curlevel)
+        exp = int(level ** 3)
+        if growth == 3:
+            exp = int(math.floor(level ** 3 * 1.2 - level * level * 15 + level * 100 - 140))
+        if growth == 4:
+            exp = int(math.floor(level ** 3 * 0.8))
+        if growth == 5:
+            exp = int(math.floor(level ** 3 * 1.25))
+        self.pkm = self.sav.pkm_set(self.pkm, 'exp', exp)
+        self.reload_pkm()
+
+    def min_everything(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        self.pkm = self.sav.pkm_set(self.pkm, 'maxhpev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'speedev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialdefenseev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialattackev', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'happiness', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'attackiv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'defenseiv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'speediv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialattackiv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialdefenseiv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'specialiv', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move1ppup', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move2ppup', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move3ppup', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'move4ppup', 0)
+        self.pkm = self.sav.pkm_set(self.pkm, 'level', 2)
+        self.pkm = self.sav.pkm_set(self.pkm, 'curlevel', 2)
+        self.pkm = self.sav.pkm_set(self.pkm, 'pokerus', 0)
+        self.adjust_exp(2)
+        self.adjust_stats()
+        self.heal_pkm()
+
+    def save_pkm(self):
+        file = asksaveasfilename(filetypes=[('PKM File', '.pkm')])
+        if not file:
+            return
+        if file[-4:] != '.pkm':
+            file = '%s.pkm' % file
+        fb = open(file, 'wb')
+        fb.write(self.pkm)
+        fb.close()
+        showinfo('Saved .PKM file', 'Saved %d bytes to %s.' % (len(self.pkm), file), parent=self.pokeedit)
+
     def add_fields(self):
-        
         self.frame.grid_forget()
-        
-        Label(self.root,text="   ").grid(row=1000,column=1000)
-        
-        Label(text="").grid(row=0)
-        Label(text="      Trainer Name:  ",anchor=W).grid(row=1,sticky=W)
+        Label(self.root, text='   ').grid(row=1000, column=1000)
+        Label(text='').grid(row=0)
+        Label(text='      Trainer Name:  ', anchor=W).grid(row=1, sticky=W)
         self.trname = Entry()
-        self.trname.grid(row=1,column=1)
-        
-        Label(text="      Rival Name:  ").grid(row=1,column=2,sticky=W)
+        self.trname.grid(row=1, column=1)
+        Label(text='      Rival Name:  ').grid(row=1, column=2, sticky=W)
         self.rivalname = Entry()
-        self.rivalname.grid(row=1,column=3)
-        
-        Label(text="      Money:  ").grid(row=2,column=0,sticky=W)
+        self.rivalname.grid(row=1, column=3)
+        Label(text='      Money:  ').grid(row=2, column=0, sticky=W)
         self.money = Entry()
-        self.money.grid(row=2,column=1)
-        
-        Label(text="      Casino Chips:  ").grid(row=2,column=2,sticky=W)
+        self.money.grid(row=2, column=1)
+        Label(text='      Casino Chips:  ').grid(row=2, column=2, sticky=W)
         self.chips = Entry()
-        self.chips.grid(row=2,column=3)
-        Label(text="      h/m/s Played  ").grid(row=3,column=0,sticky=W)
+        self.chips.grid(row=2, column=3)
+        Label(text='      h/m/s Played  ').grid(row=3, column=0, sticky=W)
         self.hours = Entry(width=5)
-        self.hours.grid(row=3,column=1,sticky=W)
+        self.hours.grid(row=3, column=1, sticky=W)
         self.minutes = Entry(width=5)
-        self.minutes.grid(row=3,column=1)
+        self.minutes.grid(row=3, column=1)
         self.seconds = Entry(width=5)
-        self.seconds.grid(row=3,column=1,sticky=E)
-        Label(text="").grid(row=4)
-        Button(text="Pokémon",width=10,command=self.show_pokemon).grid(row=5)
-        Label(text="Edit the Pokémon from the party.").grid(row=5,column=1,sticky=W,columnspan=3)
-        Label(text="",font=("Times",4)).grid(row=6)
-        Button(text="PC Pokémon",width=10,command=self.show_boxes).grid(row=7)
-        Label(text="Edit the Pokémon stored at Bill's PC.").grid(row=7,column=1,sticky=W,columnspan=3)
-        Label(text="",font=("Times",4)).grid(row=8)
-        Button(text="Bag Items",width=10,command=self.show_items).grid(row=9)
-        Label(text="Change the class or quantity of every item in the bag.").grid(row=9,column=1,sticky=W,columnspan=3)
-        Label(text="",font=("Times",4)).grid(row=10)
-        Button(text="PC Items",width=10,command=self.show_pcitems).grid(row=11)
-        Label(text="Change the class or quantity of every item in the PC.").grid(row=11,column=1,sticky=W,columnspan=3)
-        Label(text="",font=("Times",4)).grid(row=12)
-        Button(text="Pokedex 1/2",width=10,command=self.show_pokedex1).grid(row=13)
-        Label(text="Mark a certain Pokémon as seen or catched at the Pokédex.").grid(row=13,column=1,sticky=W,columnspan=3)
-        Label(text="",font=("Times",4)).grid(row=14)
-        Button(text="Pokedex 2/2",width=10,command=self.show_pokedex2).grid(row=15)
-        Label(text="Mark a certain Pokémon as seen or catched at the Pokédex.").grid(row=15,column=1,sticky=W,columnspan=3)
-    
+        self.seconds.grid(row=3, column=1, sticky=E)
+        Label(text='').grid(row=4)
+        Button(text='Pok\xc3\xa9mon', width=10, command=self.show_pokemon).grid(row=5)
+        Label(text='Edit the Pok\xc3\xa9mon from the party.').grid(row=5, column=1, sticky=W, columnspan=3)
+        Label(text='', font=('Times', 4)).grid(row=6)
+        Button(text='PC Pok\xc3\xa9mon', width=10, command=self.show_boxes).grid(row=7)
+        Label(text="Edit the Pok\xc3\xa9mon stored at Bill's PC.").grid(row=7, column=1, sticky=W, columnspan=3)
+        Label(text='', font=('Times', 4)).grid(row=8)
+        Button(text='Bag Items', width=10, command=self.show_items).grid(row=9)
+        Label(text='Change the class or quantity of every item in the bag.').grid(row=9, column=1, sticky=W, columnspan=3)
+        Label(text='', font=('Times', 4)).grid(row=10)
+        Button(text='PC Items', width=10, command=self.show_pcitems).grid(row=11)
+        Label(text='Change the class or quantity of every item in the PC.').grid(row=11, column=1, sticky=W, columnspan=3)
+        Label(text='', font=('Times', 4)).grid(row=12)
+        Button(text='Pokedex 1/2', width=10, command=self.show_pokedex1).grid(row=13)
+        Label(text='Mark a certain Pok\xc3\xa9mon as seen or catched at the Pok\xc3\xa9dex.').grid(row=13, column=1, sticky=W, columnspan=3)
+        Label(text='', font=('Times', 4)).grid(row=14)
+        Button(text='Pokedex 2/2', width=10, command=self.show_pokedex2).grid(row=15)
+        Label(text='Mark a certain Pok\xc3\xa9mon as seen or catched at the Pok\xc3\xa9dex.').grid(row=15, column=1, sticky=W, columnspan=3)
+
     def show_frame(self):
-        self.title = "PikaSav v0.3"
+        self.title = 'PikaSav v0.4 RC 2'
         self.root.title(self.title)
         self.frame = Frame(self.root)
         self.add_fields()
         self.root.protocol('WM_DELETE_WINDOW', self.exit)
         self.frame.mainloop()
-    
+
     def close_frames(self):
         if self.items != None:
             self.items.destroy()
@@ -348,11 +8471,11 @@ class PikaSav():
         if self.pokeedit != None:
             self.pokeedit.destroy()
             self.pokeedit = None
-    
+
     def exit(self):
         self.close_frames()
         self.root.destroy()
-    
+
     def __init__(self):
         self.gen = 0
         self.root = Tk()
@@ -366,363 +8489,407 @@ class PikaSav():
         self.pcitems = None
         self.pokedex1 = None
         self.pokedex2 = None
-        self.iclass = [None]*163
-        self.icount = [None]*163
-        self.pciclass = [None]*50
-        self.pcicount = [None]*50
-        self.dexseen = [None]*387
-        self.dexcatched = [None]*387
+        self.iclass = [None] * 163
+        self.icount = [None] * 163
+        self.pciclass = [None] * 50
+        self.pcicount = [None] * 50
+        self.dexseen = [None] * 387
+        self.dexcatched = [None] * 387
         self.add_menus()
         self.show_frame()
-        return
-    
+
     def save_items(self):
         if self.items != None:
             for i in range(20):
-                self.sav.items[i][1]=self.icount[i]
-    
+                self.sav.items[i][1] = self.icount[i]
+
     def show_items(self):
-        global items
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.items != None:
+            self.items.focus_force()
             return
         self.items = Toplevel()
-        self.items.title("Bag Items - %s" % (self.title))
+        self.items.title('Bag Items - %s' % self.title)
         self.items.protocol('WM_DELETE_WINDOW', self.wmdel_items)
-        Label(self.items,text="   ").grid(row=1000,column=1000)
-        Label(self.items,text="Item class").grid(row=0,column=1)
-        Label(self.items,text="Quantity").grid(row=0,column=2)
-        array = items*1
+        Label(self.items, text='   ').grid(row=1000, column=1000)
+        Label(self.items, text='Item class').grid(row=0, column=1)
+        Label(self.items, text='Quantity').grid(row=0, column=2)
+        array = items * 1
         array.sort(reverse=True)
         inum = 20
-        if self.gen >= 3: inum = 33
+        if self.gen >= 3:
+            inum = 33
         for i in range(inum):
             iclass = self.sav.items[i][0]
-            if (iclass < len(items)): iclass = items[iclass]
-            else: iclass = str(iclass)
+            if iclass < len(items):
+                iclass = items[iclass]
+            else:
+                iclass = str(iclass)
             icount = self.sav.items[i][1]
-            Label(self.items,text="    Item %d" % (i+1)).grid(row=i+1,sticky=W)
-            self.iclass[i] = ComboBox(self.items,dropdown=1,editable=1,width=20,value=iclass)
+            Label(self.items, text='    Item %d' % (i + 1)).grid(row=i + 1, sticky=W)
+            self.iclass[i] = ComboBox(self.items, dropdown=1, editable=1, width=20, value=iclass)
             for t in array:
-                self.iclass[i].insert(0,t)
-            self.iclass[i].grid(row=i+1,column=1)
-            self.icount[i] = Entry(self.items,width=4)
-            self.icount[i].insert(0,icount)
-            self.icount[i].grid(row=i+1,column=2)
-        
+                self.iclass[i].insert(0, t)
+
+            self.iclass[i].grid(row=i + 1, column=1)
+            self.icount[i] = Entry(self.items, width=4)
+            self.icount[i].insert(0, icount)
+            self.icount[i].grid(row=i + 1, column=2)
+
         if self.gen >= 3:
-            Label(self.items,text="Item class").grid(row=0,column=4)
-            Label(self.items,text="Quantity").grid(row=0,column=5)
-            for i in range(33,33*2):
+            Label(self.items, text='Item class').grid(row=0, column=4)
+            Label(self.items, text='Quantity').grid(row=0, column=5)
+            for i in range(33, 66):
                 iclass = self.sav.items[i][0]
-                if (iclass < len(items)): iclass = items[iclass]
-                else: iclass = str(iclass)
+                if iclass < len(items):
+                    iclass = items[iclass]
+                else:
+                    iclass = str(iclass)
                 icount = self.sav.items[i][1]
-                Label(self.items,text="    Item %d" % (i+1)).grid(row=i%33+1,column=3,sticky=W)
-                self.iclass[i] = ComboBox(self.items,dropdown=1,editable=1,width=20,value=iclass)
+                Label(self.items, text='    Item %d' % (i + 1)).grid(row=i % 33 + 1, column=3, sticky=W)
+                self.iclass[i] = ComboBox(self.items, dropdown=1, editable=1, width=20, value=iclass)
                 for t in array:
-                    self.iclass[i].insert(0,t)
-                self.iclass[i].grid(row=i%33+1,column=4)
-                self.icount[i] = Entry(self.items,width=4)
-                self.icount[i].insert(0,icount)
-                self.icount[i].grid(row=i%33+1,column=5)
-        
-            Label(self.items,text="Item class").grid(row=0,column=7)
-            Label(self.items,text="Quantity").grid(row=0,column=8)
-            for i in range(33*2,33*3):
+                    self.iclass[i].insert(0, t)
+
+                self.iclass[i].grid(row=i % 33 + 1, column=4)
+                self.icount[i] = Entry(self.items, width=4)
+                self.icount[i].insert(0, icount)
+                self.icount[i].grid(row=i % 33 + 1, column=5)
+
+            Label(self.items, text='Item class').grid(row=0, column=7)
+            Label(self.items, text='Quantity').grid(row=0, column=8)
+            for i in range(66, 99):
                 iclass = self.sav.items[i][0]
-                if (iclass < len(items)): iclass = items[iclass]
-                else: iclass = str(iclass)
+                if iclass < len(items):
+                    iclass = items[iclass]
+                else:
+                    iclass = str(iclass)
                 icount = self.sav.items[i][1]
-                Label(self.items,text="    Item %d" % (i+1)).grid(row=i%33+1,column=6,sticky=W)
-                self.iclass[i] = ComboBox(self.items,dropdown=1,editable=1,width=20,value=iclass)
+                Label(self.items, text='    Item %d' % (i + 1)).grid(row=i % 33 + 1, column=6, sticky=W)
+                self.iclass[i] = ComboBox(self.items, dropdown=1, editable=1, width=20, value=iclass)
                 for t in array:
-                    self.iclass[i].insert(0,t)
-                self.iclass[i].grid(row=i%33+1,column=7)
-                self.icount[i] = Entry(self.items,width=7)
-                self.icount[i].insert(0,icount)
-                self.icount[i].grid(row=i%33+1,column=8)
-        
-            Label(self.items,text="Item class").grid(row=0,column=10)
-            Label(self.items,text="Quantity").grid(row=0,column=11)
-            for i in range(33*3,33*4):
+                    self.iclass[i].insert(0, t)
+
+                self.iclass[i].grid(row=i % 33 + 1, column=7)
+                self.icount[i] = Entry(self.items, width=7)
+                self.icount[i].insert(0, icount)
+                self.icount[i].grid(row=i % 33 + 1, column=8)
+
+            Label(self.items, text='Item class').grid(row=0, column=10)
+            Label(self.items, text='Quantity').grid(row=0, column=11)
+            for i in range(99, 132):
                 iclass = self.sav.items[i][0]
-                if (iclass < len(items)): iclass = items[iclass]
-                else: iclass = str(iclass)
+                if iclass < len(items):
+                    iclass = items[iclass]
+                else:
+                    iclass = str(iclass)
                 icount = self.sav.items[i][1]
-                Label(self.items,text="    Item %d" % (i+1)).grid(row=i%33+1,column=9,sticky=W)
-                self.iclass[i] = ComboBox(self.items,dropdown=1,editable=1,width=20,value=iclass)
+                Label(self.items, text='    Item %d' % (i + 1)).grid(row=i % 33 + 1, column=9, sticky=W)
+                self.iclass[i] = ComboBox(self.items, dropdown=1, editable=1, width=20, value=iclass)
                 for t in array:
-                    self.iclass[i].insert(0,t)
-                self.iclass[i].grid(row=i%33+1,column=10)
-                self.icount[i] = Entry(self.items,width=7)
-                self.icount[i].insert(0,icount)
-                self.icount[i].grid(row=i%33+1,column=11)
-        
-            Label(self.items,text="Item class").grid(row=0,column=13)
-            Label(self.items,text="Quantity").grid(row=0,column=14)
-            for i in range(33*4,163):
+                    self.iclass[i].insert(0, t)
+
+                self.iclass[i].grid(row=i % 33 + 1, column=10)
+                self.icount[i] = Entry(self.items, width=7)
+                self.icount[i].insert(0, icount)
+                self.icount[i].grid(row=i % 33 + 1, column=11)
+
+            Label(self.items, text='Item class').grid(row=0, column=13)
+            Label(self.items, text='Quantity').grid(row=0, column=14)
+            for i in range(132, 163):
                 iclass = self.sav.items[i][0]
-                if (iclass < len(items)): iclass = items[iclass]
-                else: iclass = str(iclass)
+                if iclass < len(items):
+                    iclass = items[iclass]
+                else:
+                    iclass = str(iclass)
                 icount = self.sav.items[i][1]
-                Label(self.items,text="    Item %d" % (i+1)).grid(row=i%33+1,column=12,sticky=W)
-                self.iclass[i] = ComboBox(self.items,dropdown=1,editable=1,width=20,value=iclass)
+                Label(self.items, text='    Item %d' % (i + 1)).grid(row=i % 33 + 1, column=12, sticky=W)
+                self.iclass[i] = ComboBox(self.items, dropdown=1, editable=1, width=20, value=iclass)
                 for t in array:
-                    self.iclass[i].insert(0,t)
-                self.iclass[i].grid(row=i%33+1,column=13)
-                self.icount[i] = Entry(self.items,width=7)
-                self.icount[i].insert(0,icount)
-                self.icount[i].grid(row=i%33+1,column=14)
-        
-        if self.gen <= 2:    
-            Label(self.items,text="    Item # (Set this to number of items)").grid(row=21,columnspan=2,sticky=W)
-            self.itemcount = Entry(self.items,width=4)
-            self.itemcount.insert(0,str(self.sav.itemcount))
-            self.itemcount.grid(row=21,column=2)
-        
-        return    
-    
+                    self.iclass[i].insert(0, t)
+
+                self.iclass[i].grid(row=i % 33 + 1, column=13)
+                self.icount[i] = Entry(self.items, width=7)
+                self.icount[i].insert(0, icount)
+                self.icount[i].grid(row=i % 33 + 1, column=14)
+
+        if self.gen <= 2:
+            Label(self.items, text='    Item # (Set this to number of items)').grid(row=21, columnspan=2, sticky=W)
+            self.itemcount = Entry(self.items, width=4)
+            self.itemcount.insert(0, str(self.sav.itemcount))
+            self.itemcount.grid(row=21, column=2)
+
     def show_pcitems(self):
-        global items
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.pcitems != None:
+            self.pcitems.focus_force()
             return
         self.pcitems = Toplevel()
-        self.pcitems.title("PC Items - %s" % (self.title))
+        self.pcitems.title('PC Items - %s' % self.title)
         self.pcitems.protocol('WM_DELETE_WINDOW', self.wmdel_pcitems)
-        Label(self.pcitems,text="   ").grid(row=1000,column=1000)
-        Label(self.pcitems,text="Item class").grid(row=0,column=1)
-        Label(self.pcitems,text="Quantity").grid(row=0,column=2)
-        array = items*1
+        Label(self.pcitems, text='   ').grid(row=1000, column=1000)
+        Label(self.pcitems, text='Item class').grid(row=0, column=1)
+        Label(self.pcitems, text='Quantity').grid(row=0, column=2)
+        array = items * 1
         array.sort(reverse=True)
         for i in range(25):
             iclass = self.sav.pcitems[i][0]
-            if (iclass < len(items)): iclass = items[iclass]
-            else: iclass = str(iclass)
+            if iclass < len(items):
+                iclass = items[iclass]
+            else:
+                iclass = str(iclass)
             icount = self.sav.pcitems[i][1]
-            Label(self.pcitems,text="    Item %d" % (i+1)).grid(row=i+1,sticky=W)
-            self.pciclass[i] = ComboBox(self.pcitems,dropdown=1,editable=1,width=20,value=iclass)
+            Label(self.pcitems, text='    Item %d' % (i + 1)).grid(row=i + 1, sticky=W)
+            self.pciclass[i] = ComboBox(self.pcitems, dropdown=1, editable=1, width=20, value=iclass)
             for t in array:
-                self.pciclass[i].insert(0,t)
-            self.pciclass[i].grid(row=i+1,column=1)
-            self.pcicount[i] = Entry(self.pcitems,width=4)
-            self.pcicount[i].insert(0,icount)
-            self.pcicount[i].grid(row=i+1,column=2)
-                    
-        Label(self.pcitems,text="Item class").grid(row=0,column=4)
-        Label(self.pcitems,text="Quantity").grid(row=0,column=5)
-        for i in range(25,50):
+                self.pciclass[i].insert(0, t)
+
+            self.pciclass[i].grid(row=i + 1, column=1)
+            self.pcicount[i] = Entry(self.pcitems, width=4)
+            self.pcicount[i].insert(0, icount)
+            self.pcicount[i].grid(row=i + 1, column=2)
+
+        Label(self.pcitems, text='Item class').grid(row=0, column=4)
+        Label(self.pcitems, text='Quantity').grid(row=0, column=5)
+        for i in range(25, 50):
             iclass = self.sav.pcitems[i][0]
-            if (iclass < len(items)): iclass = items[iclass]
-            else: iclass = str(iclass)
+            if iclass < len(items):
+                iclass = items[iclass]
+            else:
+                iclass = str(iclass)
             icount = self.sav.pcitems[i][1]
-            Label(self.pcitems,text="    Item %d" % (i+1)).grid(row=i%25+1,column=3,sticky=W)
-            self.pciclass[i] = ComboBox(self.pcitems,dropdown=1,editable=1,width=20,value=iclass)
+            Label(self.pcitems, text='    Item %d' % (i + 1)).grid(row=i % 25 + 1, column=3, sticky=W)
+            self.pciclass[i] = ComboBox(self.pcitems, dropdown=1, editable=1, width=20, value=iclass)
             for t in array:
-                self.pciclass[i].insert(0,t)
-            self.pciclass[i].grid(row=i%25+1,column=4)
-            self.pcicount[i] = Entry(self.pcitems,width=4)
-            self.pcicount[i].insert(0,icount)
-            self.pcicount[i].grid(row=i%25+1,column=5)
+                self.pciclass[i].insert(0, t)
+
+            self.pciclass[i].grid(row=i % 25 + 1, column=4)
+            self.pcicount[i] = Entry(self.pcitems, width=4)
+            self.pcicount[i].insert(0, icount)
+            self.pcicount[i].grid(row=i % 25 + 1, column=5)
+
         if self.gen <= 2:
-            Label(self.pcitems,text="    Item # (Set this to number of items)").grid(row=26,columnspan=2,sticky=W)
-            self.pcitemcount = Entry(self.pcitems,width=4)
-            self.pcitemcount.insert(0,str(self.sav.pcitemcount))
-            self.pcitemcount.grid(row=26,column=2)
-        return
-    
+            Label(self.pcitems, text='    Item # (Set this to number of items)').grid(row=26, columnspan=2, sticky=W)
+            self.pcitemcount = Entry(self.pcitems, width=4)
+            self.pcitemcount.insert(0, str(self.sav.pcitemcount))
+            self.pcitemcount.grid(row=26, column=2)
+
     def store_items(self):
-        if (self.items != None):
+        if self.items != None:
             if self.gen <= 2:
                 for i in range(20):
-                    self.sav.setitem(i,items.index(self.iclass[i]["selection"]),int(self.icount[i].get()))
-                self.sav.set("itemcount",self.itemcount.get())
+                    self.sav.setitem(i, items.index(self.iclass[i]['selection']), int(self.icount[i].get()))
+
+                self.sav.set('itemcount', self.itemcount.get())
             if self.gen >= 3:
                 for i in range(163):
-                    self.sav.setitem(i,items.index(self.iclass[i]["selection"]),int(self.icount[i].get()))
+                    self.sav.setitem(i, items.index(self.iclass[i]['selection']), int(self.icount[i].get()))
+
             self.sav.refresh()
-    
+
     def store_pokemon(self):
-        if (self.pokemon != None):
+        if self.pokemon != None:
             if self.gen <= 2:
-                self.sav.set("pokemoncount",self.pokecount.get())
+                self.sav.set('pokemoncount', self.pokecount.get())
                 self.sav.refresh()
-    
+
     def store_boxedit(self):
-        if (self.boxedit != None):
+        if self.boxedit != None:
             if self.gen <= 2:
-                self.sav.set("box%dpokemoncount" % (self.curbox),self.boxpokecount.get())
+                self.sav.set('box%dpokemoncount' % self.curbox, self.boxpokecount.get())
                 self.sav.refresh()
-    
+
     def store_pokedex1(self):
-            if (self.pokedex1 != None):
-                stop = 76
-                if self.gen == 2:
-                    stop = 125                    
-                if self.gen == 3:
-                    stop = 196
-                for p in range(stop):
-                    self.sav.setpokedex(p+1,self.dexseen[p].get(),self.dexcatched[p].get())
-                self.sav.refresh()
-    
+        if self.pokedex1 != None:
+            stop = 76
+            if self.gen == 2:
+                stop = 125
+            if self.gen == 3:
+                stop = 196
+            for p in range(stop):
+                self.sav.setpokedex(p + 1, self.dexseen[p].get(), self.dexcatched[p].get())
+
+            self.sav.refresh()
+
     def store_pokedex2(self):
-            if (self.pokedex2 != None):
-                start = 76
-                stop = 151
-                if self.gen == 2:
-                    start = 125
-                    stop = 251
-                if self.gen == 3:
-                    start = 196
-                    stop = 386
-                for p in range(start,stop):
-                    self.sav.setpokedex(p+1,self.dexseen[p].get(),self.dexcatched[p].get())
-                self.sav.refresh()
-    
+        if self.pokedex2 != None:
+            start = 76
+            stop = 151
+            if self.gen == 2:
+                start = 125
+                stop = 251
+            if self.gen == 3:
+                start = 196
+                stop = 386
+            for p in range(start, stop):
+                self.sav.setpokedex(p + 1, self.dexseen[p].get(), self.dexcatched[p].get())
+
+            self.sav.refresh()
+
     def store_pcitems(self):
-        global items
-        if (self.pcitems != None):
+        if self.pcitems != None:
             for i in range(50):
                 if self.gen <= 2:
-                    self.sav.setitem(i+20,items.index(self.pciclass[i]["selection"]),int(self.pcicount[i].get()))
+                    self.sav.setitem(i + 20, items.index(self.pciclass[i]['selection']), int(self.pcicount[i].get()))
                 if self.gen >= 3:
-                    self.sav.setitem(i+163,items.index(self.pciclass[i]["selection"]),int(self.pcicount[i].get()))
+                    self.sav.setitem(i + 163, items.index(self.pciclass[i]['selection']), int(self.pcicount[i].get()))
+
             if self.gen <= 2:
-                self.sav.set("pcitemcount",self.pcitemcount.get())
+                self.sav.set('pcitemcount', self.pcitemcount.get())
             self.sav.refresh()
-    
+
     def store_pokeedit(self):
-        global pokemon
-        global types
-        global moves
-        if (self.pokeedit != None):
+        if self.pokeedit != None:
             p = self.p
             b = self.b
             pkm = self.pkm
-            snames = ["maxhp","attack","defense","speed","special"]
+            snames = ['maxhp',
+             'attack',
+             'defense',
+             'speed',
+             'special']
             snames2 = snames[:]
             if self.gen == 2:
-                snames2 = ["maxhp","attack","defense","speed","specialattack","specialdefense"]
+                snames2 = ['maxhp',
+                 'attack',
+                 'defense',
+                 'speed',
+                 'specialattack',
+                 'specialdefense']
             if self.gen >= 3:
-                snames = ["maxhp","attack","defense","speed","specialattack","specialdefense"]
+                snames = ['maxhp',
+                 'attack',
+                 'defense',
+                 'speed',
+                 'specialattack',
+                 'specialdefense']
                 snames2 = snames[:]
             if self.gen == 1 or b == None:
-                pkm = self.sav.pkm_set(pkm,"hp",int(self.curhp.get()))
+                pkm = self.sav.pkm_set(pkm, 'hp', int(self.curhp.get()))
             if self.gen == 1:
-                pkm = self.sav.pkm_set(pkm,"catchrate",int(self.catchrate.get()))
+                pkm = self.sav.pkm_set(pkm, 'catchrate', int(self.catchrate.get()))
             else:
-                pkm = self.sav.pkm_set(pkm,"item",items.index(self.helditem["selection"]))
-                pkm = self.sav.pkm_set(pkm,"pokerus",int(self.pokerus.get()))
-                pkm = self.sav.pkm_set(pkm,"happiness",int(self.happiness.get()))
-                pkm = self.sav.pkm_set(pkm,"caughtlocation",int(self.caughtlocation.get()))
+                pkm = self.sav.pkm_set(pkm, 'item', items.index(self.helditem['selection']))
+                pkm = self.sav.pkm_set(pkm, 'pokerus', int(self.pokerus.get()))
+                pkm = self.sav.pkm_set(pkm, 'happiness', int(self.happiness.get()))
+                pkm = self.sav.pkm_set(pkm, 'caughtlocation', int(self.caughtlocation.get()))
                 if self.gen == 2:
-                    pkm = self.sav.pkm_set(pkm,"caughttime",int(self.caughttime.get()))
+                    pkm = self.sav.pkm_set(pkm, 'caughttime', int(self.caughttime.get()))
                 if self.gen >= 3:
-                    pkm = self.sav.pkm_set(pkm,"caughtball",int(self.caughtball.get()))
-                pkm = self.sav.pkm_set(pkm,"caughtlevel",int(self.caughtlevel.get()))
-            pkm = self.sav.pkm_set(pkm,"otnum",int(self.otnum.get()))
+                    pkm = self.sav.pkm_set(pkm, 'caughtball', int(self.caughtball.get()))
+                pkm = self.sav.pkm_set(pkm, 'caughtlevel', int(self.caughtlevel.get()))
+            pkm = self.sav.pkm_set(pkm, 'otnum', int(self.otnum.get()))
             if self.gen == 3:
-                pkm = self.sav.pkm_set(pkm,"pid",int(self.pid.get()))
-                pkm = self.sav.pkm_set(pkm,"secretid",int(self.secretid.get()))
-            pkm = self.sav.pkm_set(pkm,"exp",int(self.exp.get()))
-            pkm = self.sav.pkm_set(pkm,"otname",self.otname.get())
-            pkm = self.sav.pkm_set(pkm,"name",self.nickname.get())
-            pkm = self.sav.pkm_set(pkm,"num",pokemon.index(self.pokeclass["selection"]))
-            if self.gen <= 2:
-                pkm = self.sav.pkm_set(pkm,"sprite",pokemon.index(self.pokesprite["selection"]))
-            if self.gen == 1: 
-                pkm = self.sav.pkm_set(pkm,"type1",types.index(self.type1["selection"]))
-                pkm = self.sav.pkm_set(pkm,"type2",types.index(self.type2["selection"]))
-            if self.gen <= 2:
-                if (len(pkm) >= 67):
-                    pkm = self.sav.pkm_set(pkm,"curlevel",int(self.level.get()))
-                else:
-                    pkm = self.sav.pkm_set(pkm,"level",int(self.level.get()))
-            if self.gen >= 3:
-                if (len(pkm) >= 100):
-                    pkm = self.sav.pkm_set(pkm,"level",int(self.level.get()))
-            
-            if self.gen == 1 or b == None:
-                pkm = self.sav.pkm_set(pkm,"asleep",self.asleep.get())
-                pkm = self.sav.pkm_set(pkm,"poisoned",self.poisoned.get())
-                pkm = self.sav.pkm_set(pkm,"frozen",self.frozen.get())
-                pkm = self.sav.pkm_set(pkm,"paralyzed",self.paralyzed.get())
-            
-            for m in range(4):
-                pkm = self.sav.pkm_set(pkm,"move%d" % (m+1),moves.index(self.moveclass[m]["selection"]))
-                pkm = self.sav.pkm_set(pkm,"move%dpp" % (m+1),int(self.movepp[m].get()))
-                pkm = self.sav.pkm_set(pkm,"move%dppup" % (m+1),int(self.moveppup[m].get()))
+                pkm = self.sav.pkm_set(pkm, 'pid', int(self.pid.get()))
+                pkm = self.sav.pkm_set(pkm, 'secretid', int(self.secretid.get()))
+            pkm = self.sav.pkm_set(pkm, 'exp', int(self.exp.get()))
+            pkm = self.sav.pkm_set(pkm, 'otname', self.otname.get())
+            pkm = self.sav.pkm_set(pkm, 'name', self.nickname.get())
+            try:
+                pkm = self.sav.pkm_set(pkm, 'num', pokemon.index(self.pokeclass['selection']))
+            except:
+                pkm = self.sav.pkm_set(pkm, 'num', pokemon_lower.index(self.pokeclass['selection'].lower()))
 
-            for s in range(len(snames)):
+            if self.gen <= 2:
+                try:
+                    pkm = self.sav.pkm_set(pkm, 'sprite', pokemon.index(self.pokesprite['selection']))
+                except:
+                    pkm = self.sav.pkm_set(pkm, 'sprite', pokemon_lower.index(self.pokesprite['selection'].lower()))
+
+            if self.gen == 1:
+                pkm = self.sav.pkm_set(pkm, 'type1', types.index(self.type1['selection']))
+                pkm = self.sav.pkm_set(pkm, 'type2', types.index(self.type2['selection']))
+            if self.gen <= 2:
+                if len(pkm) >= 67:
+                    pkm = self.sav.pkm_set(pkm, 'curlevel', int(self.level.get()))
+                else:
+                    pkm = self.sav.pkm_set(pkm, 'level', int(self.level.get()))
+            if self.gen >= 3:
+                if len(pkm) >= 100:
+                    pkm = self.sav.pkm_set(pkm, 'level', int(self.level.get()))
+            if self.gen == 1 or b == None:
+                pkm = self.sav.pkm_set(pkm, 'asleep', self.asleep.get())
+                pkm = self.sav.pkm_set(pkm, 'poisoned', self.poisoned.get())
+                pkm = self.sav.pkm_set(pkm, 'frozen', self.frozen.get())
+                pkm = self.sav.pkm_set(pkm, 'paralyzed', self.paralyzed.get())
+            for m in range(4):
+                pkm = self.sav.pkm_set(pkm, 'move%d' % (m + 1), moves.index(self.moveclass[m]['selection']))
+                pkm = self.sav.pkm_set(pkm, 'move%dpp' % (m + 1), int(self.movepp[m].get()))
+                pkm = self.sav.pkm_set(pkm, 'move%dppup' % (m + 1), int(self.moveppup[m].get()))
+
+            for s in range(len(snames2)):
                 if s != 5 or self.gen == 3:
                     if s or self.gen == 3:
-                        pkm = self.sav.pkm_set(pkm,"%siv" % (snames[s]),int(self.stativs[s].get()))
-                    pkm = self.sav.pkm_set(pkm,"%sev" % (snames[s]),int(self.statevs[s].get()))
+                        pkm = self.sav.pkm_set(pkm, '%siv' % snames[s], int(self.stativs[s].get()))
+                    pkm = self.sav.pkm_set(pkm, '%sev' % snames[s], int(self.statevs[s].get()))
                 if b == None:
                     if s != 5 or self.gen >= 2:
-                        pkm = self.sav.pkm_set(pkm,snames2[s],int(self.statcur[s].get()))
-            
+                        pkm = self.sav.pkm_set(pkm, snames2[s], int(self.statcur[s].get()))
+
             if self.gen >= 3:
-                cnames = ["coolness","beauty","cuteness","smartness","toughness","feel"]
+                cnames = ['coolness',
+                 'beauty',
+                 'cuteness',
+                 'smartness',
+                 'toughness',
+                 'feel']
                 for s in range(len(cnames)):
-                    pkm = self.sav.pkm_set(pkm,cnames[s],int(self.constat[s].get()))
-            
+                    pkm = self.sav.pkm_set(pkm, cnames[s], int(self.constat[s].get()))
+
             if b == None:
-                self.sav.setpokemon(p,pkm)
+                self.sav.setpokemon(p, pkm)
             else:
-                self.sav.setpcpokemon(b*self.bp+p,pkm)
+                self.sav.setpcpokemon(b * self.bp + p, pkm)
+            self.pkm = pkm
             self.sav.refresh()
 
-    
-    
     def wmdel_items(self):
         self.store_items()
         self.items.destroy()
         self.items = None
-        
+
     def wmdel_boxes(self):
         self.boxes.destroy()
         self.boxes = None
-        
+
     def wmdel_pcitems(self):
         self.store_pcitems()
         self.pcitems.destroy()
         self.pcitems = None
-    
+
     def wmdel_pokedex1(self):
         self.store_pokedex1()
         self.pokedex1.destroy()
         self.pokedex1 = None
-    
+
     def wmdel_pokedex2(self):
         self.store_pokedex2()
         self.pokedex2.destroy()
         self.pokedex2 = None
-        
+
     def wmdel_pokeedit(self):
         self.store_pokeedit()
         self.pokeedit.destroy()
+        self.sav.refresh()
         if self.b == None:
             if self.pokemon != None:
                 self.wmdel_pokemon()
                 self.show_pokemon()
-            else:
-                if self.boxedit != None:
-                    if self.curbox == self.b:
-                        self.wmdel_boxedit()
-                        self.show_boxedit(self.curbox)
+            elif self.boxedit != None:
+                if self.curbox == self.b:
+                    self.wmdel_boxedit()
+                    self.show_boxedit(self.curbox)
         self.pokeedit = None
-        
+
     def wmdel_pokemon(self):
         self.store_pokemon()
         self.pokemon.destroy()
         self.pokemon = None
-        
+
     def wmdel_boxedit(self):
         self.store_boxedit()
         self.boxedit.destroy()
@@ -730,357 +8897,380 @@ class PikaSav():
             self.wmdel_boxes()
             self.show_boxes()
         self.boxedit = None
-    
+
     def show_pokemon(self):
-        global pokedex
-        global pokemon
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.pokemon != None:
+            self.pokemon.focus_force()
             return
         self.pokemon = Toplevel()
-        self.pokemon.title("Party Pokémon - %s" % (self.title))
-        Label(self.pokemon,text="   ").grid(row=1000,column=1000)
+        self.pokemon.title('Party Pok\xc3\xa9mon - %s' % self.title)
+        Label(self.pokemon, text='   ').grid(row=1000, column=1000)
         self.pokemon.protocol('WM_DELETE_WINDOW', self.wmdel_pokemon)
-        #Label(self.pokemon,text="Level").grid(row=1,column=1)
-        #Label(self.pokemon,text="Class").grid(row=1,column=2)
-        Label(self.pokemon,text="",font=("Times",4)).grid(row=0)
+        Label(self.pokemon, text='', font=('Times', 4)).grid(row=0)
         for p in range(6):
-            pclass = self.sav.pkm_get(self.sav.pokemon[p],"num")
-            plevel = self.sav.pkm_get(self.sav.pokemon[p],"curlevel")
-            Label(self.pokemon,text="    Pokémon %d" % (p+1)).grid(row=p*2+2,column=0,sticky=W)
-            Label(self.pokemon,text="    Lv. %d    " % (plevel)).grid(row=p*2+2,column=1)
-            Label(self.pokemon,text=pokemon[pclass]+"    ").grid(row=p*2+2,column=2,sticky=W)
-            Button(self.pokemon,text="Edit",width=6,command=lambda p=p: self.show_pokeedit(p)).grid(row=p*2+2,column=3)
+            pclass = self.sav.pkm_get(self.sav.pokemon[p], 'sprite')
+            plevel = self.sav.pkm_get(self.sav.pokemon[p], 'curlevel')
+            Label(self.pokemon, text='    Pok\xc3\xa9mon %d' % (p + 1)).grid(row=p * 2 + 2, column=0, sticky=W)
+            Label(self.pokemon, text='    Lv. %d    ' % plevel).grid(row=p * 2 + 2, column=1)
+            Label(self.pokemon, text=pokemon[pclass] + '    ').grid(row=p * 2 + 2, column=2, sticky=W)
+            Button(self.pokemon, text='Edit', width=6, command=lambda p = p: self.show_pokeedit(p)).grid(row=p * 2 + 2, column=3)
+
         if self.gen <= 2:
-            Label(self.pokemon,text="",font=("Times",4)).grid(row=13)
-            Label(self.pokemon,text="    Pokémon #  (Pokémon in the party)").grid(row=14,columnspan=3,sticky=W)
-            self.pokecount = Entry(self.pokemon,width=7)
-            self.pokecount.insert(0,str(self.sav.pokemoncount))
-            self.pokecount.grid(row=14,column=3)
-    
+            Label(self.pokemon, text='', font=('Times', 4)).grid(row=13)
+            Label(self.pokemon, text='    Pok\xc3\xa9mon #  (Pok\xc3\xa9mon in the party)').grid(row=14, columnspan=3, sticky=W)
+            self.pokecount = Entry(self.pokemon, width=7)
+            self.pokecount.insert(0, str(self.sav.pokemoncount))
+            self.pokecount.grid(row=14, column=3)
+
     def show_boxes(self):
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.boxes != None:
+            self.boxes.focus_force()
             return
         self.boxes = Toplevel()
-        self.boxes.title("PC Boxes - %s" % (self.title))
-        Label(self.boxes,text="   ").grid(row=1000,column=1000)
+        self.boxes.title('PC Boxes - %s' % self.title)
+        Label(self.boxes, text='   ').grid(row=1000, column=1000)
         self.boxes.protocol('WM_DELETE_WINDOW', self.wmdel_boxes)
-        Label(self.boxes,text="",font=("Times",4)).grid(row=0)
+        Label(self.boxes, text='', font=('Times', 4)).grid(row=0)
         curbox = self.sav.currentbox
         for b in range(self.bn):
             boxnum = self.sav.boxpokemoncount[b]
-            if (b == curbox):
-                Label(self.boxes,text="    Box %d (Selected)" % (b+1)).grid(row=b*2+2,column=0,sticky=W)
+            if b == curbox:
+                Label(self.boxes, text='    Box %d (Selected)' % (b + 1)).grid(row=b * 2 + 2, column=0, sticky=W)
             else:
-                Label(self.boxes,text="    Box %d" % (b+1)).grid(row=b*2+2,column=0,sticky=W)
+                Label(self.boxes, text='    Box %d' % (b + 1)).grid(row=b * 2 + 2, column=0, sticky=W)
             if self.gen < 3:
-                Label(self.boxes,text="    %d / 20 Pokémon    " % (boxnum)).grid(row=b*2+2,column=1)
+                Label(self.boxes, text='    %d / 20 Pok\xc3\xa9mon    ' % boxnum).grid(row=b * 2 + 2, column=1)
             else:
-                Label(self.boxes,text="    %d / 30 Pokémon    " % (boxnum)).grid(row=b*2+2,column=1)
-            Button(self.boxes,text="Edit",width=6,command=lambda b=b: self.show_boxedit(b)).grid(row=b*2+2,column=3)
-    
-    def show_boxedit(self,b):
-        global pokedex
-        global pokemon
+                Label(self.boxes, text='    %d / 30 Pok\xc3\xa9mon    ' % boxnum).grid(row=b * 2 + 2, column=1)
+            Button(self.boxes, text='Edit', width=6, command=lambda b = b: self.show_boxedit(b)).grid(row=b * 2 + 2, column=3)
+
+    def show_boxedit(self, b):
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.boxedit != None:
+            self.boxedit.focus_force()
             return
         self.curbox = b
         self.boxedit = Toplevel()
-        self.boxedit.title("Box %d - %s" % (b+1,self.title))
-        Label(self.boxedit,text="   ").grid(row=1000,column=1000)
+        self.boxedit.title('Box %d - %s' % (b + 1, self.title))
+        if self.gen <= 2:
+            menu = Menu(self.boxedit)
+            menu_file = Menu(menu, tearoff=0)
+            menu_file.add_command(label='Reorder & recount...', command=self.box_reorder)
+            menu.add_cascade(label='Box %d management' % (b + 1), menu=menu_file)
+            self.boxedit.configure(menu=menu)
+        Label(self.boxedit, text='   ').grid(row=1000, column=1000)
         self.boxedit.protocol('WM_DELETE_WINDOW', self.wmdel_boxedit)
-        Label(self.boxedit,text="",font=("Times",4)).grid(row=0) 
+        Label(self.boxedit, text='', font=('Times', 4)).grid(row=0)
         plevel = 0
         for p in range(self.bp):
-            pclass = self.sav.pkm_get(self.sav.pcpokemon[b*self.bp+p],"num")
+            pclass = self.sav.pkm_get(self.sav.pcpokemon[b * self.bp + p], 'sprite')
             if self.gen <= 2:
-                plevel = self.sav.pkm_get(self.sav.pcpokemon[b*self.bp+p],"level")
-            Label(self.boxedit,text="    Pokémon %d" % (p+1)).grid(row=p*2+2,column=0,sticky=W)
-            Label(self.boxedit,text="    Lv. %d    " % (plevel)).grid(row=p*2+2,column=1)
-            text = "??????????"
+                plevel = self.sav.pkm_get(self.sav.pcpokemon[b * self.bp + p], 'level')
+            Label(self.boxedit, text='    Pok\xc3\xa9mon %d' % (p + 1)).grid(row=p * 2 + 2, column=0, sticky=W)
+            Label(self.boxedit, text='    Lv. %d    ' % plevel).grid(row=p * 2 + 2, column=1)
+            text = '??????????'
             if pclass < len(pokemon):
                 text = pokemon[pclass]
-            Label(self.boxedit,text=text+"    ").grid(row=p*2+2,column=2,sticky=W)
-            Button(self.boxedit,text="Edit",width=6,command=lambda p=p: self.show_pokeedit(p,b)).grid(row=p*2+2,column=3)
+            Label(self.boxedit, text=text + '    ').grid(row=p * 2 + 2, column=2, sticky=W)
+            Button(self.boxedit, text='Edit', width=6, command=lambda p = p: self.show_pokeedit(p, b)).grid(row=p * 2 + 2, column=3)
+
         if self.gen <= 2:
-            Label(self.boxedit,text="",font=("Times",4)).grid(row=self.bp*2+1)
-            Label(self.boxedit,text="    Pokémon #  (Pokémon in the box)").grid(row=self.bp*2+2,columnspan=3,sticky=W)
-            self.boxpokecount = Entry(self.boxedit,width=7)
-            self.boxpokecount.insert(0,str(self.sav.boxpokemoncount[b]))
-            self.boxpokecount.grid(row=self.bp*2+2,column=3)
-        pass
-    
-    def show_pokeedit(self,p,b=None):
-        global pokedex
-        global pclass
-        global moves
-        global types
+            Label(self.boxedit, text='', font=('Times', 4)).grid(row=self.bp * 2 + 1)
+            Label(self.boxedit, text='    Pok\xc3\xa9mon #  (Pok\xc3\xa9mon in the box)').grid(row=self.bp * 2 + 2, columnspan=3, sticky=W)
+            self.boxpokecount = Entry(self.boxedit, width=7)
+            self.boxpokecount.insert(0, str(self.sav.boxpokemoncount[b]))
+            self.boxpokecount.grid(row=self.bp * 2 + 2, column=3)
+
+    def box_reorder(self):
+        if self.pokeedit != None:
+            self.wmdel_pokeedit()
+        if self.boxedit != None:
+            self.wmdel_boxedit()
+        b = self.curbox
+        pkmlen = len(self.sav.pcpokemon[0])
+        newbox = ''
+        boxtrash = ''
+        for p in range(self.bp):
+            pkm = self.sav.pcpokemon[b * self.bp + p]
+            if pkm[0] != chr(255) and pkm[0] != chr(0):
+                newbox += pkm
+            else:
+                boxtrash += pkm
+
+        pkmcount = len(newbox) / pkmlen
+        newbox += boxtrash
+        for p in range(self.bp):
+            self.sav.setpcpokemon(b * self.bp + p, newbox[pkmlen * p:pkmlen * (p + 1)])
+
+        self.sav.refresh()
+        self.show_boxedit(b)
+        self.boxpokecount.delete(0, END)
+        self.boxpokecount.insert(0, pkmcount)
+        self.boxedit.focus_force()
+
+    def show_pokeedit(self, p, b = None):
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.pokeedit != None:
+            self.pokeedit.focus_force()
             return
-        
         self.pokeedit = Toplevel()
-        
-        if b==None:
+        if self.gen <= 2:
+            self.add_pokeedit_menus()
+        if b == None:
             pkm = self.sav.pokemon[p]
             self.pkm = pkm
             self.p = p
             self.b = None
-            self.pokeedit.title("Party Pokémon %d - %s" % (p+1,self.title))
+            self.pokeedit.title('Party Pok\xc3\xa9mon %d - %s' % (p + 1, self.title))
         else:
-            pkm = self.sav.pcpokemon[b*self.bp+p]
+            pkm = self.sav.pcpokemon[b * self.bp + p]
             self.pkm = pkm
             self.p = p
             self.b = b
-            self.pokeedit.title("PC Box %d, Pokémon %d - %s" % (b+1,p+1,self.title))
-
-        
+            self.pokeedit.title('PC Box %d, Pok\xc3\xa9mon %d - %s' % (b + 1, p + 1, self.title))
         Label(self.pokeedit).grid()
-        Label(self.pokeedit,text="   ").grid(row=1000,column=1000)
+        Label(self.pokeedit, text='   ').grid(row=1000, column=1000)
         self.pokeedit.protocol('WM_DELETE_WINDOW', self.wmdel_pokeedit)
-        Label(self.pokeedit,text="    Pokémon Class:  ").grid(row=10,column=10,columnspan=10)
-        if (self.gen <= 2):
-            Label(self.pokeedit,text="    Pokémon Sprite:  ").grid(row=20,column=10,columnspan=10)
+        Label(self.pokeedit, text='    Pok\xc3\xa9mon Class:  ').grid(row=10, column=10, columnspan=10)
+        if self.gen <= 2:
+            Label(self.pokeedit, text='    Pok\xc3\xa9mon Sprite:  ').grid(row=20, column=10, columnspan=10)
         else:
-            Label(self.pokeedit,text = "    Personality / PID:  ").grid(row=20,column=10,columnspan=10,sticky=E)    
-            self.pid = Entry(self.pokeedit,width=22)
-            self.pid.insert(0,self.sav.pkm_get(pkm,"pid"));
-            self.pid.grid(row=20,column=20,columnspan=10)
-        Label(self.pokeedit,text="    Nickname:  ").grid(row=25,column=10,columnspan=10)
-        Label(self.pokeedit,text="    OT Num / OT Name:  ").grid(row=10,column=30,columnspan=10)
-        Label(self.pokeedit,text="    Level / Exp. Points:  ").grid(row=20,column=30,columnspan=10)
-        
-        self.otnum = Entry(self.pokeedit,width=6)
-        self.otnum.insert(0,self.sav.pkm_get(pkm,"otnum"));
-        self.otnum.grid(row=10,column=40,columnspan=10)
-        self.otname = Entry(self.pokeedit,width=10)
-        self.otname.insert(0,self.sav.pkm_get(pkm,"otname"));
-        self.otname.grid(row=10,column=50,columnspan=10)
-        
+            Label(self.pokeedit, text='    Personality / PID:  ').grid(row=20, column=10, columnspan=10, sticky=E)
+            self.pid = Entry(self.pokeedit, width=22)
+            self.pid.insert(0, self.sav.pkm_get(pkm, 'pid'))
+            self.pid.grid(row=20, column=20, columnspan=10)
+        Label(self.pokeedit, text='    Nickname:  ').grid(row=25, column=10, columnspan=10)
+        Label(self.pokeedit, text='    OT Num / OT Name:  ').grid(row=10, column=30, columnspan=10)
+        Label(self.pokeedit, text='    Level / Exp. Points:  ').grid(row=20, column=30, columnspan=10)
+        self.otnum = Entry(self.pokeedit, width=6)
+        self.otnum.insert(0, self.sav.pkm_get(pkm, 'otnum'))
+        self.otnum.grid(row=10, column=40, columnspan=10)
+        self.otname = Entry(self.pokeedit, width=10)
+        self.otname.insert(0, self.sav.pkm_get(pkm, 'otname'))
+        self.otname.grid(row=10, column=50, columnspan=10)
         if self.gen >= 2:
-            Label(self.pokeedit,text="    Held Item:  ").grid(row=23,column=10,columnspan=10)
-            self.helditem = ComboBox(self.pokeedit,dropdown=1,editable=1,width=20,value=items[self.sav.pkm_get(pkm,"item")])
-            
-            array = items*1
+            Label(self.pokeedit, text='    Held Item:  ').grid(row=23, column=10, columnspan=10)
+            self.helditem = ComboBox(self.pokeedit, dropdown=1, editable=1, width=20, value=items[self.sav.pkm_get(pkm, 'item')])
+            array = items * 1
             array.sort(reverse=False)
             for x in range(len(array)):
                 if len(array[x]) > 4:
-                    self.helditem.insert(END,array[x])
-            self.helditem.grid(row=23,column=20,columnspan=10)
-            
+                    self.helditem.insert(END, array[x])
+
+            self.helditem.grid(row=23, column=20, columnspan=10)
             if self.gen <= 2:
-                Label(self.pokeedit,text="    Pokérus:  ").grid(row=25,column=30,columnspan=10)
+                Label(self.pokeedit, text='    Pok\xc3\xa9rus:  ').grid(row=25, column=30, columnspan=10)
             else:
-                Label(self.pokeedit,text="    Pokérus / Secret ID:  ").grid(row=25,column=30,columnspan=10)
-                self.secretid = Entry(self.pokeedit,width=10)
-                self.secretid.insert(0,self.sav.pkm_get(pkm,"secretid"));
-                self.secretid.grid(row=25,column=50,columnspan=10)
-            self.pokerus = Entry(self.pokeedit,width=6)
-            self.pokerus.insert(0,self.sav.pkm_get(pkm,"pokerus"));
-            self.pokerus.grid(row=25,column=40,columnspan=10)
-            
+                Label(self.pokeedit, text='    Pok\xc3\xa9rus / Secret ID:  ').grid(row=25, column=30, columnspan=10)
+                self.secretid = Entry(self.pokeedit, width=10)
+                self.secretid.insert(0, self.sav.pkm_get(pkm, 'secretid'))
+                self.secretid.grid(row=25, column=50, columnspan=10)
+            self.pokerus = Entry(self.pokeedit, width=6)
+            self.pokerus.insert(0, self.sav.pkm_get(pkm, 'pokerus'))
+            self.pokerus.grid(row=25, column=40, columnspan=10)
             if self.gen == 2:
-                Label(self.pokeedit,text="    Caught zone / level / time:  ").grid(row=23,column=30,columnspan=10)
+                Label(self.pokeedit, text='    Caught zone / level / time:  ').grid(row=23, column=30, columnspan=10)
             if self.gen >= 3:
-                Label(self.pokeedit,text="    Caught zone / level / Ball:  ").grid(row=23,column=30,columnspan=10)
-            
-            self.caughtlocation = Entry(self.pokeedit,width=6)
-            self.caughtlocation.insert(0,self.sav.pkm_get(pkm,"caughtlocation"));
-            self.caughtlocation.grid(row=23,column=40,columnspan=10)
-            self.caughtlevel = Entry(self.pokeedit,width=5)
-            self.caughtlevel.insert(0,self.sav.pkm_get(pkm,"caughtlevel"));
-            self.caughtlevel.grid(row=23,column=50,columnspan=5)
+                Label(self.pokeedit, text='    Caught zone / level / Ball:  ').grid(row=23, column=30, columnspan=10)
+            self.caughtlocation = Entry(self.pokeedit, width=6)
+            self.caughtlocation.insert(0, self.sav.pkm_get(pkm, 'caughtlocation'))
+            self.caughtlocation.grid(row=23, column=40, columnspan=10)
+            self.caughtlevel = Entry(self.pokeedit, width=5)
+            self.caughtlevel.insert(0, self.sav.pkm_get(pkm, 'caughtlevel'))
+            self.caughtlevel.grid(row=23, column=50, columnspan=5)
         if self.gen == 2:
-            self.caughttime = Entry(self.pokeedit,width=4)
-            self.caughttime.insert(0,self.sav.pkm_get(pkm,"caughttime"));
-            self.caughttime.grid(row=23,column=55,columnspan=5)
+            self.caughttime = Entry(self.pokeedit, width=4)
+            self.caughttime.insert(0, self.sav.pkm_get(pkm, 'caughttime'))
+            self.caughttime.grid(row=23, column=55, columnspan=5)
         if self.gen >= 3:
-            self.caughtball = Entry(self.pokeedit,width=4)
-            self.caughtball.insert(0,self.sav.pkm_get(pkm,"caughtball"));
-            self.caughtball.grid(row=23,column=55,columnspan=5)
-            
-        
-        self.level = Entry(self.pokeedit,width=6)
-        
-        if (b == None):
-            self.level.insert(0,self.sav.pkm_get(pkm,"curlevel"));
-        else:
-            if self.gen <= 2:
-                self.level.insert(0,self.sav.pkm_get(pkm,"level"));
-        self.level.grid(row=20,column=40,columnspan=10)
-        self.exp = Entry(self.pokeedit,width=10)
-        self.exp.insert(0,self.sav.pkm_get(pkm,"exp"));
-        self.exp.grid(row=20,column=50,columnspan=10)        
-        
-        self.nickname = Entry(self.pokeedit,width=22)
-        self.nickname.insert(0,self.sav.pkm_get(pkm,"name"));
-        self.nickname.grid(row=25,column=20,columnspan=10)
-        
+            self.caughtball = Entry(self.pokeedit, width=4)
+            self.caughtball.insert(0, self.sav.pkm_get(pkm, 'caughtball'))
+            self.caughtball.grid(row=23, column=55, columnspan=5)
+        self.level = Entry(self.pokeedit, width=6)
+        if b == None:
+            self.level.insert(0, self.sav.pkm_get(pkm, 'curlevel'))
+        elif self.gen <= 2:
+            self.level.insert(0, self.sav.pkm_get(pkm, 'level'))
+        self.level.grid(row=20, column=40, columnspan=10)
+        self.exp = Entry(self.pokeedit, width=10)
+        self.exp.insert(0, self.sav.pkm_get(pkm, 'exp'))
+        self.exp.grid(row=20, column=50, columnspan=10)
+        self.nickname = Entry(self.pokeedit, width=22)
+        self.nickname.insert(0, self.sav.pkm_get(pkm, 'name'))
+        self.nickname.grid(row=25, column=20, columnspan=10)
         Label(self.pokeedit).grid(row=30)
-        
         if self.gen == 1 or b == None:
-            Label(self.pokeedit,text="    Curr. HP:  ").grid(row=40,column=10,columnspan=10,sticky=W)
-            self.curhp = Entry(self.pokeedit,width=6)
-            self.curhp.insert(0,self.sav.pkm_get(pkm,"hp"));
-            self.curhp.grid(row=40,column=10,columnspan=10,sticky=E)
-        
-        self.asleep=IntVar()
-        self.poisoned=IntVar()
-        self.paralyzed=IntVar()
-        self.frozen=IntVar()
-        
+            Label(self.pokeedit, text='    Curr. HP:  ').grid(row=40, column=10, columnspan=10, sticky=W)
+            self.curhp = Entry(self.pokeedit, width=6)
+            self.curhp.insert(0, self.sav.pkm_get(pkm, 'hp'))
+            self.curhp.grid(row=40, column=10, columnspan=10, sticky=E)
+        self.asleep = IntVar()
+        self.poisoned = IntVar()
+        self.paralyzed = IntVar()
+        self.frozen = IntVar()
         if self.gen == 1 or b == None:
-            Checkbutton(self.pokeedit,variable=self.asleep,text="SLP").grid(row=40,column=20,columnspan=5,sticky=E)
-            if (self.sav.pkm_get(pkm,"asleep")): self.asleep.set(1);
-            Checkbutton(self.pokeedit,variable=self.poisoned,text="PSN").grid(row=40,column=25,columnspan=5,sticky=E)
-            if (self.sav.pkm_get(pkm,"poisoned")): self.poisoned.set(1);
-            Checkbutton(self.pokeedit,variable=self.frozen,text="FRZ").grid(row=40,column=30,columnspan=5,sticky=E)
-            if (self.sav.pkm_get(pkm,"frozen")): self.frozen.set(1);
-            Checkbutton(self.pokeedit,variable=self.paralyzed,text="PAR").grid(row=40,column=35,columnspan=5,sticky=E)
-            if (self.sav.pkm_get(pkm,"paralyzed")): self.paralyzed.set(1);
-        
+            Checkbutton(self.pokeedit, variable=self.asleep, text='SLP').grid(row=40, column=20, columnspan=5, sticky=E)
+            if self.sav.pkm_get(pkm, 'asleep'):
+                self.asleep.set(1)
+            Checkbutton(self.pokeedit, variable=self.poisoned, text='PSN').grid(row=40, column=25, columnspan=5, sticky=E)
+            if self.sav.pkm_get(pkm, 'poisoned'):
+                self.poisoned.set(1)
+            Checkbutton(self.pokeedit, variable=self.frozen, text='FRZ').grid(row=40, column=30, columnspan=5, sticky=E)
+            if self.sav.pkm_get(pkm, 'frozen'):
+                self.frozen.set(1)
+            Checkbutton(self.pokeedit, variable=self.paralyzed, text='PAR').grid(row=40, column=35, columnspan=5, sticky=E)
+            if self.sav.pkm_get(pkm, 'paralyzed'):
+                self.paralyzed.set(1)
         if self.gen == 1:
-            Label(self.pokeedit,text="    Catch rate:").grid(row=40,column=40,columnspan=10,sticky=W)
-            self.catchrate = Entry(self.pokeedit,width=6)
-            self.catchrate.insert(0,self.sav.pkm_get(pkm,"catchrate"));
-            self.catchrate.grid(row=40,column=50,columnspan=10,sticky=W)
+            Label(self.pokeedit, text='    Catch rate:').grid(row=40, column=40, columnspan=10, sticky=W)
+            self.catchrate = Entry(self.pokeedit, width=6)
+            self.catchrate.insert(0, self.sav.pkm_get(pkm, 'catchrate'))
+            self.catchrate.grid(row=40, column=50, columnspan=10, sticky=W)
         else:
-            Label(self.pokeedit,text="    Happiness:").grid(row=40,column=40,columnspan=10,sticky=W)
-            self.happiness = Entry(self.pokeedit,width=6)
-            self.happiness.insert(0,self.sav.pkm_get(pkm,"happiness"));
-            self.happiness.grid(row=40,column=50,columnspan=10,sticky=W)
-        
+            Label(self.pokeedit, text='    Happiness:').grid(row=40, column=40, columnspan=10, sticky=W)
+            self.happiness = Entry(self.pokeedit, width=6)
+            self.happiness.insert(0, self.sav.pkm_get(pkm, 'happiness'))
+            self.happiness.grid(row=40, column=50, columnspan=10, sticky=W)
         if self.gen == 1:
-            Label(self.pokeedit,text="    Type1 / Type2:").grid(row=28,column=10,columnspan=10)
-            self.type1 = ComboBox(self.pokeedit,dropdown=1,editable=1,value=types[self.sav.pkm_get(pkm,"type1")])
-            array = types*1
+            Label(self.pokeedit, text='    Type1 / Type2:').grid(row=28, column=10, columnspan=10)
+            self.type1 = ComboBox(self.pokeedit, dropdown=1, editable=1, value=types[self.sav.pkm_get(pkm, 'type1')])
+            array = types * 1
             array.sort(reverse=False)
-            self.type2 = ComboBox(self.pokeedit,dropdown=1,editable=1,value=types[self.sav.pkm_get(pkm,"type2")])
+            self.type2 = ComboBox(self.pokeedit, dropdown=1, editable=1, value=types[self.sav.pkm_get(pkm, 'type2')])
             for x in range(256):
                 if len(array[x]) > 4:
-                    self.type1.insert(END,array[x])
-                    self.type2.insert(END,array[x])
-            self.type1.grid(row=28,column=20,columnspan=10,sticky=E)
-            self.type2.grid(row=28,column=30,columnspan=10,sticky=E)
-        
-        self.pokeclass = ComboBox(self.pokeedit,dropdown=1,editable=1,width=20,value=pokemon[self.sav.pkm_get(pkm,"num")])
-        if (self.gen <= 2):
-            self.pokesprite = ComboBox(self.pokeedit,dropdown=1,editable=1,width=20,value=pokemon[self.sav.pkm_get(pkm,"sprite")])
-        array = pokemon*1
+                    self.type1.insert(END, array[x])
+                    self.type2.insert(END, array[x])
+
+            self.type1.grid(row=28, column=20, columnspan=10, sticky=E)
+            self.type2.grid(row=28, column=30, columnspan=10, sticky=E)
+        self.pokeclass = ComboBox(self.pokeedit, dropdown=1, editable=1, width=20, value=pokemon[self.sav.pkm_get(pkm, 'num')])
+        if self.gen <= 2:
+            self.pokesprite = ComboBox(self.pokeedit, dropdown=1, editable=1, width=20, value=pokemon[self.sav.pkm_get(pkm, 'sprite')])
+        array = pokemon * 1
         array.sort(reverse=False)
         for x in range(len(array)):
             if len(array[x]) > 4:
-                self.pokeclass.insert(END,array[x])
-                if (self.gen <= 2):
-                    self.pokesprite.insert(END,array[x])
-        
-        self.pokeclass.grid(row=10,column=20,columnspan=10)
-        if (self.gen <= 2):
-            self.pokesprite.grid(row=20,column=20,columnspan=10)
+                self.pokeclass.insert(END, array[x])
+                if self.gen <= 2:
+                    self.pokesprite.insert(END, array[x])
 
-        self.moveclass = [None]*4
-        self.movepp = [None]*4
-        self.moveppup = [None]*4
-        
+        self.pokeclass.grid(row=10, column=20, columnspan=10)
+        if self.gen <= 2:
+            self.pokesprite.grid(row=20, column=20, columnspan=10)
+        self.moveclass = [None] * 4
+        self.movepp = [None] * 4
+        self.moveppup = [None] * 4
         Label(self.pokeedit).grid(row=50)
-        
         for m in range(4):
-            self.moveclass[m] = ComboBox(self.pokeedit,dropdown=1,editable=1,width=20,value=moves[self.sav.pkm_get(pkm,"move%d" % (m+1))])
-            array = moves*1
+            self.moveclass[m] = ComboBox(self.pokeedit, dropdown=1, editable=1, width=20, value=moves[self.sav.pkm_get(pkm, 'move%d' % (m + 1))])
+            array = moves * 1
             array.sort(reverse=False)
-            Label(self.pokeedit,text = "Move %d:" % (m+1)).grid(row=60+10*m,column=10,columnspan=10)
-            Label(self.pokeedit,text = "PP / PP up:").grid(row=60+10*m,column=30,columnspan=10)
+            Label(self.pokeedit, text='Move %d:' % (m + 1)).grid(row=60 + 10 * m, column=10, columnspan=10)
+            Label(self.pokeedit, text='PP / PP up:').grid(row=60 + 10 * m, column=30, columnspan=10)
             for x in range(256):
                 if len(array[x]) > 4:
-                    self.moveclass[m].insert(END,array[x])
-            self.moveclass[m].grid(row=60+10*m,column=20,columnspan=10)
-            self.movepp[m]=Entry(self.pokeedit,width=6)
-            self.movepp[m].insert(0,self.sav.pkm_get(pkm,"move%dpp" % (m+1)))
-            self.movepp[m].grid(row=60+10*m,column=40,columnspan=5)
-            self.moveppup[m]=Entry(self.pokeedit,width=6)
-            self.moveppup[m].insert(0,self.sav.pkm_get(pkm,"move%dppup" % (m+1)))
-            self.moveppup[m].grid(row=60+10*m,column=45,columnspan=5)
-            
+                    self.moveclass[m].insert(END, array[x])
+
+            self.moveclass[m].grid(row=60 + 10 * m, column=20, columnspan=10)
+            self.movepp[m] = Entry(self.pokeedit, width=6)
+            self.movepp[m].insert(0, self.sav.pkm_get(pkm, 'move%dpp' % (m + 1)))
+            self.movepp[m].grid(row=60 + 10 * m, column=40, columnspan=5)
+            self.moveppup[m] = Entry(self.pokeedit, width=6)
+            self.moveppup[m].insert(0, self.sav.pkm_get(pkm, 'move%dppup' % (m + 1)))
+            self.moveppup[m].grid(row=60 + 10 * m, column=45, columnspan=5)
+
         Label(self.pokeedit).grid(row=100)
-        Label(self.pokeedit,text = "HP (Max.)").grid(row=110,column=20,columnspan=5)
-        Label(self.pokeedit,text = "Attack").grid(row=110,column=25,columnspan=5)
-        Label(self.pokeedit,text = "Defense").grid(row=110,column=30,columnspan=5)
-        Label(self.pokeedit,text = "Speed").grid(row=110,column=35,columnspan=5)
-        if self.gen == 1:Label(self.pokeedit,text = "Special").grid(row=110,column=40,columnspan=5)
-        if self.gen > 1: Label(self.pokeedit,text = "Special Att./Def.").grid(row=110,column=40,columnspan=10)
-        Label(self.pokeedit,text = "Individual values:   ").grid(row=120,column=10,columnspan=10,sticky=E)
-        Label(self.pokeedit,text = "Effort values:   ").grid(row=130,column=10,columnspan=10,sticky=E)
-        
-        if b==None:
-            Label(self.pokeedit,text = "Current values:   ").grid(row=140,column=10,columnspan=10,sticky=E)
-        
+        Label(self.pokeedit, text='HP (Max.)').grid(row=110, column=20, columnspan=5)
+        Label(self.pokeedit, text='Attack').grid(row=110, column=25, columnspan=5)
+        Label(self.pokeedit, text='Defense').grid(row=110, column=30, columnspan=5)
+        Label(self.pokeedit, text='Speed').grid(row=110, column=35, columnspan=5)
+        if self.gen == 1:
+            Label(self.pokeedit, text='Special').grid(row=110, column=40, columnspan=5)
+        if self.gen > 1:
+            Label(self.pokeedit, text='Special Att./Def.').grid(row=110, column=40, columnspan=10)
+        Label(self.pokeedit, text='Individual values:   ').grid(row=120, column=10, columnspan=10, sticky=E)
+        Label(self.pokeedit, text='Effort values:   ').grid(row=130, column=10, columnspan=10, sticky=E)
+        if b == None:
+            Label(self.pokeedit, text='Current values:   ').grid(row=140, column=10, columnspan=10, sticky=E)
         scol = 20
-        snames = ["maxhp","attack","defense","speed","special"] 
-        snames2 = ["maxhp","attack","defense","speed","specialattack","specialdefense"]
-        if self.gen == 1: snames2 = snames
-        if self.gen >= 3: snames = snames2
-        self.statevs=[None]*6
-        self.stativs=[None]*6
-        self.statcur=[None]*6
-        self.constat=[None]*6
-        
-        for s in range(len(snames)):
-            if (scol > 20 and s != 5) or self.gen >= 3:
-                self.stativs[s]=Entry(self.pokeedit,width=6)
-                self.stativs[s].insert(0,self.sav.pkm_get(pkm,"%siv" % (snames[s])))
-                self.stativs[s].grid(row=120,column=scol,columnspan=5)
+        snames = ['maxhp',
+         'attack',
+         'defense',
+         'speed',
+         'special']
+        snames2 = ['maxhp',
+         'attack',
+         'defense',
+         'speed',
+         'specialattack',
+         'specialdefense']
+        if self.gen == 1:
+            snames2 = snames
+        if self.gen >= 3:
+            snames = snames2
+        self.statevs = [None] * 6
+        self.stativs = [None] * 6
+        self.statcur = [None] * 6
+        self.constat = [None] * 6
+        for s in range(len(snames2)):
+            if scol > 20 and s != 5 or self.gen >= 3:
+                self.stativs[s] = Entry(self.pokeedit, width=6)
+                self.stativs[s].insert(0, self.sav.pkm_get(pkm, '%siv' % snames[s]))
+                self.stativs[s].grid(row=120, column=scol, columnspan=5)
             if s != 5 or self.gen >= 3:
-                self.statevs[s]=Entry(self.pokeedit,width=6)
-                self.statevs[s].insert(0,self.sav.pkm_get(pkm,"%sev" % (snames[s])))
-                self.statevs[s].grid(row=130,column=scol,columnspan=5)
-            if b==None:
-                self.statcur[s]=Entry(self.pokeedit,width=6)
-                self.statcur[s].insert(0,self.sav.pkm_get(pkm,snames2[s]))
-                self.statcur[s].grid(row=140,column=scol,columnspan=5)
-            scol+=5
-        
-        if self.gen >= 3:   
-            cnames = ["coolness","beauty","cuteness","smartness","toughness","feel"]
+                self.statevs[s] = Entry(self.pokeedit, width=6)
+                self.statevs[s].insert(0, self.sav.pkm_get(pkm, '%sev' % snames[s]))
+                self.statevs[s].grid(row=130, column=scol, columnspan=5)
+            if b == None:
+                self.statcur[s] = Entry(self.pokeedit, width=6)
+                self.statcur[s].insert(0, self.sav.pkm_get(pkm, snames2[s]))
+                self.statcur[s].grid(row=140, column=scol, columnspan=5)
+            scol += 5
+
+        if self.gen >= 3:
+            cnames = ['coolness',
+             'beauty',
+             'cuteness',
+             'smartness',
+             'toughness',
+             'feel']
             Label(self.pokeedit).grid(row=150)
-            Label(self.pokeedit,text = "Contest values:   ").grid(row=170,column=10,columnspan=10,sticky=E)
-            Label(self.pokeedit,text = "Coolness").grid(row=160,column=20,columnspan=5)
-            Label(self.pokeedit,text = "Beauty").grid(row=160,column=25,columnspan=5)
-            Label(self.pokeedit,text = "Cuteness").grid(row=160,column=30,columnspan=5)
-            Label(self.pokeedit,text = "Smartness").grid(row=160,column=35,columnspan=5)
-            Label(self.pokeedit,text = "Toughness").grid(row=160,column=40,columnspan=5)
-            Label(self.pokeedit,text = "Feel").grid(row=160,column=45,columnspan=5)
+            Label(self.pokeedit, text='Contest values:   ').grid(row=170, column=10, columnspan=10, sticky=E)
+            Label(self.pokeedit, text='Coolness').grid(row=160, column=20, columnspan=5)
+            Label(self.pokeedit, text='Beauty').grid(row=160, column=25, columnspan=5)
+            Label(self.pokeedit, text='Cuteness').grid(row=160, column=30, columnspan=5)
+            Label(self.pokeedit, text='Smartness').grid(row=160, column=35, columnspan=5)
+            Label(self.pokeedit, text='Toughness').grid(row=160, column=40, columnspan=5)
+            Label(self.pokeedit, text='Feel').grid(row=160, column=45, columnspan=5)
             scol = 20
             for s in range(len(cnames)):
-                self.constat[s]=Entry(self.pokeedit,width=6)
-                self.constat[s].insert(0,self.sav.pkm_get(pkm,"%s" % (cnames[s])))
-                self.constat[s].grid(row=170,column=scol,columnspan=5)
-                scol+=5 
+                self.constat[s] = Entry(self.pokeedit, width=6)
+                self.constat[s].insert(0, self.sav.pkm_get(pkm, '%s' % cnames[s]))
+                self.constat[s].grid(row=170, column=scol, columnspan=5)
+                scol += 5
 
-        
-        
-        
     def show_pokedex1(self):
-        global pokedex
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.pokedex1 != None:
+            self.pokedex1.focus_force()
             return
         self.pokedex1 = Toplevel()
-        self.pokedex1.title("Pokédex 1/2 - %s" % (self.title))
+        self.pokedex1.title('Pok\xc3\xa9dex 1/2 - %s' % self.title)
         self.pokedex1.protocol('WM_DELETE_WINDOW', self.wmdel_pokedex1)
-        Label(self.pokedex1,text="   ").grid(row=1000,column=1000)
-        
+        Label(self.pokedex1, text='   ').grid(row=1000, column=1000)
         start = 0
         stop = 76
         step = 4
@@ -1092,38 +9282,37 @@ class PikaSav():
             start = 0
             stop = 196
             step = 7
-                
         for p in range(step):
-            Label(self.pokedex1,text=" S").grid(row=0,column=1+3*p,sticky=W)
-            Label(self.pokedex1,text=" C").grid(row=0,column=2+3*p,sticky=W)
-        for p in range(start,stop):
-            Label(self.pokedex1,text="    "+pokedex[p+1]).grid(row=(p//step)+1,column=(p%step)*3,sticky=W)
-            self.dexseen[p]=IntVar()
+            Label(self.pokedex1, text=' S').grid(row=0, column=1 + 3 * p, sticky=W)
+            Label(self.pokedex1, text=' C').grid(row=0, column=2 + 3 * p, sticky=W)
+
+        for p in range(start, stop):
+            Label(self.pokedex1, text='    ' + pokedex[p + 1]).grid(row=p // step + 1, column=p % step * 3, sticky=W)
+            self.dexseen[p] = IntVar()
             var = IntVar()
-            Checkbutton(self.pokedex1,variable=var).grid(row=(p//step)+1,column=(p%step)*3+1,sticky=W)
-            self.dexseen[p]=var
+            Checkbutton(self.pokedex1, variable=var).grid(row=p // step + 1, column=p % step * 3 + 1, sticky=W)
+            self.dexseen[p] = var
             del var
             var = IntVar()
-            Checkbutton(self.pokedex1,variable=var).grid(row=(p//step)+1,column=(p%step)*3+2,sticky=W)
-            self.dexcatched[p]=var
+            Checkbutton(self.pokedex1, variable=var).grid(row=p // step + 1, column=p % step * 3 + 2, sticky=W)
+            self.dexcatched[p] = var
             del var
-            if (self.sav.catched[p+1]): self.dexcatched[p].set(1)
-            if (self.sav.seen[p+1]): self.dexseen[p].set(1)
-        return
-    
-        
+            if self.sav.catched[p + 1]:
+                self.dexcatched[p].set(1)
+            if self.sav.seen[p + 1]:
+                self.dexseen[p].set(1)
+
     def show_pokedex2(self):
-        global pokedex
         if self.sav == None:
-            showerror("Something went wrong =(","You need to load a .sav first")
+            showerror('Something went wrong =(', 'You need to load a .sav first')
             return
         if self.pokedex2 != None:
+            self.pokedex2.focus_force()
             return
         self.pokedex2 = Toplevel()
-        self.pokedex2.title("Pokédex 2/2 - %s" % (self.title))
+        self.pokedex2.title('Pok\xc3\xa9dex 2/2 - %s' % self.title)
         self.pokedex2.protocol('WM_DELETE_WINDOW', self.wmdel_pokedex2)
-        Label(self.pokedex2,text="   ").grid(row=1000,column=1000)
-         
+        Label(self.pokedex2, text='   ').grid(row=1000, column=1000)
         start = 76
         stop = 151
         step = 4
@@ -1135,36 +9324,34 @@ class PikaSav():
             start = 196
             stop = 386
             step = 7
-         
         for p in range(step):
-            Label(self.pokedex2,text=" S").grid(row=0,column=1+3*p,sticky=W)
-            Label(self.pokedex2,text=" C").grid(row=0,column=2+3*p,sticky=W)
-        for p in range(start,stop):
-            Label(self.pokedex2,text="    "+pokedex[p+1]).grid(row=((p-start)//step)+1,column=(p%step)*3,sticky=W)
-            self.dexseen[p]=IntVar()
+            Label(self.pokedex2, text=' S').grid(row=0, column=1 + 3 * p, sticky=W)
+            Label(self.pokedex2, text=' C').grid(row=0, column=2 + 3 * p, sticky=W)
+
+        for p in range(start, stop):
+            Label(self.pokedex2, text='    ' + pokedex[p + 1]).grid(row=(p - start) // step + 1, column=p % step * 3, sticky=W)
+            self.dexseen[p] = IntVar()
             var = IntVar()
-            Checkbutton(self.pokedex2,variable=var).grid(row=((p-start)//step)+1,column=(p%step)*3+1,sticky=W)
-            self.dexseen[p]=var
+            Checkbutton(self.pokedex2, variable=var).grid(row=(p - start) // step + 1, column=p % step * 3 + 1, sticky=W)
+            self.dexseen[p] = var
             del var
             var = IntVar()
-            Checkbutton(self.pokedex2,variable=var).grid(row=((p-start)//step)+1,column=(p%step)*3+2,sticky=W)
-            self.dexcatched[p]=var
+            Checkbutton(self.pokedex2, variable=var).grid(row=(p - start) // step + 1, column=p % step * 3 + 2, sticky=W)
+            self.dexcatched[p] = var
             del var
-            if (self.sav.catched[p+1]): self.dexcatched[p].set(1)
-            if (self.sav.seen[p+1]): self.dexseen[p].set(1)
-        return
-        
-        
-        
+            if self.sav.catched[p + 1]:
+                self.dexcatched[p].set(1)
+            if self.sav.seen[p + 1]:
+                self.dexseen[p].set(1)
+
     def show_about(self):
-        showinfo("About PikaSav","Made by Ritchie. I'm cool. Yes, you're cool too.")
-        return
+        showinfo('About PikaSav', "Made by Ritchie. I'm cool. Yes, you're cool too.")
 
     def show_savinfo(self):
         if self.sav == None:
-            showinfo("SAV Info","There is no .sav file loaded.")
+            showinfo('SAV Info', 'There is no .sav file loaded.')
         else:
-            showinfo("SAV Info","Handler: %s\n- Sav filesize: %d\n- %d bytes loaded" % (self.sav.version,os.path.getsize(self.sav.file),len(self.sav.buffer)))
-        return
+            showinfo('SAV Info', 'Handler: %s\n- Sav filesize: %d\n- %d bytes loaded' % (self.sav.version, os.path.getsize(self.sav.file), len(self.sav.buffer)))
+
 
 pikasav = PikaSav()
